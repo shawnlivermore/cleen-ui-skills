@@ -69,6 +69,10 @@ Add the skills folder to your project's Copilot configuration (`.github/copilot-
 
 Each skill file is self-contained and can be registered independently. You don't need to load all of them — pick the ones relevant to your project.
 
+### Installation via `skills.sh`
+
+Open terminal inside your project, run this command `npx skills add https://github.com/shawnlivermore/cleen-ui-skills` and follow instructions on the interface. It should let you choose which skills to install inside your project or globally.
+
 ### Trigger examples
 
 | You say | Skill invoked |
