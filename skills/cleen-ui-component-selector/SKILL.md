@@ -1,11 +1,11 @@
 ---
 name: cleen-ui-component-selector
-description: Select the right @cleen/cleen-components component before writing any UI code. ALWAYS trigger this skill when implementing any UI — dashboards, pages, forms, modals, tables, cards, lists, navigation, charts, overlays, status indicators, media players, or any other interface element. This applies to vague prompts like "build a dashboard", "create a profile page", "add a filter panel", "show a table", "make a stepper form", etc. The primary purpose is to PREVENT building custom UI from scratch when a cleen-component already exists. Trigger on any feature or page generation request, not just explicit component questions.
+description: Select the right @cleen/ui component before writing any UI code. ALWAYS trigger this skill when implementing any UI — dashboards, pages, forms, modals, tables, cards, lists, navigation, charts, overlays, status indicators, media players, or any other interface element. This applies to vague prompts like "build a dashboard", "create a profile page", "add a filter panel", "show a table", "make a stepper form", etc. The primary purpose is to PREVENT building custom UI from scratch when a cleen-component already exists. Trigger on any feature or page generation request, not just explicit component questions.
 ---
 
 # Component Selector
 
-This skill exists to stop you from reinventing the wheel. This project uses `@cleen/cleen-components` — a full-featured component library. **Before writing any custom UI code, check if a cleen-component already covers it.** Users will ask for pages, features, and flows — they won't say "use the DataGrid component". That's your job.
+This skill exists to stop you from reinventing the wheel. This project uses `@cleen/ui` — a full-featured component library. **Before writing any custom UI code, check if a cleen-component already covers it.** Users will ask for pages, features, and flows — they won't say "use the DataGrid component". That's your job.
 
 ---
 

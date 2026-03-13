@@ -1,11 +1,11 @@
 ---
 name: cleen-ui-configure
-description: Configure @cleen/cleen-components — currently CSS color variables. Use this skill whenever the user wants to change colors, customize the theme, set a brand color, adjust the palette, override defaults, make it match their design system, or tweak light/dark mode colors. Trigger proactively even for vague requests like "how do I make it blue?" or "can I change the primary color?" or "how do I theme this?".
+description: Configure @cleen/ui — currently CSS color variables. Use this skill whenever the user wants to change colors, customize the theme, set a brand color, adjust the palette, override defaults, make it match their design system, or tweak light/dark mode colors. Trigger proactively even for vague requests like "how do I make it blue?" or "can I change the primary color?" or "how do I theme this?".
 ---
 
 # Library Configure Skill
 
-This skill covers customizing `@cleen/cleen-components` theming via CSS variables. Currently: **color variables only**.
+This skill covers customizing `@cleen/ui` theming via CSS variables. Currently: **color variables only**.
 
 ---
 
@@ -70,7 +70,7 @@ Add overrides in your root CSS file, **after** the library import. Overrides in 
 
 ```css
 /* your root CSS file */
-@import "@cleen/cleen-components/styles.css";
+@import "@cleen/ui-core/dist/styles.css";
 
 /* --- your overrides below --- */
 
@@ -128,7 +128,7 @@ Override inside `.dark {}` only — leave `:root` untouched.
 If the user's project needs to change colors **at runtime** (e.g. per-tenant theming, user preferences), they can use the `useCleenColors` Zustand store that ships with the library:
 
 ```tsx
-import { useCleenColors } from '@cleen/cleen-components';
+import { useCleenColors } from '@cleen/ui';
 
 // set a single color (expects "R, G, B" string)
 const { setColor, setColors, resetColor, resetColors } = useCleenColors();

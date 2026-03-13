@@ -18,9 +18,9 @@ Concrete, copy-paste-ready form implementations for common scenarios.
 A vertical stack of `FormGroup` rows — the standard layout for settings pages or profile editors.
 
 ```tsx
-import { Button, FormGroup, Input, Select, Switch, TextArea } from '@cleen/cleen-components';
-import { useForm } from '@cleen/cleen-components';
-import { useValidation } from '@cleen/cleen-components';
+import { Button, FormGroup, Input, Select, Switch, TextArea } from '@cleen/ui';
+import { useForm } from '@cleen/ui';
+import { useValidation } from '@cleen/ui';
 
 interface SettingsForm {
   displayName: string;
@@ -132,7 +132,7 @@ A form rendered inside a `Modal` — the standard pattern for editing a single r
 import {
   Button, FormGroup, Input, Modal, Select,
   useForm, useValidation
-} from '@cleen/cleen-components';
+} from '@cleen/ui';
 import { useState } from 'react';
 
 interface UserForm {
@@ -235,8 +235,8 @@ A form rendered inside a `Drawer` for filtering a list or table. Typically state
 import {
   Button, CheckboxGroup, DatePicker, Drawer,
   FormGroup, RangeSlider, Select
-} from '@cleen/cleen-components';
-import { useForm } from '@cleen/cleen-components';
+} from '@cleen/ui';
+import { useForm } from '@cleen/ui';
 import type { DateRange } from 'react-day-picker';
 
 interface FilterForm {
@@ -347,8 +347,8 @@ A form split into sequential steps using the `Wizard` component. Each step maint
 import {
   Button, FormGroup, Input, RadioButtonGroup,
   Select, TextArea, Wizard
-} from '@cleen/cleen-components';
-import { useForm, useValidation } from '@cleen/cleen-components';
+} from '@cleen/ui';
+import { useForm, useValidation } from '@cleen/ui';
 import { useState } from 'react';
 
 interface OnboardingForm {

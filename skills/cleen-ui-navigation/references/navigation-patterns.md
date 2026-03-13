@@ -26,7 +26,7 @@ import {
   Sidebar,
   DrawerContainer,
   DrawerContentTitle,
-} from '@cleen/cleen-components';
+} from '@cleen/ui';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 
 const navItems = [
@@ -121,7 +121,7 @@ function AppShell() {
 
 - Derive `activeId` from the route rather than managing it as separate state — they must stay in sync.
 - Items without a `drawerContent` entry navigate immediately via `onActiveChange`. Items with drawer content open the drawer; navigation happens when the user clicks a `DrawerContentTitle`.
-- `DrawerContainer` + `DrawerContentTitle` are exported from `@cleen/cleen-components` — no custom components needed.
+- `DrawerContainer` + `DrawerContentTitle` are exported from `@cleen/ui` — no custom components needed.
 
 ---
 
@@ -130,7 +130,7 @@ function AppShell() {
 Multi-section settings page where all sections are independent (no order required).
 
 ```tsx
-import { Tabs, Card } from '@cleen/cleen-components';
+import { Tabs, Card } from '@cleen/ui';
 
 function SettingsPage() {
   return (
@@ -181,7 +181,7 @@ function SettingsPage() {
 Tab state stored in the URL query string so users can share direct links to a specific tab.
 
 ```tsx
-import { Tabs } from '@cleen/cleen-components';
+import { Tabs } from '@cleen/ui';
 import { useSearchParams } from 'react-router-dom';
 
 const TAB_IDS = ['overview', 'missions', 'equipment', 'history'] as const;
@@ -229,8 +229,9 @@ function AgentDetailPage() {
 Step-by-step onboarding flow where each step is validated before the user can advance.
 
 ```tsx
-import { Wizard, showNotification } from '@cleen/cleen-components';
-import { useForm, useValidation } from '@cleen/cleen-components';
+import { showNotification } from '@cleen/ui';
+import { Wizard } from '@cleen/ui-pro';;
+import { useForm, useValidation } from '@cleen/ui';
 
 interface OnboardingData {
   codename: string;
@@ -384,7 +385,7 @@ import {
   Stepper,
   Button,
   useDisclosure,
-} from '@cleen/cleen-components';
+} from '@cleen/ui';
 
 const STEPS = [
   { title: 'Select target', subtitle: 'Choose objective' },
@@ -458,12 +459,9 @@ function MissionBuilderDrawer() {
 Standard pattern for a list page with server-side pagination.
 
 ```tsx
-import {
-  DataGrid,
-  Pagination,
-  usePaginationState,
-} from '@cleen/cleen-components';
-import type { TableHeaderProps } from '@cleen/cleen-components';
+import { Pagination, usePaginationState,  } from '@cleen/ui';
+import { DataGrid } from '@cleen/ui-pro';;
+import type { TableHeaderProps } from '@cleen/ui';
 
 interface Agent {
   id: number;
@@ -529,7 +527,7 @@ function AgentsPage() {
 Auto-generated breadcrumbs from the current route location.
 
 ```tsx
-import { Breadcrumb } from '@cleen/cleen-components';
+import { Breadcrumb } from '@cleen/ui';
 import { useLocation, useParams } from 'react-router-dom';
 
 // Route: /operations/:missionId/debriefing

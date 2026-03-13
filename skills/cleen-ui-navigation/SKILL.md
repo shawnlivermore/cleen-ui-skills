@@ -1,11 +1,11 @@
 ---
 name: cleen-ui-navigation
-description: Build navigation flows using @cleen/cleen-components. Trigger this skill whenever implementing any navigation structure — sidebars, breadcrumbs, tab-based views, multi-step onboarding flows, wizards, step indicators, or paginated lists. This includes vague prompts like "build an app shell", "add a sidebar", "create a multi-step form", "make a settings page with tabs", "show progress through onboarding steps", "add breadcrumbs to the page", "paginate this table", or "build a wizard flow". The primary purpose is to PREVENT rolling custom tab switching logic, hand-built sidebar menus, manual step tracking state, or raw pagination buttons when the library already covers all of these. Trigger on any request involving page structure, section switching, app-level navigation, or multi-step content flows.
+description: Build navigation flows using @cleen/ui. Trigger this skill whenever implementing any navigation structure — sidebars, breadcrumbs, tab-based views, multi-step onboarding flows, wizards, step indicators, or paginated lists. This includes vague prompts like "build an app shell", "add a sidebar", "create a multi-step form", "make a settings page with tabs", "show progress through onboarding steps", "add breadcrumbs to the page", "paginate this table", or "build a wizard flow". The primary purpose is to PREVENT rolling custom tab switching logic, hand-built sidebar menus, manual step tracking state, or raw pagination buttons when the library already covers all of these. Trigger on any request involving page structure, section switching, app-level navigation, or multi-step content flows.
 ---
 
 # Navigation Skill
 
-This skill covers all navigation and flow-control UI using the cleen-components library — from app-level sidebars to breadcrumbs, tab views, guided multi-step wizards, and paginated data. None of these should be built from scratch.
+This skill covers all navigation and flow-control UI using the @cleen/* packages — from app-level sidebars to breadcrumbs, tab views, guided multi-step wizards, and paginated data. None of these should be built from scratch.
 
 ---
 
@@ -49,7 +49,7 @@ Common traps to avoid:
 App-level navigation panel — icon strip on the left with an optional expandable drawer for sub-navigation. The main chrome for any multi-section application.
 
 ```tsx
-import { Sidebar } from '@cleen/cleen-components';
+import { Sidebar } from '@cleen/ui';
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', iconName: 'HouseLine' },
@@ -147,7 +147,7 @@ const drawerContent = {
 Page hierarchy trail. Use on any page that lives more than one level deep.
 
 ```tsx
-import { Breadcrumb } from '@cleen/cleen-components';
+import { Breadcrumb } from '@cleen/ui';
 
 <Breadcrumb
   segments={[
@@ -182,7 +182,7 @@ import { Breadcrumb } from '@cleen/cleen-components';
 Switch between independent content sections. Use for settings pages, detail views with multiple facets, or any non-sequential multi-section UI.
 
 ```tsx
-import { Tabs } from '@cleen/cleen-components';
+import { Tabs } from '@cleen/ui';
 
 // Uncontrolled (internal state)
 <Tabs
@@ -236,7 +236,7 @@ import { Tabs } from '@cleen/cleen-components';
 Guided multi-step flow. Handles step rendering, navigation buttons (Back / Next / Finish), and step-progress indicator. The go-to for onboarding flows, multi-step forms, and setup flows.
 
 ```tsx
-import { Wizard } from '@cleen/cleen-components';
+import { Wizard } from '@cleen/ui-pro';;
 
 // Uncontrolled (simplest — Wizard manages step state internally)
 <Wizard
@@ -302,7 +302,7 @@ import { Wizard } from '@cleen/cleen-components';
 Visual step-progress indicator. Use this alone only when you need to show step progress alongside content and navigation that you control yourself (e.g., a multi-page form embedded in a drawer).
 
 ```tsx
-import { Stepper } from '@cleen/cleen-components';
+import { Stepper } from '@cleen/ui';
 
 const steps = [
   { title: 'Briefing', subtitle: 'Review mission' },
@@ -330,7 +330,7 @@ const steps = [
 Page controls for paginated data lists. Always fully controlled — you own the page state.
 
 ```tsx
-import { Pagination, usePaginationState } from '@cleen/cleen-components';
+import { Pagination, usePaginationState } from '@cleen/ui';
 
 // Simplest: use the built-in hook
 function AgentList() {

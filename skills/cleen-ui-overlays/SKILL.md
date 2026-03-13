@@ -1,11 +1,11 @@
 ---
 name: cleen-ui-overlays
-description: Build overlays and contextual UI using @cleen/cleen-components. Trigger this skill whenever implementing any overlay — modals, drawers, confirmation dialogs, dropdowns, context menus, tooltips, toasts, popovers, accordions, or filter panels. This includes vague prompts like "add a confirmation dialog", "show a side panel", "create a context menu", "add a tooltip", "show a success message", "make a filter panel", "add a collapsible section", or "trigger a popup". The primary purpose is to PREVENT rolling custom dialog/modal markup, hand-coded toast systems, bespoke dropdown implementations, or raw tooltip divs when the library covers all of these. Trigger on any request involving temporary, floating, or interruptive UI.
+description: Build overlays and contextual UI using @cleen/ui. Trigger this skill whenever implementing any overlay — modals, drawers, confirmation dialogs, dropdowns, context menus, tooltips, toasts, popovers, accordions, or filter panels. This includes vague prompts like "add a confirmation dialog", "show a side panel", "create a context menu", "add a tooltip", "show a success message", "make a filter panel", "add a collapsible section", or "trigger a popup". The primary purpose is to PREVENT rolling custom dialog/modal markup, hand-coded toast systems, bespoke dropdown implementations, or raw tooltip divs when the library covers all of these. Trigger on any request involving temporary, floating, or interruptive UI.
 ---
 
 # Overlays Skill
 
-This skill covers every temporary or floating UI surface — modals, drawers, menus, popovers, tooltips, notifications, and collapsible sections — using the cleen-components library. None of these should ever be built from scratch.
+This skill covers every temporary or floating UI surface — modals, drawers, menus, popovers, tooltips, notifications, and collapsible sections — using the @cleen/* packages. None of these should ever be built from scratch.
 
 ---
 
@@ -50,7 +50,7 @@ For the three most commonly confused overlays, see the quick rule at the bottom 
 Every togglable overlay (Modal, Drawer, Popover, Dropdown) needs open/close state. Always use `useDisclosure` — never `useState(false)` for this.
 
 ```tsx
-import { useDisclosure } from '@cleen/cleen-components';
+import { useDisclosure } from '@cleen/ui';
 
 const { isOpen, open, close, toggle } = useDisclosure();
 
@@ -69,7 +69,7 @@ const { isOpen, open, close, toggle } = useDisclosure();
 Centered, blocking overlay. Use for confirmations, short forms, alerts.
 
 ```tsx
-import { Modal, Button, useDisclosure } from '@cleen/cleen-components';
+import { Modal, Button, useDisclosure } from '@cleen/ui';
 
 const { isOpen, open, close } = useDisclosure();
 
@@ -124,7 +124,7 @@ const { isOpen, open, close } = useDisclosure();
 Right-anchored slide-over panel. Use for editing, detailed views, step-through flows.
 
 ```tsx
-import { Drawer, Button, useDisclosure } from '@cleen/cleen-components';
+import { Drawer, Button, useDisclosure } from '@cleen/ui';
 
 const { isOpen, open, close } = useDisclosure();
 
@@ -177,7 +177,7 @@ import {
   FormGroup,
   Select,
   useDisclosure,
-} from '@cleen/cleen-components';
+} from '@cleen/ui';
 
 const { isOpen, open, close } = useDisclosure();
 
@@ -239,7 +239,7 @@ const { isOpen, open, close } = useDisclosure();
 A trigger button that reveals arbitrary content below it. Use for custom panels (date pickers, tag selectors, search panels).
 
 ```tsx
-import { Dropdown } from '@cleen/cleen-components';
+import { Dropdown } from '@cleen/ui';
 
 <Dropdown label="Assign to" fullWidth={false}>
   <div className="cleen-p-3 cleen-flex cleen-flex-col cleen-gap-2">
@@ -274,7 +274,7 @@ import { Dropdown } from '@cleen/cleen-components';
 A popup list of clickable action items. Use for context menus, action dropdowns, kebab menus.
 
 ```tsx
-import { Menu, Button } from '@cleen/cleen-components';
+import { Menu, Button } from '@cleen/ui';
 import { MdMoreVert } from 'react-icons/md';
 
 <Menu
@@ -346,7 +346,7 @@ import { MdMoreVert } from 'react-icons/md';
 A floating panel triggered by click on any element. Use when you need full control over both trigger and content.
 
 ```tsx
-import { Popover } from '@cleen/cleen-components';
+import { Popover } from '@cleen/ui';
 
 <Popover
   content={
@@ -378,7 +378,7 @@ import { Popover } from '@cleen/cleen-components';
 Hover-activated label for UI elements. Use for icon buttons, truncated text, or any element that needs a hint.
 
 ```tsx
-import { Tooltip } from '@cleen/cleen-components';
+import { Tooltip } from '@cleen/ui';
 
 // Icon button tooltip
 <Tooltip label="Delete record" placement="top">
@@ -424,7 +424,7 @@ Function-based transient feedback messages. Call `showNotification()` from event
 import {
   showNotification,
   CleenNotificationContainer,
-} from '@cleen/cleen-components';
+} from '@cleen/ui';
 
 // Setup: render ONCE at the app root (e.g. App.tsx or layout)
 <CleenNotificationContainer />;
@@ -465,7 +465,7 @@ showNotification({ message: 'A new version is available', variant: 'info' });
 Accordion-style expandable sections. Use for FAQs, categorized settings, nested navigation lists.
 
 ```tsx
-import { Collapsible } from '@cleen/cleen-components';
+import { Collapsible } from '@cleen/ui';
 
 <Collapsible
   defaultOpenIndex={0}

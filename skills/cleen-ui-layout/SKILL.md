@@ -1,11 +1,11 @@
 ---
 name: cleen-ui-layout
-description: Build page layouts using @cleen/cleen-components. Trigger this skill whenever implementing any page structure, content container, dashboard, settings panel, detail view, or any UI that needs to be laid out visually. This includes vague prompts like "build a dashboard", "create a profile page", "make a settings layout", "design a detail view", "add a stats section", "build a landing page section", or "organize this content into cards". The primary purpose is to PREVENT building layouts from scratch with raw divs, rolling custom card markup, or forgetting the `cleen-` prefix and `.cleen` scoping wrapper. Trigger on any request that involves visual page composition — cards, grids, headers, stat rows, detail panels, or any content organization.
+description: Build page layouts using @cleen/ui. Trigger this skill whenever implementing any page structure, content container, dashboard, settings panel, detail view, or any UI that needs to be laid out visually. This includes vague prompts like "build a dashboard", "create a profile page", "make a settings layout", "design a detail view", "add a stats section", "build a landing page section", or "organize this content into cards". The primary purpose is to PREVENT building layouts from scratch with raw divs, rolling custom card markup, or forgetting the `cleen-` prefix and `.cleen` scoping wrapper. Trigger on any request that involves visual page composition — cards, grids, headers, stat rows, detail panels, or any content organization.
 ---
 
 # Layout Skill
 
-This skill covers structuring pages and content containers using the cleen-components library and its Tailwind system. The fundamental unit is `Card`. Grids are built with Tailwind (prefixed). Everything lives inside a `.cleen` scope wrapper.
+This skill covers structuring pages and content containers using the @cleen/* packages and its Tailwind system. The fundamental unit is `Card`. Grids are built with Tailwind (prefixed). Everything lives inside a `.cleen` scope wrapper.
 
 ---
 
@@ -65,7 +65,7 @@ Common traps to avoid:
 The primary building block for any distinct content section — metrics, forms, lists, charts, empty states, summaries.
 
 ```tsx
-import { Card } from '@cleen/cleen-components';
+import { Card } from '@cleen/ui';
 
 // Minimal
 <Card>
@@ -114,7 +114,7 @@ import { Card } from '@cleen/cleen-components';
 `CardIcon` — Card with a left-side icon holder:
 
 ```tsx
-import { CardIcon } from '@cleen/cleen-components';
+import { CardIcon } from '@cleen/ui';
 
 <CardIcon
   icon={<MdShield size={20} />}
@@ -127,7 +127,7 @@ import { CardIcon } from '@cleen/cleen-components';
 `CardMedia` — Card with an image, video, or iframe in the header area:
 
 ```tsx
-import { CardMedia } from '@cleen/cleen-components';
+import { CardMedia } from '@cleen/ui';
 
 <CardMedia
   media={{
@@ -148,7 +148,7 @@ import { CardMedia } from '@cleen/cleen-components';
 Thin separator line. Use inside `Card` to separate groups of rows, or between page sections.
 
 ```tsx
-import { Divider } from '@cleen/cleen-components';
+import { Divider } from '@cleen/ui';
 
 // Horizontal (default) — full-width line
 <Divider />
@@ -168,7 +168,7 @@ import { Divider } from '@cleen/cleen-components';
 Compact badge for statuses, counts, categories, and tags.
 
 ```tsx
-import { PillBadge } from '@cleen/cleen-components';
+import { PillBadge } from '@cleen/ui';
 
 // Status badge
 <PillBadge label="Active" color="green" showDot />
@@ -202,7 +202,7 @@ import { PillBadge } from '@cleen/cleen-components';
 User profile picture with initials fallback.
 
 ```tsx
-import { Avatar } from '@cleen/cleen-components';
+import { Avatar } from '@cleen/ui';
 
 // From image
 <Avatar src={user.avatarUrl} alt={user.name} size="md" />
@@ -223,7 +223,7 @@ import { Avatar } from '@cleen/cleen-components';
 Stacked row of avatars with overflow count. Common in cards showing assignees, participants, or team members.
 
 ```tsx
-import { AvatarRow } from '@cleen/cleen-components';
+import { AvatarRow } from '@cleen/ui';
 
 <AvatarRow
   avatars={[

@@ -23,7 +23,7 @@ Reusable, copy-paste-ready patterns for common overlay scenarios. These combine 
 Classic destructive-action confirmation. Blocks full interaction until dismissed.
 
 ```tsx
-import { Modal, Button, useDisclosure } from '@cleen/cleen-components';
+import { Modal, Button, useDisclosure } from '@cleen/ui';
 
 function DeleteOperatorButton({
   operatorName,
@@ -105,7 +105,7 @@ import {
   useForm,
   useValidation,
   showNotification,
-} from '@cleen/cleen-components';
+} from '@cleen/ui';
 
 interface Wolf {
   id: number;
@@ -244,15 +244,9 @@ function EditWolfDrawer({
 Full filter flow with applied state, saved filters, and DataGrid. This is the standard pattern for filterable tables.
 
 ```tsx
-import {
-  DataGridWithFilters,
-  FilterDrawer,
-  FormGroup,
-  Select,
-  DatePicker,
-  useDisclosure,
-} from '@cleen/cleen-components';
-import type { TableHeaderProps } from '@cleen/cleen-components';
+import { FilterDrawer, FormGroup, Select, DatePicker, useDisclosure,  } from '@cleen/ui';
+import { DataGridWithFilters } from '@cleen/ui-pro';;
+import type { TableHeaderProps } from '@cleen/ui';
 
 interface MissionFilter {
   status: string[];
@@ -359,7 +353,7 @@ function MissionsPage() {
 Standard form save + toast feedback. Works anywhere you have an async submit.
 
 ```tsx
-import { showNotification } from '@cleen/cleen-components';
+import { showNotification } from '@cleen/ui';
 
 const handleSubmit = async () => {
   if (!validate()) return;
@@ -390,7 +384,8 @@ const handleSubmit = async () => {
 Row-level action menu (edit, view, delete). Wire to `onRowContextMenu` or a kebab column.
 
 ```tsx
-import { DataGrid, Menu, Button } from '@cleen/cleen-components';
+import { Menu, Button } from '@cleen/ui';
+import { DataGrid } from '@cleen/ui-pro';;
 import { MdMoreVert, MdEdit, MdVisibility, MdDelete } from 'react-icons/md';
 
 function AgentTable({ agents, onEdit, onView, onDelete }: AgentTableProps) {
@@ -452,7 +447,7 @@ function AgentTable({ agents, onEdit, onView, onDelete }: AgentTableProps) {
 Show rich content (not just text) on hover or click, attached to any element.
 
 ```tsx
-import { Popover } from '@cleen/cleen-components';
+import { Popover } from '@cleen/ui';
 import { MdInfoOutline } from 'react-icons/md';
 
 function MetricCard({ label, value, detail }: MetricCardProps) {
@@ -488,8 +483,8 @@ function MetricCard({ label, value, detail }: MetricCardProps) {
 Custom dropdown with a search input and a results list. Use `Dropdown` since the content isn't predefined item rows.
 
 ```tsx
-import { Dropdown, Input } from '@cleen/cleen-components';
-import { useDebounce } from '@cleen/cleen-components';
+import { Dropdown, Input } from '@cleen/ui';
+import { useDebounce } from '@cleen/ui';
 
 function AssigneeDropdown({ onSelect }: { onSelect: (user: User) => void }) {
   const [query, setQuery] = useState('');
@@ -539,7 +534,7 @@ function AssigneeDropdown({ onSelect }: { onSelect: (user: User) => void }) {
 Multi-section settings panel with expandable categories. Common for settings pages or admin configuration panels.
 
 ```tsx
-import { Collapsible } from '@cleen/cleen-components';
+import { Collapsible } from '@cleen/ui';
 
 function SettingsPanel() {
   return (

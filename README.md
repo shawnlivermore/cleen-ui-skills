@@ -1,6 +1,6 @@
 # cleen-ui-skills
 
-Agent skill definitions for building UI with `@cleen/cleen-components`. These skills are designed for use with GitHub Copilot (or any compatible AI coding agent) and teach the agent library-specific conventions, component APIs, and decision patterns — so it stops reinventing the wheel and reaches for the right component the first time.
+Agent skill definitions for building UI with the Cleen UI monorepo packages (`@cleen/ui-core`, `@cleen/ui`, `@cleen/ui-pro`). These skills are designed for use with GitHub Copilot (or any compatible AI coding agent) and teach the agent library-specific conventions, component APIs, and decision patterns — so it stops reinventing the wheel and reaches for the right component the first time.
 
 ---
 
@@ -8,17 +8,17 @@ Agent skill definitions for building UI with `@cleen/cleen-components`. These sk
 
 Each skill lives in `skills/<skill-name>/` and contains a `SKILL.md` with a YAML frontmatter trigger description and full implementation guidance. Some skills also ship a `references/` folder with supporting lookup tables and decision guides.
 
-| Skill | What it covers |
-|---|---|
-| [`cleen-ui-setup`](skills/cleen-ui-setup/SKILL.md) | Installing the library, npm auth, peer dep checks, stylesheet import, dark mode |
-| [`cleen-ui-configure`](skills/cleen-ui-configure/SKILL.md) | CSS variable theming — overriding colors for light/dark mode |
-| [`cleen-ui-component-selector`](skills/cleen-ui-component-selector/SKILL.md) | Picking the right component before writing any UI code |
-| [`cleen-ui-layout`](skills/cleen-ui-layout/SKILL.md) | Page layout with `Card`, `Divider`, `Avatar`, Tailwind prefix rules, `.cleen` scope wrapper |
-| [`cleen-ui-navigation`](skills/cleen-ui-navigation/SKILL.md) | `Sidebar`, `Breadcrumb`, `Tabs`, `Wizard`, `Stepper`, `Pagination` |
-| [`cleen-ui-forms`](skills/cleen-ui-forms/SKILL.md) | Form layout, all input components, `useForm`, `useValidation`, validation UX |
-| [`cleen-ui-data-display`](skills/cleen-ui-data-display/SKILL.md) | `DataGrid`, `KanbanBoard`, `Chart`, `ProgressBar`, `PillBadge`, `Loader`, `Skeletons` |
-| [`cleen-ui-overlays`](skills/cleen-ui-overlays/SKILL.md) | `Modal`, `Drawer`, `FilterDrawer`, `Menu`, `Dropdown`, `Popover`, `Tooltip`, `showNotification` |
-| [`cleen-ui-feedback-and-errors`](skills/cleen-ui-feedback-and-errors/SKILL.md) | Loading states, toasts, skeleton screens, inline errors, empty states |
+| Skill                                                                          | What it covers                                                                                  |
+| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| [`cleen-ui-setup`](skills/cleen-ui-setup/SKILL.md)                             | Installing the library, npm auth, peer dep checks, stylesheet import, dark mode                 |
+| [`cleen-ui-configure`](skills/cleen-ui-configure/SKILL.md)                     | CSS variable theming — overriding colors for light/dark mode                                    |
+| [`cleen-ui-component-selector`](skills/cleen-ui-component-selector/SKILL.md)   | Picking the right component before writing any UI code                                          |
+| [`cleen-ui-layout`](skills/cleen-ui-layout/SKILL.md)                           | Page layout with `Card`, `Divider`, `Avatar`, Tailwind prefix rules, `.cleen` scope wrapper     |
+| [`cleen-ui-navigation`](skills/cleen-ui-navigation/SKILL.md)                   | `Sidebar`, `Breadcrumb`, `Tabs`, `Wizard`, `Stepper`, `Pagination`                              |
+| [`cleen-ui-forms`](skills/cleen-ui-forms/SKILL.md)                             | Form layout, all input components, `useForm`, `useValidation`, validation UX                    |
+| [`cleen-ui-data-display`](skills/cleen-ui-data-display/SKILL.md)               | `DataGrid`, `KanbanBoard`, `Chart`, `ProgressBar`, `PillBadge`, `Loader`, `Skeletons`           |
+| [`cleen-ui-overlays`](skills/cleen-ui-overlays/SKILL.md)                       | `Modal`, `Drawer`, `FilterDrawer`, `Menu`, `Dropdown`, `Popover`, `Tooltip`, `showNotification` |
+| [`cleen-ui-feedback-and-errors`](skills/cleen-ui-feedback-and-errors/SKILL.md) | Loading states, toasts, skeleton screens, inline errors, empty states                           |
 
 ---
 
@@ -75,14 +75,14 @@ Open terminal inside your project, run this command `npx skills add https://gith
 
 ### Trigger examples
 
-| You say | Skill invoked |
-|---|---|
-| "How do I install this in my app?" | `cleen-ui-setup` |
-| "How do I change the primary color?" | `cleen-ui-configure` |
-| "Build a user dashboard" | `cleen-ui-component-selector` → `cleen-ui-layout` → `cleen-ui-data-display` |
-| "Create a multi-step onboarding form" | `cleen-ui-forms` + `cleen-ui-navigation` |
-| "Add a confirmation dialog" | `cleen-ui-overlays` |
-| "Show a loading skeleton while data fetches" | `cleen-ui-feedback-and-errors` |
+| You say                                      | Skill invoked                                                               |
+| -------------------------------------------- | --------------------------------------------------------------------------- |
+| "How do I install this in my app?"           | `cleen-ui-setup`                                                            |
+| "How do I change the primary color?"         | `cleen-ui-configure`                                                        |
+| "Build a user dashboard"                     | `cleen-ui-component-selector` → `cleen-ui-layout` → `cleen-ui-data-display` |
+| "Create a multi-step onboarding form"        | `cleen-ui-forms` + `cleen-ui-navigation`                                    |
+| "Add a confirmation dialog"                  | `cleen-ui-overlays`                                                         |
+| "Show a loading skeleton while data fetches" | `cleen-ui-feedback-and-errors`                                              |
 
 ---
 

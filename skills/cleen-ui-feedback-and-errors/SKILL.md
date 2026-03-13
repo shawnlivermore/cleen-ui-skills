@@ -1,11 +1,11 @@
 ---
 name: cleen-ui-feedback-and-errors
-description: Display feedback, loading states, and errors using @cleen/cleen-components. Trigger this skill whenever implementing any loading UI, error states, empty states, success/failure toasts, or status indicators. This includes vague prompts like "show a loading state", "add a spinner", "display an error message", "show a success toast", "add skeleton screens", "handle loading", "show empty state", or "indicate progress". The primary purpose is to PREVENT hand-rolling spinners, custom toast logic, raw `<div>` placeholders, or alert boxes when the library already has all of this. Trigger on any request involving async data, form submission results, or state transitions.
+description: Display feedback, loading states, and errors using @cleen/ui. Trigger this skill whenever implementing any loading UI, error states, empty states, success/failure toasts, or status indicators. This includes vague prompts like "show a loading state", "add a spinner", "display an error message", "show a success toast", "add skeleton screens", "handle loading", "show empty state", or "indicate progress". The primary purpose is to PREVENT hand-rolling spinners, custom toast logic, raw `<div>` placeholders, or alert boxes when the library already has all of this. Trigger on any request involving async data, form submission results, or state transitions.
 ---
 
 # Feedback & Errors Skill
 
-This skill covers every pattern that communicates system state to the user — loading, success, error, empty, and in-progress — using the cleen-components library.
+This skill covers every pattern that communicates system state to the user — loading, success, error, empty, and in-progress — using the @cleen/* packages.
 
 ---
 
@@ -26,23 +26,23 @@ Common traps to avoid:
 
 | Need | Component | Import |
 |---|---|---|
-| Spinning loading indicator | `Loader` | `@cleen/cleen-components` |
-| Fullscreen loading overlay | `Loader` with `isFullscreen` | `@cleen/cleen-components` |
-| Content placeholder while loading | `Skeletons` (see below) | `@cleen/cleen-components` |
-| Conditional skeleton/content swap | `SkeletonWrapper` | `@cleen/cleen-components` |
-| Success / error / info toast | `showNotification` | `@cleen/cleen-components` |
-| Toast container (setup, once) | `CleenNotificationContainer` | `@cleen/cleen-components` |
+| Spinning loading indicator | `Loader` | `@cleen/ui` |
+| Fullscreen loading overlay | `Loader` with `isFullscreen` | `@cleen/ui` |
+| Content placeholder while loading | `Skeletons` (see below) | `@cleen/ui` |
+| Conditional skeleton/content swap | `SkeletonWrapper` | `@cleen/ui` |
+| Success / error / info toast | `showNotification` | `@cleen/ui` |
+| Toast container (setup, once) | `CleenNotificationContainer` | `@cleen/ui` |
 | Inline field error message | `infoLabels.errorMessage` prop on field | — |
-| Standalone info / error text | `InfoLabels` | `@cleen/cleen-components` |
-| Status badge (active/inactive) | `PillBadge` + color | `@cleen/cleen-components` |
-| Tooltip for contextual hints | `Tooltip` | `@cleen/cleen-components` |
+| Standalone info / error text | `InfoLabels` | `@cleen/ui` |
+| Status badge (active/inactive) | `PillBadge` + color | `@cleen/ui` |
+| Tooltip for contextual hints | `Tooltip` | `@cleen/ui` |
 
 ---
 
 ## Loader
 
 ```tsx
-import { Loader } from '@cleen/cleen-components';
+import { Loader } from '@cleen/ui';
 
 // Inline spinner (default xs, primary color)
 <Loader />
@@ -100,7 +100,7 @@ import {
   SkeletonButton,     // button placeholder
   SkeletonInput,      // input field placeholder
   SkeletonBanner,     // full-width banner
-} from '@cleen/cleen-components';
+} from '@cleen/ui';
 
 // Usage
 {isLoading ? <SkeletonDataGrid itemCount={8} /> : <DataGrid ... />}
@@ -122,7 +122,7 @@ import {
 Use `Skeleton` directly when no named variant fits. It's a single rectangle with configurable size and roundness.
 
 ```tsx
-import { Skeleton } from '@cleen/cleen-components';
+import { Skeleton } from '@cleen/ui';
 
 <Skeleton width="60%" height={20} roundness="md" variant="pulse" />
 <Skeleton width={48} height={48} roundness="full" />  // avatar shape
@@ -134,7 +134,7 @@ import { Skeleton } from '@cleen/cleen-components';
 The cleanest pattern for toggling between skeleton and real content:
 
 ```tsx
-import { SkeletonWrapper } from '@cleen/cleen-components';
+import { SkeletonWrapper } from '@cleen/ui';
 
 <SkeletonWrapper skeleton="dataGrid" isShowing={isLoading} itemCount={5}>
   <DataGrid ... />
@@ -159,7 +159,7 @@ Available `skeleton` values: `'card'` | `'card2'` | `'card3'` | `'cardStack'` | 
 
 ```tsx
 // App.tsx or root layout
-import { CleenNotificationContainer } from '@cleen/cleen-components';
+import { CleenNotificationContainer } from '@cleen/ui';
 
 export function App() {
   return (
@@ -174,7 +174,7 @@ export function App() {
 ### Triggering notifications
 
 ```tsx
-import { showNotification } from '@cleen/cleen-components';
+import { showNotification } from '@cleen/ui';
 
 // Variants
 showNotification({ message: 'Profile saved.', variant: 'success' });
@@ -238,7 +238,7 @@ For form fields, always pass errors through the field's own `infoLabels` prop �
 For standalone error/info text outside a field, use `InfoLabels` directly:
 
 ```tsx
-import { InfoLabels } from '@cleen/cleen-components';
+import { InfoLabels } from '@cleen/ui';
 
 <InfoLabels errorMessage="This section has errors. Please review." />
 <InfoLabels infoMessage="Changes are auto-saved every 30 seconds." />
@@ -251,7 +251,7 @@ import { InfoLabels } from '@cleen/cleen-components';
 Use `PillBadge` for any visual status indicator rather than raw coloured text or custom chips.
 
 ```tsx
-import { PillBadge } from '@cleen/cleen-components';
+import { PillBadge } from '@cleen/ui';
 
 // Semantic colors
 <PillBadge label="Active" color="green" showDot />
@@ -273,7 +273,7 @@ Available named colors: `blue` | `lighter-blue` | `primary` | `indigo` | `green`
 Use `Tooltip` to explain unclear UI elements without cluttering the layout.
 
 ```tsx
-import { Tooltip } from '@cleen/cleen-components';
+import { Tooltip } from '@cleen/ui';
 
 <Tooltip label="This ID cannot be changed after creation" placement="top" hasArrow>
   <IconInfoCircle className="cleen-text-gray/40 cleen-cursor-help" />

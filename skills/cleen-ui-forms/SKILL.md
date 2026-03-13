@@ -1,11 +1,11 @@
 ---
 name: cleen-ui-forms
-description: Build forms using @cleen/cleen-components. Trigger this skill whenever implementing any form, settings panel, filter panel, edit dialog, onboarding step, or any UI that collects user input. This includes both simple inline forms and complex multi-field configurations. Do NOT write raw HTML form elements, custom input wrappers, or roll your own validation state — the library has all of that. Trigger proactively when a user asks to "create a form", "add a settings page", "build an edit modal", "make a filter panel", "add an input for X", or any similar request involving user data entry.
+description: Build forms using @cleen/ui. Trigger this skill whenever implementing any form, settings panel, filter panel, edit dialog, onboarding step, or any UI that collects user input. This includes both simple inline forms and complex multi-field configurations. Do NOT write raw HTML form elements, custom input wrappers, or roll your own validation state — the library has all of that. Trigger proactively when a user asks to "create a form", "add a settings page", "build an edit modal", "make a filter panel", "add an input for X", or any similar request involving user data entry.
 ---
 
 # Forms Skill
 
-This skill covers building forms with the cleen-components library. The library provides everything needed — layout, inputs, state management, and validation. Don't reach for raw `<input>`, `<select>`, or custom wrappers.
+This skill covers building forms with the @cleen/* packages. The library provides everything needed — layout, inputs, state management, and validation. Don't reach for raw `<input>`, `<select>`, or custom wrappers.
 
 ---
 

@@ -1,6 +1,6 @@
 # Agent Instructions — cleen-ui-skills
 
-This repository contains agent skill definitions for `@cleen/cleen-components`. If you are an AI agent working on a project that uses this library, this file tells you which skills exist, when to load them, and what they expect from you.
+This repository contains agent skill definitions for `@cleen/ui`, `@cleen/ui-core` and `@cleen/ui-pro` packages. If you are an AI agent working on a project that uses this library, this file tells you which skills exist, when to load them, and what they expect from you.
 
 ---
 
@@ -16,7 +16,7 @@ Load a skill by reading its `SKILL.md` before implementing anything in its domai
 
 ### Always invoke first for any new project
 
-**`cleen-ui-setup`** — If the user asks how to install, configure, or get started with the library in their project. Also trigger if you are about to import anything from `@cleen/cleen-components` and there is no evidence the library is already installed (i.e. no entry in `dependencies`).
+**`cleen-ui-setup`** — If the user asks how to install, configure, or get started with the library in their project. Also trigger if you are about to import anything from the `@cleen/*` packages and there is no evidence the library is already installed (i.e. no entry in `dependencies`).
 
 ---
 
@@ -89,7 +89,7 @@ When overriding color variables, the value must be three comma-separated integer
 Never use `useState(false)` to manage open/close state for modals, drawers, popovers, or dropdowns. Always use the `useDisclosure` hook.
 
 ```tsx
-import { useDisclosure } from '@cleen/cleen-components';
+import { useDisclosure } from '@cleen/ui-core';
 const { isOpen, open, close } = useDisclosure();
 ```
 

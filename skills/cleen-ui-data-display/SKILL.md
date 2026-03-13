@@ -1,11 +1,11 @@
 ---
 name: cleen-ui-data-display
-description: Display data using @cleen/cleen-components. Trigger this skill whenever implementing any data-heavy UI — tables, grids, lists, Kanban boards, dashboards, stat cards, charts, progress indicators, status badges, or loading skeletons. This includes vague prompts like "show a list of users", "build a dashboard", "create a Kanban", "display analytics", "add a stats section", "show loading state", or "visualize metrics". The primary purpose is to PREVENT hand-rolling tables, custom card layouts, custom charts, or bare `<ul>/<li>` lists when the library already has purpose-built components for these. Trigger on any feature or page request that shows collections of data.
+description: Display data using @cleen/ui. Trigger this skill whenever implementing any data-heavy UI — tables, grids, lists, Kanban boards, dashboards, stat cards, charts, progress indicators, status badges, or loading skeletons. This includes vague prompts like "show a list of users", "build a dashboard", "create a Kanban", "display analytics", "add a stats section", "show loading state", or "visualize metrics". The primary purpose is to PREVENT hand-rolling tables, custom card layouts, custom charts, or bare `<ul>/<li>` lists when the library already has purpose-built components for these. Trigger on any feature or page request that shows collections of data.
 ---
 
 # Data Display Skill
 
-This skill covers rendering data — lists, tables, boards, charts, badges, progress, and loading states — using the cleen-components library. Do not hand-roll any of these patterns.
+This skill covers rendering data — lists, tables, boards, charts, badges, progress, and loading states — using the @cleen/* packages. Do not hand-roll any of these patterns.
 
 ---
 
@@ -28,20 +28,20 @@ Common traps to avoid:
 
 | Need | Component | Import |
 |---|---|---|
-| Tabular row data | `DataGrid` | `@cleen/cleen-components` |
-| Table + filter drawer | `DataGridWithFilters` | `@cleen/cleen-components` |
-| Kanban (card grid) | `KanbanBoard` | `@cleen/cleen-components` |
-| Kanban (row list) | `KanbanList` | `@cleen/cleen-components` |
-| Content container | `Card` | `@cleen/cleen-components` |
-| User avatar | `Avatar` / `AvatarRow` | `@cleen/cleen-components` |
-| Status tag / label | `PillBadge` | `@cleen/cleen-components` |
-| Horizontal progress | `ProgressBar` | `@cleen/cleen-components` |
-| Overlapping progress | `AdvancedProgressBar` | `@cleen/cleen-components` |
-| Circular KPI | `ProgressCircle` | `@cleen/cleen-components` |
-| Full interactive chart | `Chart` | `@cleen/cleen-components/charts` |
-| Sparkline / trend | `SimpleChart` | `@cleen/cleen-components/charts` |
-| Loading spinner | `Loader` | `@cleen/cleen-components` |
-| Loading placeholder | `Skeletons` (see below) | `@cleen/cleen-components` |
+| Tabular row data | `DataGrid` | `@cleen/ui-pro` |
+| Table + filter drawer | `DataGridWithFilters` | `@cleen/ui-pro` |
+| Kanban (card grid) | `KanbanBoard` | `@cleen/ui` |
+| Kanban (row list) | `KanbanList` | `@cleen/ui` |
+| Content container | `Card` | `@cleen/ui` |
+| User avatar | `Avatar` / `AvatarRow` | `@cleen/ui` |
+| Status tag / label | `PillBadge` | `@cleen/ui` |
+| Horizontal progress | `ProgressBar` | `@cleen/ui` |
+| Overlapping progress | `AdvancedProgressBar` | `@cleen/ui` |
+| Circular KPI | `ProgressCircle` | `@cleen/ui` |
+| Full interactive chart | `Chart` | `@cleen/ui/charts` |
+| Sparkline / trend | `SimpleChart` | `@cleen/ui/charts` |
+| Loading spinner | `Loader` | `@cleen/ui` |
+| Loading placeholder | `Skeletons` (see below) | `@cleen/ui` |
 
 ---
 
@@ -50,8 +50,8 @@ Common traps to avoid:
 The go-to for any tabular data. Every row must have a unique `id` field.
 
 ```tsx
-import { DataGrid } from '@cleen/cleen-components';
-import type { TableHeaderProps } from '@cleen/cleen-components';
+import { DataGrid } from '@cleen/ui-pro';;
+import type { TableHeaderProps } from '@cleen/ui';
 
 interface UserRow extends Record<string, unknown> {
   id: number;
@@ -130,7 +130,7 @@ threeDotContextMenuOptions={[
 ### Pagination with usePaginationState
 
 ```tsx
-import { usePaginationState } from '@cleen/cleen-components';
+import { usePaginationState } from '@cleen/ui';
 
 const { page, pageSize, setPageSize, handlePageChange } = usePaginationState({
   initialPage: 1,
@@ -155,7 +155,7 @@ const { page, pageSize, setPageSize, handlePageChange } = usePaginationState({
 Drop-in upgrade over `DataGrid` when you need a filter drawer panel. Pass all standard `DataGrid` props plus `filtersConfig`.
 
 ```tsx
-import { DataGridWithFilters } from '@cleen/cleen-components';
+import { DataGridWithFilters } from '@cleen/ui-pro';;
 
 <DataGridWithFilters
   title="Projects"
@@ -181,7 +181,7 @@ import { DataGridWithFilters } from '@cleen/cleen-components';
 General-purpose container. Use for stat widgets, info panels, detail sections — anything that needs a bordered box with optional header/footer.
 
 ```tsx
-import { Card } from '@cleen/cleen-components';
+import { Card } from '@cleen/ui';
 
 // Stat widget
 <Card
@@ -224,7 +224,7 @@ import { Card } from '@cleen/cleen-components';
 For statuses, tags, roles, categories — anywhere you'd reach for a `<Badge>` component.
 
 ```tsx
-import { PillBadge } from '@cleen/cleen-components';
+import { PillBadge } from '@cleen/ui';
 
 // Named color
 <PillBadge label="Active" color="green" />
@@ -271,7 +271,7 @@ import { PillBadge } from '@cleen/cleen-components';
 Import from the separate `charts` entry point.
 
 ```tsx
-import { Chart, SimpleChart } from '@cleen/cleen-components/charts';
+import { Chart, SimpleChart } from '@cleen/ui/charts';
 
 // Full interactive chart (line, bar, pie, area, scatter, radar...)
 <Chart
@@ -308,7 +308,7 @@ import { Chart, SimpleChart } from '@cleen/cleen-components/charts';
 ### Loader (spinner)
 
 ```tsx
-import { Loader } from '@cleen/cleen-components';
+import { Loader } from '@cleen/ui';
 
 // Inline
 <Loader size="md" />
@@ -326,7 +326,7 @@ import {
   SkeletonCard, SkeletonDataGrid, SkeletonChart,
   SkeletonForm, SkeletonList, SkeletonAvatar,
   SkeletonText, SkeletonWidgetCard
-} from '@cleen/cleen-components';
+} from '@cleen/ui';
 
 // While table loads
 {isLoading ? <SkeletonDataGrid /> : <DataGrid ... />}
@@ -351,7 +351,7 @@ import {
 ## KanbanBoard / KanbanList
 
 ```tsx
-import { KanbanBoard } from '@cleen/cleen-components';
+import { KanbanBoard } from '@cleen/ui';
 
 <KanbanBoard
   columns={[

@@ -18,12 +18,10 @@ Full-page examples of common data-heavy UI layouts.
 A typical dashboard: top row of KPI stat cards, followed by a chart panel and a slim data table.
 
 ```tsx
-import {
-  Card, PillBadge, ProgressBar, Avatar,
-  DataGrid, Loader, SkeletonWidgetCard, SkeletonChart,
-} from '@cleen/cleen-components';
-import { Chart, SimpleChart } from '@cleen/cleen-components/charts';
-import type { TableHeaderProps } from '@cleen/cleen-components';
+import { Card, PillBadge, ProgressBar, Avatar, Loader, SkeletonWidgetCard, SkeletonChart,  } from '@cleen/ui';
+import { DataGrid } from '@cleen/ui-pro';;
+import { Chart, SimpleChart } from '@cleen/ui/charts';
+import type { TableHeaderProps } from '@cleen/ui';
 
 interface ActivityRow extends Record<string, unknown> {
   id: number;
@@ -169,13 +167,11 @@ export function Dashboard({
 A paginated, searchable, sortable table with row actions and custom cell rendering.
 
 ```tsx
-import {
-  DataGridWithFilters, PillBadge, Avatar,
-  Button, Select, CheckboxGroup, useForm,
-} from '@cleen/cleen-components';
-import { IconEditable, IconTrash } from '@cleen/cleen-components';
-import type { TableHeaderProps, ThreeDotMenuItem } from '@cleen/cleen-components';
-import { usePaginationState } from '@cleen/cleen-components';
+import { PillBadge, Avatar, Button, Select, CheckboxGroup, useForm,  } from '@cleen/ui';
+import { DataGridWithFilters } from '@cleen/ui-pro';;
+import { IconEditable, IconTrash } from '@cleen/ui';
+import type { TableHeaderProps, ThreeDotMenuItem } from '@cleen/ui';
+import { usePaginationState } from '@cleen/ui';
 import { useState } from 'react';
 
 interface UserRow extends Record<string, unknown> {
@@ -329,8 +325,8 @@ export function UserTable({
 A drag-and-drop project board with columns, cards, and user assignments.
 
 ```tsx
-import { KanbanBoard } from '@cleen/cleen-components';
-import type { KanbanColumnData } from '@cleen/cleen-components';
+import { KanbanBoard } from '@cleen/ui';
+import type { KanbanColumnData } from '@cleen/ui';
 
 const COLUMNS: KanbanColumnData[] = [
   {
@@ -416,12 +412,10 @@ export function ProjectBoard({ onCardSave, onCardMove }: ProjectBoardProps) {
 A metrics-heavy page with multiple chart types, progress KPIs, and a summary table.
 
 ```tsx
-import {
-  Card, ProgressBar, ProgressCircle, PillBadge,
-  DataGrid, SkeletonChart, SkeletonCard,
-} from '@cleen/cleen-components';
-import { Chart } from '@cleen/cleen-components/charts';
-import type { TableHeaderProps } from '@cleen/cleen-components';
+import { Card, ProgressBar, ProgressCircle, PillBadge, SkeletonChart, SkeletonCard,  } from '@cleen/ui';
+import { DataGrid } from '@cleen/ui-pro';;
+import { Chart } from '@cleen/ui/charts';
+import type { TableHeaderProps } from '@cleen/ui';
 
 interface CampaignRow extends Record<string, unknown> {
   id: number;
