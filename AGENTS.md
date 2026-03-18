@@ -46,31 +46,31 @@ Multiple skills may apply to a single feature — load all relevant ones.
 
 These are non-negotiable conventions the library enforces. Violating any of them will produce broken or unstyled UI.
 
-### 1. `.cleen` scope wrapper
-Every page root **must** have `className="cleen ..."` as the first class. Without it, Tailwind styles and component tokens do not apply.
+### 1. No `.cleen` scope wrapper in consumer projects
+Do not add `.cleen` wrappers to page roots in consumer applications. Use your project's own layout/container classes.
 
 ```tsx
-// correct
-<div className="cleen cleen-p-6">...</div>
+// correct (consumer project)
+<div className="min-h-screen p-6">...</div>
 
-// broken — no scope
-<div className="cleen-p-6">...</div>
+// avoid in consumer code: internal library wrapper classes
+<div className="[internal-library-wrapper]">...</div>
 ```
 
-### 2. `cleen-` Tailwind prefix
-All Tailwind utility classes are prefixed. Using unprefixed classes (`flex`, `gap-4`, `grid`) will have no effect.
+### 2. No `cleen-` Tailwind prefix in consumer projects
+Use unprefixed utilities from the consumer project's Tailwind config. `cleen-` utility classes are for library internals only.
 
 ```tsx
-// correct
-<div className="cleen-flex cleen-gap-4 cleen-grid-cols-3">
-
-// no-op
+// correct (consumer project)
 <div className="flex gap-4 grid-cols-3">
+
+// avoid in consumer code: prefixed internal utility classes
+<div className="[internal-prefixed-utilities]">
 ```
 
-Responsive prefixes also take the `cleen-` prefix on the utility part:
+Responsive examples in consumer projects should also stay unprefixed:
 ```tsx
-<div className="cleen-grid md:cleen-grid-cols-2 lg:cleen-grid-cols-4">
+<div className="grid md:grid-cols-2 lg:grid-cols-4">
 ```
 
 ### 3. CSS variable format — bare RGB triplets only
@@ -130,8 +130,8 @@ If you find yourself about to write any of the following, stop and load the rele
 | Custom modal/dialog JSX | `Modal` + `useDisclosure` |
 | `useState(false)` for open/close | `useDisclosure` |
 | `alert()` or custom toast | `showNotification` |
-| `<div className="flex gap-4">` | `<div className="cleen-flex cleen-gap-4">` |
-| Page root without `.cleen` class | Add `cleen` as first class on root element |
+| Prefixed internal utility classes in app code | Use unprefixed Tailwind utilities from the project config |
+| Internal library wrapper classes on page root | Use your app's regular root classes (`min-h-screen`, `p-6`, etc.) |
 | `--cleen-primary: #6366f1` | `--cleen-primary: 99, 102, 241` |
 | Custom spinner/loading div | `Loader` |
 | `<ul><li>` list of records | `DataGrid` or `Card` layout |

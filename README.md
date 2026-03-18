@@ -13,7 +13,7 @@ Each skill lives in `skills/<skill-name>/` and contains a `SKILL.md` with a YAML
 | [`cleen-ui-setup`](skills/cleen-ui-setup/SKILL.md)                             | Installing the library, npm auth, peer dep checks, stylesheet import, dark mode                 |
 | [`cleen-ui-configure`](skills/cleen-ui-configure/SKILL.md)                     | CSS variable theming — overriding colors for light/dark mode                                    |
 | [`cleen-ui-component-selector`](skills/cleen-ui-component-selector/SKILL.md)   | Picking the right component before writing any UI code                                          |
-| [`cleen-ui-layout`](skills/cleen-ui-layout/SKILL.md)                           | Page layout with `Card`, `Divider`, `Avatar`, Tailwind prefix rules, `.cleen` scope wrapper     |
+| [`cleen-ui-layout`](skills/cleen-ui-layout/SKILL.md)                           | Page layout with `Card`, `Divider`, `Avatar`, and consumer-project Tailwind conventions          |
 | [`cleen-ui-navigation`](skills/cleen-ui-navigation/SKILL.md)                   | `Sidebar`, `Breadcrumb`, `Tabs`, `Wizard`, `Stepper`, `Pagination`                              |
 | [`cleen-ui-forms`](skills/cleen-ui-forms/SKILL.md)                             | Form layout, all input components, `useForm`, `useValidation`, validation UX                    |
 | [`cleen-ui-data-display`](skills/cleen-ui-data-display/SKILL.md)               | `DataGrid`, `KanbanBoard`, `Chart`, `ProgressBar`, `PillBadge`, `Loader`, `Skeletons`           |
@@ -88,8 +88,8 @@ Open terminal inside your project, run this command `npx skills add https://gith
 
 ## Key conventions enforced by these skills
 
-- **`.cleen` scope wrapper** — every page root needs `className="cleen ..."` or nothing renders correctly.
-- **`cleen-` Tailwind prefix** — all utility classes are prefixed: `cleen-flex`, `cleen-gap-4`, `cleen-grid-cols-3`, etc.
+- **No `.cleen` scope wrapper in consumer projects** — use your app's own layout/container classes at the page root.
+- **No `cleen-` Tailwind utility classes in consumer code** — use your project's standard unprefixed utilities (`flex`, `gap-4`, `grid-cols-3`, etc.).
 - **CSS variables as bare RGB triplets** — `--cleen-primary: 99, 102, 241` not `rgb(...)` or hex.
 - **`useDisclosure`** for all overlay open/close state — never raw `useState(false)`.
 - **`useForm` + `useValidation`** for form state — never hand-roll field state management.

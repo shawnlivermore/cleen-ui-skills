@@ -49,11 +49,11 @@ interface StatCardProps {
 function StatCard({ title, value, trend, badge, badgeColor }: StatCardProps) {
   return (
     <Card p={20} gap={8} hoverable>
-      <div className="cleen-flex cleen-items-center cleen-justify-between">
-        <span className="cleen-text-sm cleen-text-gray/70">{title}</span>
+      <div className="flex items-center justify-between">
+        <span className="text-sm text-gray/70">{title}</span>
         {badge && <PillBadge label={badge} color={badgeColor} variant="pill" />}
       </div>
-      <div className="cleen-text-2xl cleen-font-bold">{value}</div>
+      <div className="text-2xl font-bold">{value}</div>
       <SimpleChart data={trend} width={160} height={40} />
     </Card>
   );
@@ -78,10 +78,10 @@ export function Dashboard({
   const userGrowthData = [120, 145, 162, 190, 210, 248];
 
   return (
-    <div className="cleen-flex cleen-flex-col cleen-gap-6 cleen-p-6">
+    <div className="flex flex-col gap-6 p-6">
 
       {/* KPI stat cards */}
-      <div className="cleen-grid cleen-grid-cols-4 cleen-gap-4">
+      <div className="grid grid-cols-4 gap-4">
         {isLoading ? (
           <>
             <SkeletonWidgetCard />
@@ -100,7 +100,7 @@ export function Dashboard({
       </div>
 
       {/* Charts row */}
-      <div className="cleen-grid cleen-grid-cols-2 cleen-gap-4">
+      <div className="grid grid-cols-2 gap-4">
         {isLoading ? (
           <>
             <SkeletonChart />
@@ -148,7 +148,7 @@ export function Dashboard({
         renderRow={(row) => ({
           status: <PillBadge label={row.status} colorByIndex={row.id as number} variant="pill" />,
           user: (
-            <div className="cleen-flex cleen-items-center cleen-gap-2">
+            <div className="flex items-center gap-2">
               <Avatar name={row.user} size="xs" />
               <span>{row.user}</span>
             </div>
@@ -264,7 +264,7 @@ export function UserTable({
       threeDotContextMenuOptions={menuItems}
       renderRow={(row) => ({
         name: (
-          <div className="cleen-flex cleen-items-center cleen-gap-2">
+          <div className="flex items-center gap-2">
             <Avatar name={row.name} size="sm" />
             <span>{row.name}</span>
           </div>
@@ -281,9 +281,9 @@ export function UserTable({
       })}
       filtersConfig={{
         filters: (
-          <div className="cleen-flex cleen-flex-col cleen-gap-6">
+          <div className="flex flex-col gap-6">
             <div>
-              <p className="cleen-text-sm cleen-font-semibold cleen-mb-2">Role</p>
+              <p className="text-sm font-semibold mb-2">Role</p>
               <CheckboxGroup
                 checkboxes={ROLE_OPTIONS.map(r => ({
                   id: r.id, label: r.label,
@@ -295,7 +295,7 @@ export function UserTable({
               />
             </div>
             <div>
-              <p className="cleen-text-sm cleen-font-semibold cleen-mb-2">Status</p>
+              <p className="text-sm font-semibold mb-2">Status</p>
               <CheckboxGroup
                 checkboxes={STATUS_OPTIONS.map(s => ({
                   id: s.id, label: s.label,
@@ -441,28 +441,28 @@ interface AnalyticsPageProps {
 
 export function AnalyticsPage({ isLoading, campaigns }: AnalyticsPageProps) {
   return (
-    <div className="cleen-flex cleen-flex-col cleen-gap-6 cleen-p-6">
+    <div className="flex flex-col gap-6 p-6">
 
       {/* Performance KPIs */}
-      <div className="cleen-grid cleen-grid-cols-3 cleen-gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {isLoading ? (
           <><SkeletonCard /><SkeletonCard /><SkeletonCard /></>
         ) : (
           <>
             <Card p={24} gap={12}>
-              <p className="cleen-text-sm cleen-text-gray/70">Email Open Rate</p>
+              <p className="text-sm text-gray/70">Email Open Rate</p>
               <ProgressCircle percentage={68} size="lg" />
             </Card>
             <Card p={24} gap={12}>
-              <p className="cleen-text-sm cleen-text-gray/70">Goal Completion</p>
-              <div className="cleen-flex cleen-flex-col cleen-gap-3">
+              <p className="text-sm text-gray/70">Goal Completion</p>
+              <div className="flex flex-col gap-3">
                 <ProgressBar title="Q1 Target" percentage={82} showPercentage renderAnimated />
                 <ProgressBar title="Q2 Target" percentage={45} showPercentage renderAnimated />
                 <ProgressBar title="Q3 Target" percentage={12} showPercentage renderAnimated />
               </div>
             </Card>
             <Card p={24} gap={8}>
-              <p className="cleen-text-sm cleen-text-gray/70">Channels</p>
+              <p className="text-sm text-gray/70">Channels</p>
               <Chart
                 type="pie"
                 series={[41, 28, 19, 12]}
@@ -503,7 +503,7 @@ export function AnalyticsPage({ isLoading, campaigns }: AnalyticsPageProps) {
         spacing="moderate"
         renderRow={(row) => ({
           status: <PillBadge label={row.status} colorByIndex={row.id as number} showDot />,
-          ctr: <span className="cleen-font-mono cleen-text-sm">{row.ctr}</span>,
+          ctr: <span className="font-mono text-sm">{row.ctr}</span>,
         })}
       />
     </div>

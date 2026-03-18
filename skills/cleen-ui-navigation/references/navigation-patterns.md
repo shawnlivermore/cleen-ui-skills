@@ -95,21 +95,21 @@ function AppShell() {
   };
 
   return (
-    <div className="cleen cleen-flex cleen-h-screen">
+    <div className="cleen flex h-screen">
       <Sidebar
         navigationItems={navItems}
         bottomNavigationItems={bottomItems}
         drawerContent={drawerContent}
         activeId={activeId}
         onActiveChange={handleActiveChange}
-        logo={<img src="/logo.svg" alt="FOXHOUND" className="cleen-h-8" />}
+        logo={<img src="/logo.svg" alt="FOXHOUND" className="h-8" />}
         onLogoClick={() => navigate('/')}
         userAvatar={<img src={user.avatarUrl} alt={user.name} />}
         userInfo={
-          <span className="cleen-text-sm cleen-font-medium">{user.name}</span>
+          <span className="text-sm font-medium">{user.name}</span>
         }
       />
-      <main className="cleen-flex-1 cleen-overflow-auto cleen-p-6">
+      <main className="flex-1 overflow-auto p-6">
         <Outlet />
       </main>
     </div>
@@ -301,7 +301,7 @@ function OnboardingWizard({
       title: 'Identity',
       subtitle: 'Your operative profile',
       content: (
-        <div className="cleen-flex cleen-flex-col cleen-gap-4">
+        <div className="flex flex-col gap-4">
           <FormGroup title="Codename" required>
             <Input
               value={form.codename}
@@ -339,7 +339,7 @@ function OnboardingWizard({
       title: 'Confirm',
       subtitle: 'Review and submit',
       content: (
-        <div className="cleen-flex cleen-flex-col cleen-gap-4">
+        <div className="flex flex-col gap-4">
           <ReviewSummary data={form} />
           <Checkbox
             label="I accept the operative terms and conditions"
@@ -353,7 +353,7 @@ function OnboardingWizard({
   ];
 
   return (
-    <div className="cleen-max-w-2xl cleen-mx-auto cleen-p-6">
+    <div className="max-w-2xl mx-auto p-6">
       <Wizard
         steps={steps}
         currentStepIndex={currentStep}
@@ -418,7 +418,7 @@ function MissionBuilderDrawer() {
         title="Mission builder"
         size="lg"
         footer={
-          <div className="cleen-flex cleen-justify-between cleen-w-full">
+          <div className="flex justify-between w-full">
             <Button
               variant="secondary"
               label="Back"
@@ -434,7 +434,7 @@ function MissionBuilderDrawer() {
         }
       >
         <Stepper steps={STEPS} activeStep={step} orientation="horizontal" />
-        <div className="cleen-mt-6">
+        <div className="mt-6">
           {step === 0 && <TargetSelector />}
           {step === 1 && <AgentPicker />}
           {step === 2 && <TimelineForm />}
@@ -488,7 +488,7 @@ function AgentsPage() {
   const totalPages = Math.ceil((data?.totalCount ?? 0) / pageSize);
 
   return (
-    <div className="cleen cleen-flex cleen-flex-col cleen-gap-4">
+    <div className="cleen flex flex-col gap-4">
       <DataGrid
         title="Agents"
         tableHeaders={headers}

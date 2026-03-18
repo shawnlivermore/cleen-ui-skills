@@ -112,7 +112,7 @@ function HomePage() {
             onStepClick={setCurrentStep}
             className="mb-4"
           />
-          <Card color="var(--cleen-blue)">
+          <Card color="var(--cleen-primary)">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-sm font-semibold">Next up: Business Valuation</p>

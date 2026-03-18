@@ -194,7 +194,7 @@ const handleSubmit = () => {
   // call API...
 };
 
-<div className="cleen-flex cleen-justify-end cleen-gap-2">
+<div className="flex justify-end gap-2">
   <Button variant="secondary" label="Cancel" onClick={reset} />
   <Button
     variant="primary"

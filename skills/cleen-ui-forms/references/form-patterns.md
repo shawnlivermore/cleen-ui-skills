@@ -65,7 +65,7 @@ export function AccountSettings() {
   };
 
   return (
-    <div className="cleen-flex cleen-flex-col cleen-gap-6">
+    <div className="flex flex-col gap-6">
       <FormGroup title="Display Name" required>
         <Input
           value={form?.displayName}
@@ -113,7 +113,7 @@ export function AccountSettings() {
         />
       </FormGroup>
 
-      <div className="cleen-flex cleen-justify-end cleen-gap-2">
+      <div className="flex justify-end gap-2">
         <Button variant="secondary" label="Cancel" onClick={reset} disabled={!isDirty} />
         <Button variant="primary" label="Save Changes" onClick={handleSave} disabled={!isDirty} />
       </div>
@@ -181,7 +181,7 @@ export function EditUserModal({ user, isOpen, onClose, onSave }: EditUserModalPr
       onClose={onClose}
       header="Edit User"
       footer={
-        <div className="cleen-flex cleen-justify-end cleen-gap-2">
+        <div className="flex justify-end gap-2">
           <Button variant="secondary" label="Cancel" onClick={onClose} />
           <Button
             variant="primary"
@@ -193,7 +193,7 @@ export function EditUserModal({ user, isOpen, onClose, onSave }: EditUserModalPr
         </div>
       }
     >
-      <div className="cleen-flex cleen-flex-col cleen-gap-4">
+      <div className="flex flex-col gap-4">
         <FormGroup title="Name" required>
           <Input
             value={form?.name}
@@ -285,13 +285,13 @@ export function FiltersDrawer({ isOpen, onClose, onApply }: FilterDrawerProps) {
       onClose={onClose}
       title="Filters"
       footer={
-        <div className="cleen-flex cleen-justify-end cleen-gap-2">
+        <div className="flex justify-end gap-2">
           <Button variant="borderless" label="Clear All" onClick={reset} />
           <Button variant="primary" label="Apply Filters" onClick={handleApply} />
         </div>
       }
     >
-      <div className="cleen-flex cleen-flex-col cleen-gap-6">
+      <div className="flex flex-col gap-6">
         <FormGroup title="Status">
           <CheckboxGroup
             checkboxes={STATUS_OPTIONS.map(s => ({
@@ -420,7 +420,7 @@ export function OnboardingWizard() {
     {
       title: 'Personal Info',
       content: (
-        <div className="cleen-flex cleen-flex-col cleen-gap-4">
+        <div className="flex flex-col gap-4">
           <FormGroup title="First Name" required>
             <Input
               value={form?.firstName}
@@ -449,7 +449,7 @@ export function OnboardingWizard() {
     {
       title: 'Your Company',
       content: (
-        <div className="cleen-flex cleen-flex-col cleen-gap-4">
+        <div className="flex flex-col gap-4">
           <FormGroup title="Company Name" required>
             <Input
               value={form?.companyName}
@@ -470,7 +470,7 @@ export function OnboardingWizard() {
     {
       title: 'Your Plan',
       content: (
-        <div className="cleen-flex cleen-flex-col cleen-gap-4">
+        <div className="flex flex-col gap-4">
           <FormGroup title="Goals" subtitle="What are you hoping to achieve?">
             <TextArea
               value={form?.goals}

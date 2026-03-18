@@ -97,7 +97,7 @@ const { isOpen, open, close } = useDisclosure();
   header={{ title: 'Delete record', hasDivider: true }}
   footer={{
     content: (
-      <div className="cleen-flex cleen-justify-end cleen-gap-2">
+      <div className="flex justify-end gap-2">
         <Button variant="secondary" label="Cancel" onClick={close} />
         <Button variant="danger" label="Delete" onClick={handleDelete} isLoading={isDeleting} />
       </div>
@@ -107,7 +107,7 @@ const { isOpen, open, close } = useDisclosure();
   size="sm"
   closeOnOverlayClick
 >
-  <p className="cleen-text-gray-600">This action cannot be undone.</p>
+  <p className="text-gray-600">This action cannot be undone.</p>
 </Modal>
 ```
 
@@ -152,7 +152,7 @@ const { isOpen, open, close } = useDisclosure();
   title="Edit User"
   subtitle="Update the user's profile details"
   footer={
-    <div className="cleen-flex cleen-justify-end cleen-gap-2">
+    <div className="flex justify-end gap-2">
       <Button variant="secondary" label="Cancel" onClick={close} />
       <Button variant="primary" label="Save Changes" onClick={handleSave} isLoading={isSaving} disabled={!isDirty} />
     </div>
@@ -258,7 +258,7 @@ A trigger button that reveals arbitrary content below it. Use for custom panels 
 import { Dropdown } from '@cleen/ui';
 
 <Dropdown label="Assign to" fullWidth={false}>
-  <div className="cleen-p-3 cleen-flex cleen-flex-col cleen-gap-2">
+  <div className="p-3 flex flex-col gap-2">
     {users.map(user => (
       <button key={user.id} onClick={() => assign(user)}>
         {user.name}
@@ -317,7 +317,7 @@ import { MdMoreVert } from 'react-icons/md';
   ]}
   position="bottom-right"
 >
-  <button className="cleen-p-1">
+  <button className="p-1">
     <MdMoreVert size={20} />
   </button>
 </Menu>;
@@ -366,15 +366,15 @@ import { Popover } from '@cleen/ui';
 
 <Popover
   content={
-    <div className="cleen-p-4 cleen-w-64">
-      <p className="cleen-font-medium cleen-mb-2">Color picker</p>
+    <div className="p-4 w-64">
+      <p className="font-medium mb-2">Color picker</p>
       {/* custom color swatches */}
     </div>
   }
   position="bottom-left"
 >
   <div
-    className="cleen-w-8 cleen-h-8 cleen-rounded-full cleen-cursor-pointer"
+    className="w-8 h-8 rounded-full cursor-pointer"
     style={{ background: selectedColor }}
   />
 </Popover>;
@@ -405,7 +405,7 @@ import { Tooltip } from '@cleen/ui';
 
 // Delayed tooltip (prevents flicker on fast mouse movement)
 <Tooltip label="This metric compares..." placement="bottom" openDelay={400}>
-  <span className="cleen-underline cleen-decoration-dotted">Revenue</span>
+  <span className="underline decoration-dotted">Revenue</span>
 </Tooltip>
 ```
 

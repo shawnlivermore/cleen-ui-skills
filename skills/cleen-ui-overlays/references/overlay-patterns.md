@@ -55,7 +55,7 @@ function DeleteOperatorButton({
         footer={{
           hasDivider: true,
           content: (
-            <div className="cleen-flex cleen-justify-end cleen-gap-2">
+            <div className="flex justify-end gap-2">
               <Button
                 variant="secondary"
                 label="Cancel"
@@ -72,7 +72,7 @@ function DeleteOperatorButton({
           ),
         }}
       >
-        <p className="cleen-text-sm cleen-text-gray-600">
+        <p className="text-sm text-gray-600">
           Are you sure you want to delete <strong>{operatorName}</strong>? This
           action cannot be undone.
         </p>
@@ -184,7 +184,7 @@ function EditWolfDrawer({
         subtitle="Update rank and territory assignment"
         size="md"
         footer={
-          <div className="cleen-flex cleen-justify-end cleen-gap-2">
+          <div className="flex justify-end gap-2">
             <Button variant="secondary" label="Cancel" onClick={handleClose} />
             <Button
               variant="primary"
@@ -422,7 +422,7 @@ function AgentTable({ agents, onEdit, onView, onDelete }: AgentTableProps) {
             },
           ]}
         >
-          <button className="cleen-p-1 cleen-rounded hover:cleen-bg-gray-100">
+          <button className="p-1 rounded hover:bg-gray-100">
             <MdMoreVert size={18} />
           </button>
         </Menu>
@@ -452,17 +452,17 @@ import { MdInfoOutline } from 'react-icons/md';
 
 function MetricCard({ label, value, detail }: MetricCardProps) {
   return (
-    <div className="cleen-flex cleen-items-center cleen-gap-1">
-      <span className="cleen-font-semibold">{label}</span>
+    <div className="flex items-center gap-1">
+      <span className="font-semibold">{label}</span>
       <Popover
         content={
-          <div className="cleen-p-3 cleen-w-56 cleen-text-sm cleen-text-gray-600">
+          <div className="p-3 w-56 text-sm text-gray-600">
             {detail}
           </div>
         }
         position="top"
       >
-        <button className="cleen-text-gray-400 hover:cleen-text-gray-600">
+        <button className="text-gray-400 hover:text-gray-600">
           <MdInfoOutline size={16} />
         </button>
       </Popover>
@@ -474,7 +474,7 @@ function MetricCard({ label, value, detail }: MetricCardProps) {
 **Pattern notes:**
 
 - `Popover` is click-based. For hover, use `Tooltip` instead.
-- Give the popover panel a sensible `cleen-w-*` — unconstrained width looks broken.
+- Give the popover panel a sensible width utility (for example `w-64`) — unconstrained width looks broken.
 
 ---
 
@@ -498,17 +498,17 @@ function AssigneeDropdown({ onSelect }: { onSelect: (user: User) => void }) {
       fullWidthDropdown
       keepOpenOnClickContent={false}
     >
-      <div className="cleen-p-2 cleen-flex cleen-flex-col cleen-gap-1 cleen-w-64">
+      <div className="p-2 flex flex-col gap-1 w-64">
         <Input
           placeholder="Search users..."
           value={query}
           onChange={e => setQuery(e.target.value)}
         />
-        <div className="cleen-max-h-48 cleen-overflow-y-auto">
+        <div className="max-h-48 overflow-y-auto">
           {users?.map(user => (
             <button
               key={user.id}
-              className="cleen-w-full cleen-text-left cleen-px-3 cleen-py-2 cleen-rounded hover:cleen-bg-gray-100 cleen-text-sm"
+              className="w-full text-left px-3 py-2 rounded hover:bg-gray-100 text-sm"
               onClick={() => onSelect(user)}
             >
               {user.name}
@@ -525,7 +525,7 @@ function AssigneeDropdown({ onSelect }: { onSelect: (user: User) => void }) {
 
 - Set `keepOpenOnClickContent={false}` so clicking a result actually closes the dropdown.
 - Use `useDebounce` from the library — don't install a separate package.
-- Cap the results list height (`cleen-max-h-48`) and scroll — long lists overflow otherwise.
+- Cap the results list height (for example `max-h-48`) and scroll — long lists overflow otherwise.
 
 ---
 
@@ -623,7 +623,7 @@ function EditAndDeleteDrawer({ record }: { record: Record }) {
         title="Edit record"
         zIndex={100}
         footer={
-          <div className="cleen-flex cleen-justify-between">
+          <div className="flex justify-between">
             <Button
               variant="danger"
               label="Delete"
@@ -644,7 +644,7 @@ function EditAndDeleteDrawer({ record }: { record: Record }) {
         header={{ title: 'Confirm deletion' }}
         footer={{
           content: (
-            <div className="cleen-flex cleen-justify-end cleen-gap-2">
+            <div className="flex justify-end gap-2">
               <Button
                 variant="secondary"
                 label="Cancel"

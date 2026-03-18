@@ -109,7 +109,7 @@ export default function RootLayout({
 
 The `cleen-` prefix and library imports are **for the library's internals and integration only**. Once installed, the user's project should use its **own Tailwind configuration** for styling its custom components — not the library's prefixed utilities.
 
-- ✅ Use the library's prefixed classes (`cleen-flex`, `cleen-p-4`) **only when building the library itself**
+- ✅ Use prefixed utilities only when working inside the library source itself
 - ✅ Use the project's default Tailwind config (unprefixed: `flex`, `p-4`, `grid`, etc.) for all consumer project components
 - ❌ **Do NOT spread `cleen-` classnames throughout the consumer application** — that's a library concern, not a project concern. 
 

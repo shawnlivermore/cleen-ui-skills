@@ -101,7 +101,7 @@ Use `renderRow` to replace specific cell values with components. Only fields you
 renderRow={(row) => ({
   status: <PillBadge label={row.status} colorByIndex={row.id as number} />,
   name: (
-    <div className="cleen-flex cleen-items-center cleen-gap-2">
+    <div className="flex items-center gap-2">
       <Avatar name={row.name} size="sm" />
       <span>{row.name}</span>
     </div>
@@ -189,7 +189,7 @@ import { Card } from '@cleen/ui';
   p={24}
   hoverable
 >
-  <div className="cleen-text-3xl cleen-font-bold">$48,200</div>
+  <div className="text-3xl font-bold">$48,200</div>
   <SimpleChart data={revenueTrend} />
 </Card>
 
@@ -294,7 +294,7 @@ import { Chart, SimpleChart } from '@cleen/ui/charts';
 
 // Sparkline inside a card
 <Card header={{ title: 'Weekly Signups' }} p={20}>
-  <div className="cleen-text-2xl cleen-font-bold">1,284</div>
+  <div className="text-2xl font-bold">1,284</div>
   <SimpleChart data={[32, 45, 38, 56, 49, 62]} width={200} height={60} />
 </Card>
 ```
@@ -333,7 +333,7 @@ import {
 
 // While cards load
 {isLoading ? (
-  <div className="cleen-grid cleen-grid-cols-3 cleen-gap-4">
+  <div className="grid grid-cols-3 gap-4">
     <SkeletonCard />
     <SkeletonCard />
     <SkeletonCard />

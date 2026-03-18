@@ -276,7 +276,7 @@ Use `Tooltip` to explain unclear UI elements without cluttering the layout.
 import { Tooltip } from '@cleen/ui';
 
 <Tooltip label="This ID cannot be changed after creation" placement="top" hasArrow>
-  <IconInfoCircle className="cleen-text-gray/40 cleen-cursor-help" />
+  <IconInfoCircle className="text-gray/40 cursor-help" />
 </Tooltip>
 
 // Delay opening to avoid flicker on quick mouse passes

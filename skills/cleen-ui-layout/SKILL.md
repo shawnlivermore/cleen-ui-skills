@@ -37,7 +37,7 @@ When styling **your own components** in a consumer project, use Tailwind utiliti
 <div className="flex gap-4 grid grid-cols-3 p-6">
 
 // ❌ Don't spread cleen- classes through your app
-<div className="cleen-flex cleen-gap-4 cleen-grid cleen-grid-cols-3 cleen-p-6">
+<div className="flex gap-4 grid grid-cols-3 p-6">
 ```
 
 ### 2. Prefer library components over custom styling
@@ -134,7 +134,7 @@ import { Card } from '@cleen/ui';
 
 // Color-tinted (useful for status cards, alert panels)
 <Card color="var(--cleen-error)">
-  <p className="cleen-text-sm">This action is irreversible.</p>
+  <p className="text-sm">This action is irreversible.</p>
 </Card>
 
 // Hoverable (use for clickable cards in a grid)
@@ -155,7 +155,7 @@ import { Card } from '@cleen/ui';
 - `color` — CSS color string or CSS variable; tints the background and border automatically
 - `isGlass` — frosted-glass gradient overlay
 - `hoverable` — adds hover shadow/border transition for clickable cards
-- `p` — padding override in pixels (overrides the default `cleen-p-6`)
+- `p` — padding override in pixels (overrides the default card body padding)
 - `gap` — gap override in pixels between header/children/footer zones
 
 **Subcomponents:**
@@ -186,7 +186,7 @@ import { CardMedia } from '@cleen/ui';
   }}
   header={{ title: 'Operation Shadow Moses', hasDivider: true }}
 >
-  <p className="cleen-text-sm cleen-text-gray/80">Infiltrate the facility...</p>
+  <p className="text-sm text-gray/80">Infiltrate the facility...</p>
 </CardMedia>;
 ```
 
@@ -203,9 +203,9 @@ import { Divider } from '@cleen/ui';
 <Divider />
 
 // Vertical — full-height line (use in flex rows)
-<div className="cleen-flex cleen-h-8 cleen-items-center">
+<div className="flex h-8 items-center">
   <span>Section A</span>
-  <Divider isHorizontal={false} className="cleen-mx-3" />
+  <Divider isHorizontal={false} className="mx-3" />
   <span>Section B</span>
 </div>
 ```
