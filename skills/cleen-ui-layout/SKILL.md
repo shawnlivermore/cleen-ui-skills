@@ -309,5 +309,6 @@ Use `references/layout-default-patterns.md` for applications by default. It incl
 - `SaaS Public Profile / Marketplace Screen` — public-facing profile + booking
 - `SaaS Data List Screen (Events / Admin)` — filtered data tables
 - `SaaS Knowledge Base Screen` — topic taxonomy + searchable content
+- `SaaS Subsequential Data List Screen` — hierarchical data with drill-down navigation
 
-Use `references/layout-patterns.md` only when the user explicitly requests a non-SaaS layout or a specialized pattern (detail pages, mixed-width grids, etc.). It contains 10 generic fallback recipes.
+Use `references/layout-patterns.md` only when the user explicitly requests a non-SaaS layout or a specialized pattern (detail pages, mixed-width grids, etc.). It contains 6 generic fallback recipes.

@@ -20,7 +20,8 @@ These patterns should be the **default output** when users ask for Home, Dashboa
 4. [SaaS Profile Settings Screen (Default)](#saas-profile-settings-screen-default)
 5. [SaaS Public Profile / Marketplace Screen](#saas-public-profile--marketplace-screen)
 6. [SaaS Data List Screen (Events / Admin)](#saas-data-list-screen-events--admin)
-7. [SaaS Knowledge Base Screen](#saas-knowledge-base-screen)
+7. [SaaS Subsequential Data List Screen (Default)](#saas-subsequential-data-list-screen-default)
+8. [SaaS Knowledge Base Screen](#saas-knowledge-base-screen)
 
 ---
 
@@ -364,6 +365,102 @@ function EventsPage() {
   );
 }
 ```
+
+---
+
+## SaaS Subsequential Data List Screen (Default)
+
+Use this when data is hierarchical and users drill down level-by-level (for example: Organizations -> Projects -> Tasks). The first grid is always visible; each next grid appears only after selecting a row in the previous grid.
+
+```tsx
+function SubsequentialEventsPage() {
+  const [selectedOrgId, setSelectedOrgId] = useState<string | null>(null);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+
+  const organizationRows = organizations;
+  const projectRows = selectedOrgId
+    ? projects.filter((project) => project.organizationId === selectedOrgId)
+    : [];
+  const taskRows = selectedProjectId
+    ? tasks.filter((task) => task.projectId === selectedProjectId)
+    : [];
+
+  const handleOrganizationSelect = (org: { id: string }) => {
+    setSelectedOrgId(org.id);
+    setSelectedProjectId(null); // Reset deeper level when parent changes.
+  };
+
+  const handleProjectSelect = (project: { id: string }) => {
+    setSelectedProjectId(project.id);
+  };
+
+  return (
+    <AppShell>
+      <div>
+        <h1 className="text-2xl font-semibold">Events</h1>
+        <p className="text-sm text-slate-500">Explore data step-by-step from top-level entities to detailed records.</p>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <Tabs
+          tabs={[{ label: 'Grid' }, { label: 'Calendar' }]}
+          currentTabIndex={0}
+          onTabChange={() => {}}
+          variant="underlined"
+        />
+        <div className="flex gap-2">
+          <Button variant="secondary" label="Upcoming" />
+          <Button variant="secondary" label="Previous" />
+          <Button variant="secondary" label="All" />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4 lg:gap-6">
+        <Card header={{ title: '1. Organizations', hasDivider: true }}>
+          <DataGrid
+            tableHeaders={organizationHeaders}
+            rowData={organizationRows}
+            withSearch
+            withFooter
+            onRowClick={handleOrganizationSelect}
+          />
+        </Card>
+
+        {selectedOrgId && (
+          <Card header={{ title: '2. Projects', hasDivider: true }}>
+            <DataGrid
+              tableHeaders={projectHeaders}
+              rowData={projectRows}
+              withSearch
+              withFooter
+              onRowClick={handleProjectSelect}
+            />
+          </Card>
+        )}
+
+        {selectedProjectId && (
+          <Card header={{ title: '3. Tasks', hasDivider: true }}>
+            <DataGrid
+              tableHeaders={taskHeaders}
+              rowData={taskRows}
+              withSearch
+              withFilters
+              withFooter
+            />
+          </Card>
+        )}
+      </div>
+    </AppShell>
+  );
+}
+```
+
+**Notes:**
+
+- Keep the stack vertical (`flex-col`) so each revealed grid appears directly below the previous one.
+- Reset downstream selections when the parent row changes to avoid stale child data.
+- Show 2 levels for simpler flows, or 3 levels for deeper drill-downs.
+- Use explicit card titles (`1.`, `2.`, `3.`) so users understand the sequence.
 
 ---
 
