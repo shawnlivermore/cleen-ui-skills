@@ -12,49 +12,98 @@ This skill covers structuring pages and content containers using the @cleen/* pa
 ## Prime Directive
 
 > **`Card` is the default container for any distinct content block. Reach for it first.**
+> **Reuse library layout components within each other — avoid building wrapper divs or custom styled containers if the design of the layout component already provides the desired styling.**
 
 Common traps to avoid:
 
 - Custom `<div>` containers with hand-rolled border/shadow/padding → use `Card`
+- Section wrapper div inside a Card that duplicates Card styling → nest `Card` inside `Card` or use `Divider` instead
 - `<hr>` for section separators → use `Divider`
 - Raw `<span>` with colored background for status tags → use `PillBadge`
-- Non-prefixed Tailwind classes (`flex`, `grid`, `gap-4`) → always `cleen-flex`, `cleen-grid`, `cleen-gap-4`
-- Forgetting the `.cleen` scope wrapper on the page root → everything breaks without it
+- Custom CSS file to style a wrapper container → use `Card` or another layout component
+- Non-prefixed Tailwind classes (`flex`, `grid`, `gap-4` in a consumer project) → use your project's default Tailwind config (not the library's `cleen-` prefixed classes, which are for the library's internal use only)
 - Rolling a custom avatar or initials component → use `Avatar` / `AvatarRow`
 
 ---
 
 ## The Golden Rules
 
-### 1. Every page root needs `.cleen`
+### 1. Use your project's Tailwind config, not library prefixes
+
+When styling **your own components** in a consumer project, use Tailwind utilities from your project's configuration (unprefixed). The `cleen-` prefix is **for the library's internals only**.
 
 ```tsx
-// ✅ Correct
-<div className="cleen cleen-p-6 cleen-min-h-screen">
-  ...
+// ✅ In a consumer project — use unprefixed Tailwind
+<div className="flex gap-4 grid grid-cols-3 p-6">
+
+// ❌ Don't spread cleen- classes through your app
+<div className="cleen-flex cleen-gap-4 cleen-grid cleen-grid-cols-3 cleen-p-6">
+```
+
+### 2. Prefer library components over custom styling
+
+Instead of reaching for CSS files or custom Tailwind utilities, **reuse library layout components** (Card, Divider, PillBadge, etc.). This ensures visual consistency and reduces custom code.
+
+```tsx
+// ✅ Use library components
+<Card header={{ title: 'Stats' }}>
+  <div className="flex gap-4">
+    <StatItem value={123} label="Total" />
+    <StatItem value={45} label="Active" />
+  </div>
+</Card>
+
+// ❌ Don't create wrapper divs that mimic Card
+<div style={{ border: '1px solid #e5e7eb', padding: '24px', borderRadius: '8px' }}>
+  {/* custom styling that duplicates Card functionality */}
+</div>
+```
+
+---
+
+## Styling Approach: Use Components, Not Custom CSS
+
+**When you're tempted to create a custom CSS file or write stylesheet code, reach for a library component instead.**
+
+### The Decision Tree
+
+1. **"I need a container with padding, border, and shadow"** → `Card` (not a `<div>` with custom CSS)
+2. **"I need to separate sections visually"** → `Divider` (not an `<hr>` or custom `border-top`)
+3. **"I need a status indicator or label"** → `PillBadge` (not a `<span>` with background color)
+4. **"I need to layout rows/columns with spacing"** → `Card` + Tailwind utilities from your project config (not custom layout CSS)
+5. **"I need grid or flex layout"** → Use your project's Tailwind config (`flex`, `gap-4`, `grid`) \*inside\* Card or library components (not unprefixed classes at page root; not custom CSS)
+
+### Anti-Pattern: Custom CSS for Component-Like Styling
+
+```tsx
+// ❌ Creating custom CSS for something the library provides
+// styles.css
+.section-container {
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+// App.tsx
+<div className="section-container">
+  <h2>Content</h2>
 </div>
 
-// ❌ Wrong — no scoping wrapper, no styles will apply
-<div className="cleen-p-6 cleen-min-h-screen">
-  ...
-</div>
+// ✅ Use Card instead
+<Card header={{ title: 'Content' }}>
+  {/* No custom CSS needed */}
+</Card>
 ```
 
-### 2. All Tailwind classes take the `cleen-` prefix
+### When Custom CSS IS Appropriate
 
-```tsx
-// ✅
-<div className="cleen-flex cleen-gap-4 cleen-grid cleen-grid-cols-3">
+Create custom CSS **only** for truly unique visual styling that the library doesn't provide:
+- Custom animations or transitions
+- Brand-specific visual effects (gradients, glows, etc.)
+- Component-specific styling that doesn't belong in Tailwind
 
-// ❌
-<div className="flex gap-4 grid grid-cols-3">
-```
-
-### 3. Responsive breakpoints also get the prefix
-
-```tsx
-<div className="cleen-grid cleen-grid-cols-1 md:cleen-grid-cols-2 lg:cleen-grid-cols-4 cleen-gap-4">
-```
+When you do create custom CSS, **keep it minimal and isolated to that one component**. Use CSS variables (in RGB format) inherited from the library's color system.
 
 ---
 
@@ -62,7 +111,7 @@ Common traps to avoid:
 
 ### Card
 
-The primary building block for any distinct content section — metrics, forms, lists, charts, empty states, summaries.
+The primary building block for any distinct content section — metrics, forms, lists, charts, empty states, summaries. Nest Cards within Cards to create rich layouts without custom styling.
 
 ```tsx
 import { Card } from '@cleen/ui';

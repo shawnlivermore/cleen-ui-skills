@@ -45,9 +45,25 @@ For the three most commonly confused overlays, see the quick rule at the bottom 
 
 ---
 
-## State Management: useDisclosure
+## State Management: useDisclosure (MANDATORY)
 
-Every togglable overlay (Modal, Drawer, Popover, Dropdown) needs open/close state. Always use `useDisclosure` — never `useState(false)` for this.
+**Every togglable overlay (Modal, Drawer, Popover, Dropdown) MUST use `useDisclosure` — never `useState(false)` for managing controlled open/close state.**
+
+Using raw `useState` for overlay state is an anti-pattern that leads to lost state, incorrect accessibility, and missed close handlers.
+
+```tsx
+// ✅ CORRECT — useDisclosure handles all state transitions
+const { isOpen, open, close, toggle } = useDisclosure();
+
+<Button label="Open Modal" onClick={open} />
+<Modal isOpen={isOpen} onClose={close}>
+  ...
+</Modal>
+
+// ❌ WRONG — useState loses state consistency
+const [isOpen, setIsOpen] = useState(false);
+// ^ Missing close handlers, no consistent open/close flows
+```
 
 ```tsx
 import { useDisclosure } from '@cleen/ui';

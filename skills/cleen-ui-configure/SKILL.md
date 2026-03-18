@@ -13,15 +13,26 @@ This skill covers customizing `@cleen/ui` theming via CSS variables. Currently: 
 
 All colors are CSS custom properties defined under `:root` (light) and `.dark` (dark mode). They live in the library's compiled `styles.css`, but you can **override any of them** in your own CSS file after the library import.
 
-The values are bare `R, G, B` triplets — **not** wrapped in `rgb()`. This is intentional: the library uses them as `rgba(var(--cleen-primary))`, which allows transparency to work correctly. Always provide values in this format.
+The values are bare `R, G, B` triplets — **not** wrapped in `rgb()`. This is intentional: the library uses them as `rgba(var(--cleen-primary))`, which allows transparency to work correctly. **Always provide values in RGB triplet format — this is non-negotiable.**
 
 ```css
-/* correct */
+/* ✅ correct — RGB triplet, enables opacity */
 --cleen-primary: 99, 102, 241;
 
-/* wrong — will break transparency */
+/* ❌ wrong — breaks transparency */
 --cleen-primary: rgb(99, 102, 241);
 --cleen-primary: #6366f1;
+```
+
+**Creating custom CSS variables:** If building color variables for a consumer project (not the library), follow the same RGB triplet format so Tailwind's opacity modifiers work seamlessly. Prefer inheriting values from library variables instead of creating entirely new ones.
+
+```css
+/* Good — inherit from library, customize if needed */
+--project-primary: var(--cleen-primary);  /* use as-is */
+--project-secondary: 236, 72, 153;         /* custom but inherits library color space */
+
+/* Avoid — isolated colors lose design system continuity */
+--project-quirky: #a78bfa;  /* breaks opacity, orphaned from system */
 ```
 
 ---
@@ -61,6 +72,32 @@ General-purpose palette, used across components for tints, borders, and text.
 | `--cleen-purple` | `89, 37, 220` | `168, 85, 247` |
 | `--cleen-indigo` | `53, 56, 205` | `99, 102, 241` |
 | `--cleen-blue` | `23, 92, 211` | `59, 130, 246` |
+
+---
+
+## Strategy: Prefer Library Variables, Minimize Custom Ones
+
+Before creating custom color variables in your project, **check if a library variable already covers the use case**. This keeps your design system cohesive and leverages the library's thought-out palette.
+
+- **Need a primary button color?** → Use or override `--cleen-primary`  
+- **Need success/warning/error feedback?** → Use `--cleen-success`, `--cleen-warning`, `--cleen-error`  
+- **Need a branded accent?** → Use or override `--cleen-brand`  
+- **Building a custom alert banner?** → Inherit from `--cleen-error` or another semantic color
+
+**Only create new variables when the library doesn't have a semantic match.** And if you do, inherit from a library color:
+
+```css
+:root {
+  /* \u2705 Prefer using library variables directly */
+  --app-primary: var(--cleen-primary);
+  
+  /* \u2705 Or inherit a library color and apply your own name */
+  --app-warning-light: rgba(var(--cleen-warning), 0.1);
+  
+  /* \u274c Avoid isolated hex colors unLinked from the system */
+  --app-quirky: #a78bfa;  /* orphaned from design system */
+}
+```
 
 ---
 

@@ -34,6 +34,54 @@ This skill covers building forms with the @cleen/* packages. The library provide
 
 ---
 
+## Styling Forms: Use FormGroup & Tailwind, Not Custom CSS
+
+`FormGroup` handles all the layout and visual styling for form rows. **Never create custom CSS files or wrapper divs to style form layouts.**
+
+```tsx
+// \u2705 Use FormGroup for layout \u2014 it handles spacing, alignment, labels automatically
+<FormGroup
+  title="Email Address"
+  subtitle="We'll use this to contact you"
+  required
+>
+  <Input value={email} onChange={e => setField('email', e.target.value)} />
+</FormGroup>
+
+// \u274c Don't create custom CSS for form layout
+// form-styles.css: .form-row { display: flex; gap: 16px; ... }
+// Then: <div className="form-row"><label>...</label><input /></div>
+```
+
+If you need to adjust spacing or alignment beyond FormGroup's defaults, use your project's Tailwind utilities (`flex`, `gap-4`, etc.) — never reach for custom CSS.
+
+---
+
+## Core Building Blocks
+
+| Need | Component / Hook |
+|---|---|
+| Form layout rows | `FormGroup` |
+| Text input | `Input` |
+| Multi-line text | `TextArea` |
+| Dropdown (static options) | `Select` |
+| Dropdown (async search) | `Lookup` |
+| Single checkbox | `Checkbox` |
+| Multiple checkboxes | `CheckboxGroup` |
+| On/off toggle | `Switch` |
+| Single choice (text labels) | `RadioButtonGroup` |
+| Single choice (rich cards) | `RadioBoxGroup` |
+| Date / date range | `DatePicker` |
+| Numeric range | `RangeSlider` |
+| Single numeric value | `Slider` |
+| Field error / info messages | `InfoLabels` |
+| Form state management | `useForm` |
+| Validation state | `useValidation` |
+| Submit / cancel | `Button` (`primary` / `secondary`) |
+| AI-assisted text field | `AiInput` / `AiTextArea` |
+
+---
+
 ## Layout: FormGroup
 
 `FormGroup` is the standard row layout for forms. It puts the field label on the left (~300px column) and the controls on the right (flex, wrapping).
@@ -57,9 +105,24 @@ This skill covers building forms with the @cleen/* packages. The library provide
 
 ---
 
-## State: useForm
+## State: useForm (MANDATORY)
 
-`useForm` manages the form object and tracks dirtiness.
+**All form state must be managed with `useForm` — never use individual `useState` calls for form fields.**
+
+`useForm` manages the form object as a single unit and tracks dirtiness for you. Using raw `useState` per field is verbose, error-prone, and loses form-level state tracking (like dirty checking for Save buttons).
+
+```tsx
+// ✅ CORRECT — Single unified form state
+const { form, setField, isDirty, reset } = useForm<ProfileForm>({
+  defaultValue: { name: '', email: '', role: '' },
+});
+
+// ❌ WRONG — Scattered useState calls (anti-pattern)
+const [name, setName] = useState('');
+const [email, setEmail] = useState('');
+const [role, setRole] = useState('');
+// ^ Lost form-level state, no dirty tracking, verbose
+```.
 
 ```tsx
 interface ProfileForm {
