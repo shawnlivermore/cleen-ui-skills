@@ -300,4 +300,14 @@ import { AvatarRow } from '@cleen/ui';
 
 ## Layout Recipes
 
-For complete page layouts — dashboards, settings, detail pages, KPI stat rows, list pages — see `references/layout-patterns.md`.
+Use `references/layout-default-patterns.md` for applications by default. It includes:
+
+- `SaaS App Shell (Default)` — dashboard with left sidebar navigation
+- `SaaS Home Screen (Default)` — welcome + journey tracking + quick actions
+- `SaaS Dashboard Screen (Default)` — KPI strip + charts + activity table
+- `SaaS Profile Settings Screen (Default)` — tabbed settings with form cards
+- `SaaS Public Profile / Marketplace Screen` — public-facing profile + booking
+- `SaaS Data List Screen (Events / Admin)` — filtered data tables
+- `SaaS Knowledge Base Screen` — topic taxonomy + searchable content
+
+Use `references/layout-patterns.md` only when the user explicitly requests a non-SaaS layout or a specialized pattern (detail pages, mixed-width grids, etc.). It contains 10 generic fallback recipes.

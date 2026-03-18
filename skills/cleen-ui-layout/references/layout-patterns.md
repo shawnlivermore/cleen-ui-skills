@@ -1,532 +1,66 @@
 # Layout Patterns
 
-Reusable, copy-paste-ready layout structures for common page types. All use `Card`, `Divider`, `PillBadge`, `Avatar`, and Tailwind grid/flex via the `cleen-` prefix.
+Reusable layout structures for consumer projects. Choose a base layout pattern (header nav, sidebar, or icon sidebar) and combine with content areas and card grids.
 
----
+**For SaaS applications, refer to [`layout-default-patterns.md`](layout-default-patterns.md) first.**
 
 ## Table of Contents
 
-1. [Page Shell (header + content area)](#page-shell-header--content-area)
-2. [KPI / Stats Row](#kpi--stats-row)
-3. [Dashboard Page](#dashboard-page)
-4. [Settings Page (tabbed)](#settings-page-tabbed)
-5. [Detail Page (main + sidebar)](#detail-page-main--sidebar)
-6. [List Page (table + empty state)](#list-page-table--empty-state)
-7. [Card Grid (flexible column count)](#card-grid-flexible-column-count)
-8. [Card with Inline Row List](#card-with-inline-row-list)
-9. [Danger Zone Card](#danger-zone-card)
-10. [Mixed-width Grid (asymmetric columns)](#mixed-width-grid-asymmetric-columns)
+1. [Header Navigation Layout](#header-navigation-layout)
+2. [Header Navigation with Two-Row Layout](#header-navigation-with-two-row-layout)
+3. [Left Sidebar Navigation Layout](#left-sidebar-navigation-layout)
+4. [Compact Icon Sidebar Layout](#compact-icon-sidebar-layout)
+5. [Multi-Column Card Grid](#multi-column-card-grid)
+6. [Asymmetric Column Layout](#asymmetric-column-layout)
 
 ---
 
-## Page Shell (header + content area)
+## Header Navigation Layout
 
-The standard outer shell for any page — title, subtitle, action buttons, then content below.
-
-```tsx
-function MissionsPage() {
-  return (
-    <div className="cleen cleen-p-6 cleen-bg-gray-50 cleen-min-h-screen">
-      {/* Page header */}
-      <div className="cleen-flex cleen-justify-between cleen-items-start cleen-mb-6">
-        <div>
-          <h1 className="cleen-text-3xl cleen-font-bold cleen-text-gray">
-            Missions
-          </h1>
-          <p className="cleen-text-gray/70 cleen-mt-1">
-            Active and completed field operations
-          </p>
-        </div>
-        <div className="cleen-flex cleen-gap-2">
-          <Button
-            variant="secondary"
-            label="Export"
-            leftIcon={<MdDownload />}
-          />
-          <Button
-            variant="primary"
-            label="New mission"
-            leftIcon={<MdAdd />}
-            onClick={openCreate}
-          />
-        </div>
-      </div>
-
-      {/* Page content */}
-      <div className="cleen-flex cleen-flex-col cleen-gap-6">
-        {/* ... sections go here */}
-      </div>
-    </div>
-  );
-}
-```
-
-**Notes:**
-
-- Always `cleen` + `cleen-p-6` + `cleen-min-h-screen` on the page root.
-- `cleen-bg-gray-50` gives a subtle off-white page background that makes Cards pop.
-- Use `cleen-flex cleen-flex-col cleen-gap-6` as the content area — consistent vertical rhythm throughout the page.
-
----
-
-## KPI / Stats Row
-
-Row of metric cards — the most common dashboard element.
+Horizontal navigation bar at the top with main content below. Best for apps with 4-6 top-level sections.
 
 ```tsx
-interface Metric {
-  label: string;
-  value: string;
-  change: number; // positive = up, negative = down
-  icon: ReactNode;
-  color: string;
-}
+import { Avatar, Button, Card, Tabs } from '@cleen/ui';
+import { useState } from 'react';
 
-const metrics: Metric[] = [
-  {
-    label: 'Active missions',
-    value: '24',
-    change: +12,
-    icon: <MdFlashOn />,
-    color: 'primary',
-  },
-  {
-    label: 'Agents deployed',
-    value: '8',
-    change: -2,
-    icon: <MdPerson />,
-    color: 'blue',
-  },
-  {
-    label: 'Success rate',
-    value: '91%',
-    change: +4.5,
-    icon: <MdCheckCircle />,
-    color: 'green',
-  },
-  {
-    label: 'Avg. mission time',
-    value: '18d',
-    change: -8,
-    icon: <MdTimer />,
-    color: 'orange',
-  },
-];
-
-<div className="cleen-grid cleen-grid-cols-1 md:cleen-grid-cols-2 lg:cleen-grid-cols-4 cleen-gap-4 cleen-mb-6">
-  {metrics.map((metric, index) => (
-    <Card key={index}>
-      <div className="cleen-flex cleen-justify-between cleen-items-start cleen-mb-4">
-        <div
-          className={`cleen-p-3 cleen-rounded-lg cleen-bg-${metric.color}/10 cleen-text-${metric.color}`}
-        >
-          {metric.icon}
-        </div>
-        <PillBadge
-          label={`${metric.change > 0 ? '+' : ''}${metric.change}%`}
-          color={metric.change > 0 ? 'green' : 'red'}
-        />
-      </div>
-      <p className="cleen-text-sm cleen-font-medium cleen-text-gray/70 cleen-mb-1">
-        {metric.label}
-      </p>
-      <p className="cleen-text-2xl cleen-font-bold cleen-text-gray">
-        {metric.value}
-      </p>
-    </Card>
-  ))}
-</div>;
-```
-
-**Notes:**
-
-- 1 col mobile → 2 cols tablet → 4 cols desktop. Adjust `lg:cleen-grid-cols-*` for 2 or 3 metric cards.
-- `cleen-bg-${metric.color}/10` + `cleen-text-${metric.color}` for icon box coloring — uses the color palette CSS variables.
-- `PillBadge` with `color="green"` / `color="red"` for trend indicator, no dot needed here.
-
----
-
-## Dashboard Page
-
-Full dashboard with KPI row, charts grid, and a mixed-width bottom section.
-
-```tsx
-function Dashboard() {
+function AppWithHeaderNav() {
   const [activeTab, setActiveTab] = useState(0);
 
-  return (
-    <div className="cleen cleen-p-6 cleen-bg-gray-50 cleen-min-h-screen">
-      {/* Header */}
-      <div className="cleen-mb-6">
-        <div className="cleen-flex cleen-justify-between cleen-items-start cleen-mb-4">
-          <div>
-            <h1 className="cleen-text-3xl cleen-font-bold cleen-text-gray">
-              Command Dashboard
-            </h1>
-            <p className="cleen-text-gray/70 cleen-mt-1">
-              FOX-HOUND operational overview
-            </p>
-          </div>
-          <Button
-            variant="secondary"
-            label="Export report"
-            leftIcon={<MdDownload />}
-          />
-        </div>
-        <Tabs
-          tabs={[
-            { label: 'Overview' },
-            { label: 'Operations' },
-            { label: 'Personnel' },
-          ]}
-          currentTabIndex={activeTab}
-          onTabChange={setActiveTab}
-          variant="underlined"
-        />
-      </div>
-
-      {/* KPI row */}
-      <div className="cleen-grid cleen-grid-cols-1 md:cleen-grid-cols-2 lg:cleen-grid-cols-4 cleen-gap-4 cleen-mb-6">
-        {metrics.map(/* ... see KPI pattern above ... */)}
-      </div>
-
-      {/* Charts: 2-column grid */}
-      <div className="cleen-grid cleen-grid-cols-1 lg:cleen-grid-cols-2 cleen-gap-6 cleen-mb-6">
-        <Card header={{ title: 'Mission success rate', hasDivider: true }}>
-          <Chart
-            type="line"
-            series={successSeries}
-            options={lineOpts}
-            height={280}
-          />
-        </Card>
-        <Card header={{ title: 'Deployments by region', hasDivider: true }}>
-          <Chart
-            type="bar"
-            series={regionalSeries}
-            options={barOpts}
-            height={280}
-          />
-        </Card>
-      </div>
-
-      {/* Bottom: asymmetric 3-column grid */}
-      <div className="cleen-grid cleen-grid-cols-1 lg:cleen-grid-cols-3 cleen-gap-6">
-        <Card header={{ title: 'Mission types', hasDivider: true }}>
-          <Chart
-            type="pie"
-            series={typeSeries}
-            options={pieOpts}
-            height={280}
-          />
-        </Card>
-        <Card
-          className="lg:cleen-col-span-2"
-          header={{ title: 'Top operatives', hasDivider: true }}
-        >
-          <DataGrid tableHeaders={operativeHeaders} rowData={topOperatives} />
-        </Card>
-      </div>
-    </div>
-  );
-}
-```
-
-**Notes:**
-
-- Section rhythm: `cleen-mb-6` between rows keeps vertical spacing consistent.
-- Charts should always live inside a `Card` with a `header.title` — a floating chart with no context is confusing.
-- `lg:cleen-col-span-2` on the last card in a 3-column grid creates the "side panel + main" asymmetric layout.
-
----
-
-## Settings Page (tabbed)
-
-Classic settings layout: tabs on the left or top, content cards stacked vertically per section.
-
-```tsx
-function SettingsPage() {
-  const [activeTab, setActiveTab] = useState('profile');
-
   const tabs = [
-    { id: 'profile', label: 'Profile' },
-    { id: 'security', label: 'Security' },
-    { id: 'notifications', label: 'Notifications' },
-    { id: 'preferences', label: 'Preferences' },
+    { label: 'Dashboard' },
+    { label: 'Team' },
+    { label: 'Projects' },
+    { label: 'Calendar' },
+    { label: 'Reports' },
   ];
 
   return (
-    <div className="cleen cleen-p-6 cleen-min-h-screen">
-      <div className="cleen-flex cleen-justify-between cleen-items-center cleen-mb-6">
-        <h1 className="cleen-text-2xl cleen-font-bold cleen-text-gray">
-          Settings
-        </h1>
-        {hasUnsavedChanges && (
-          <div className="cleen-flex cleen-gap-2">
-            <Button variant="secondary" label="Discard" onClick={reset} />
-            <Button
-              variant="primary"
-              label="Save changes"
-              isLoading={isSaving}
-              onClick={save}
+    <div className="min-h-screen bg-gray-50">
+      {/* Header Navigation */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-8">
+            <span className="text-xl font-semibold text-gray-900">Logo</span>
+            <Tabs
+              tabs={tabs}
+              currentTabIndex={activeTab}
+              onTabChange={setActiveTab}
+              variant="underlined"
             />
           </div>
-        )}
-      </div>
-
-      <Tabs
-        tabs={tabs.map(t => ({ id: t.id, label: t.label }))}
-        currentTabIndex={tabs.findIndex(t => t.id === activeTab)}
-        onTabChange={(_, tab) => setActiveTab(tab?.id ?? 'profile')}
-        variant="underlined"
-      />
-
-      <div className="cleen-mt-6 cleen-flex cleen-flex-col cleen-gap-6">
-        {activeTab === 'profile' && (
-          <>
-            {/* Profile info card */}
-            <Card header={{ title: 'Personal information', hasDivider: true }}>
-              <div className="cleen-grid cleen-grid-cols-1 md:cleen-grid-cols-2 cleen-gap-4">
-                <FormGroup title="First name" required>
-                  <Input
-                    value={profile.firstName}
-                    onChange={e => update('firstName', e.target.value)}
-                  />
-                </FormGroup>
-                <FormGroup title="Last name" required>
-                  <Input
-                    value={profile.lastName}
-                    onChange={e => update('lastName', e.target.value)}
-                  />
-                </FormGroup>
-                <FormGroup title="Bio" className="md:cleen-col-span-2">
-                  <TextArea
-                    value={profile.bio}
-                    onChange={e => update('bio', e.target.value)}
-                  />
-                </FormGroup>
-              </div>
-            </Card>
-
-            {/* Danger zone at the bottom */}
-            <Card color="var(--cleen-error)">
-              <h3 className="cleen-text-base cleen-font-semibold cleen-text-error cleen-mb-1">
-                Danger zone
-              </h3>
-              <p className="cleen-text-sm cleen-text-gray/70 cleen-mb-4">
-                Permanently delete your account and all data.
-              </p>
-              <Button
-                variant="danger"
-                label="Delete account"
-                onClick={openDeleteDialog}
-              />
-            </Card>
-          </>
-        )}
-
-        {activeTab === 'notifications' && (
-          <Card
-            header={{ title: 'Notification preferences', hasDivider: true }}
-          >
-            {notificationRows.map((row, i) => (
-              <div key={row.id}>
-                <div className="cleen-flex cleen-justify-between cleen-items-center cleen-py-3">
-                  <div>
-                    <p className="cleen-text-sm cleen-font-medium cleen-text-gray">
-                      {row.label}
-                    </p>
-                    <p className="cleen-text-xs cleen-text-gray/60">
-                      {row.description}
-                    </p>
-                  </div>
-                  <Switch
-                    checked={row.enabled}
-                    onChange={e => toggleNotification(row.id, e.target.checked)}
-                  />
-                </div>
-                {i < notificationRows.length - 1 && <Divider />}
-              </div>
-            ))}
-          </Card>
-        )}
-      </div>
-    </div>
-  );
-}
-```
-
-**Notes:**
-
-- Put a `<Divider />` between rows inside a card instead of `border-b` on each row — it's cleaner and uses the library.
-- The danger-zone card uses `color="var(--cleen-error)"` to apply a subtle red tint — no custom border needed.
-- `md:cleen-col-span-2` on wide fields (bio, address) inside a 2-column form grid spans them full width on tablet+.
-
----
-
-## Detail Page (main + sidebar)
-
-Two-column layout: wide main content area + narrower detail sidebar. Common for record detail pages.
-
-```tsx
-function AgentDetailPage({ agent }: { agent: Agent }) {
-  return (
-    <div className="cleen cleen-p-6 cleen-min-h-screen">
-      {/* Breadcrumb */}
-      <Breadcrumb
-        segments={[
-          { path: '/agents', label: 'Agents' },
-          { path: `/agents/${agent.id}`, label: agent.codename },
-        ]}
-      />
-
-      {/* Page title row */}
-      <div className="cleen-flex cleen-justify-between cleen-items-center cleen-mt-4 cleen-mb-6">
-        <div className="cleen-flex cleen-items-center cleen-gap-3">
-          <Avatar name={agent.codename} src={agent.avatarUrl} size="xl" />
-          <div>
-            <h1 className="cleen-text-2xl cleen-font-bold cleen-text-gray">
-              {agent.codename}
-            </h1>
-            <div className="cleen-flex cleen-items-center cleen-gap-2 cleen-mt-1">
-              <PillBadge
-                label={agent.status}
-                color={agent.status === 'Active' ? 'green' : 'gray'}
-                showDot
-              />
-              <PillBadge label={agent.clearance} color="blue" />
-            </div>
+          <div className="flex items-center gap-3">
+            <Button variant="secondary" label="Notifications" />
+            <Avatar name="Jane Doe" size="md" />
           </div>
         </div>
-        <div className="cleen-flex cleen-gap-2">
-          <Button variant="secondary" label="Edit" onClick={openEdit} />
-          <Button
-            variant="danger"
-            label="Deactivate"
-            onClick={openDeactivate}
-          />
-        </div>
-      </div>
+      </header>
 
-      {/* Main 2-column grid */}
-      <div className="cleen-grid cleen-grid-cols-1 lg:cleen-grid-cols-3 cleen-gap-6">
-        {/* Wide main column */}
-        <div className="lg:cleen-col-span-2 cleen-flex cleen-flex-col cleen-gap-6">
-          <Card header={{ title: 'Mission history', hasDivider: true }}>
-            <DataGrid tableHeaders={missionHeaders} rowData={agent.missions} />
-          </Card>
-          <Card header={{ title: 'Performance metrics', hasDivider: true }}>
-            <Chart
-              type="bar"
-              series={performanceSeries}
-              options={opts}
-              height={240}
-            />
-          </Card>
-        </div>
-
-        {/* Narrow sidebar column */}
-        <div className="cleen-flex cleen-flex-col cleen-gap-6">
-          <Card header={{ title: 'Details', hasDivider: true }}>
-            <div className="cleen-flex cleen-flex-col cleen-gap-3 cleen-text-sm">
-              <div className="cleen-flex cleen-justify-between">
-                <span className="cleen-text-gray/60">Unit</span>
-                <span className="cleen-font-medium">{agent.unit}</span>
-              </div>
-              <Divider />
-              <div className="cleen-flex cleen-justify-between">
-                <span className="cleen-text-gray/60">Rank</span>
-                <span className="cleen-font-medium">{agent.rank}</span>
-              </div>
-              <Divider />
-              <div className="cleen-flex cleen-justify-between">
-                <span className="cleen-text-gray/60">Active since</span>
-                <span className="cleen-font-medium">{agent.activeSince}</span>
-              </div>
-            </div>
-          </Card>
-
-          <Card header={{ title: 'Team', hasDivider: true }}>
-            <AvatarRow avatars={agent.teamMembers} maxVisible={4} size="sm" />
-          </Card>
-        </div>
-      </div>
-    </div>
-  );
-}
-```
-
-**Notes:**
-
-- `lg:cleen-col-span-2` on the main column, sidebar takes the remaining col — standard 2:1 split.
-- Key-value rows inside sidebar cards: `cleen-flex cleen-justify-between` + `Divider` between items is cleaner than a table.
-- Avatar + status badges in the title row establish identity at a glance before any content loads.
-
----
-
-## List Page (table + empty state)
-
-Page for browsing a collection of records. Wraps the `DataGrid` in a standard shell with empty and loading states.
-
-```tsx
-function OperativesListPage() {
-  const { page, pageSize, setPageSize, handlePageChange, setPage } =
-    usePaginationState({ initialPage: 1 });
-  const { data, isLoading } = useFetchOperatives({ page, pageSize });
-  const totalPages = Math.ceil((data?.totalCount ?? 0) / pageSize);
-
-  return (
-    <div className="cleen cleen-p-6 cleen-min-h-screen">
-      <div className="cleen-flex cleen-justify-between cleen-items-center cleen-mb-6">
-        <h1 className="cleen-text-2xl cleen-font-bold cleen-text-gray">
-          Operatives
-        </h1>
-        <Button variant="primary" label="Add operative" onClick={openCreate} />
-      </div>
-
-      {isLoading ? (
-        <SkeletonDataGrid variant="pulse" itemCount={8} />
-      ) : !data?.operatives.length ? (
-        <Card className="cleen-text-center cleen-py-16">
-          <MdPeopleOutline
-            size={48}
-            className="cleen-text-gray/30 cleen-mx-auto cleen-mb-4"
-          />
-          <h3 className="cleen-text-lg cleen-font-semibold cleen-text-gray cleen-mb-2">
-            No operatives yet
-          </h3>
-          <p className="cleen-text-sm cleen-text-gray/60 cleen-mb-4">
-            Add your first operative to get started.
-          </p>
-          <Button
-            variant="primary"
-            label="Add operative"
-            onClick={openCreate}
-          />
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-6 py-8">
+        <Card header={{ title: 'Overview', hasDivider: true }}>
+          <p className="text-sm text-gray-600">Page content goes here.</p>
         </Card>
-      ) : (
-        <>
-          <DataGrid
-            tableHeaders={headers}
-            rowData={data.operatives}
-            withSearch
-          />
-          {totalPages > 1 && (
-            <div className="cleen-mt-4">
-              <Pagination
-                currentPage={page}
-                totalPages={totalPages}
-                pageSize={pageSize}
-                onPageChange={handlePageChange}
-                onPageSizeChange={size => {
-                  setPageSize(size);
-                  setPage(1);
-                }}
-              />
-            </div>
-          )}
-        </>
-      )}
+      </main>
     </div>
   );
 }
@@ -534,127 +68,365 @@ function OperativesListPage() {
 
 **Notes:**
 
-- Three states: loading → `SkeletonDataGrid`, empty → Card with CTA, populated → DataGrid + Pagination.
-- Empty state lives in a `Card` centered — don't just put loose text on the page.
-- `cleen-mt-4` between DataGrid and Pagination keeps them visually anchored together.
+- Navigation items use underline indicator for active state — clear and minimal.
+- Header stays at fixed 64px height; adjust `py-4` for different heights.
+- Logo and nav are grouped on left; utilities (search, notifications, profile) on right.
 
 ---
 
-## Card Grid (flexible column count)
+## Header Navigation with Two-Row Layout
 
-Reusable pattern for rendering a collection as a responsive card grid.
-
-```tsx
-// 3-column responsive grid (most common)
-<div className="cleen-grid cleen-grid-cols-1 md:cleen-grid-cols-2 lg:cleen-grid-cols-3 cleen-gap-4">
-  {items.map(item => (
-    <Card key={item.id} hoverable onClick={() => navigate(`/items/${item.id}`)}>
-      <h3 className="cleen-font-semibold cleen-text-gray cleen-mb-1">{item.title}</h3>
-      <p className="cleen-text-sm cleen-text-gray/70">{item.description}</p>
-      <div className="cleen-flex cleen-items-center cleen-gap-2 cleen-mt-3">
-        <PillBadge label={item.status} color={statusColor[item.status]} showDot />
-        <AvatarRow avatars={item.assignees} maxVisible={3} size="xs" />
-      </div>
-    </Card>
-  ))}
-</div>
-
-// 4-column (KPI-style)
-<div className="cleen-grid cleen-grid-cols-2 lg:cleen-grid-cols-4 cleen-gap-4">
-
-// 2-column (chart pairs, form sections)
-<div className="cleen-grid cleen-grid-cols-1 lg:cleen-grid-cols-2 cleen-gap-6">
-```
-
----
-
-## Card with Inline Row List
-
-Common pattern for notification feeds, activity logs, or setting rows — items separated by Dividers inside a single Card.
+Horizontal top nav in first row, search + utilities in second row. Good for search-heavy apps.
 
 ```tsx
-<Card header={{ title: 'Recent activity', hasDivider: true }}>
-  {activityItems.map((item, index) => (
-    <div key={item.id}>
-      <div className="cleen-flex cleen-items-start cleen-gap-3 cleen-py-3">
-        <Avatar name={item.user} size="sm" />
-        <div className="cleen-flex-1 cleen-min-w-0">
-          <p className="cleen-text-sm cleen-text-gray">
-            <span className="cleen-font-medium">{item.user}</span> {item.action}
-          </p>
-          <p className="cleen-text-xs cleen-text-gray/50 cleen-mt-0.5">
-            {item.timestamp}
-          </p>
+import { Avatar, Button, Card, Input, Tabs } from '@cleen/ui';
+import { useState } from 'react';
+
+function AppWithSearchHeader() {
+  const [activeTab, setActiveTab] = useState(0);
+  const [search, setSearch] = useState('');
+
+  const tabs = [
+    { label: 'Dashboard' },
+    { label: 'Team' },
+    { label: 'Projects' },
+    { label: 'Calendar' },
+    { label: 'Reports' },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Row 1: Logo + Navigation */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-8">
+            <span className="text-xl font-semibold text-gray-900">Logo</span>
+            <Tabs
+              tabs={tabs}
+              currentTabIndex={activeTab}
+              onTabChange={setActiveTab}
+              variant="underlined"
+            />
+          </div>
         </div>
-        <PillBadge label={item.type} color={item.color} />
+      </header>
+
+      {/* Row 2: Search + Utilities */}
+      <nav className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+          <div className="flex-1 max-w-sm">
+            <Input
+              placeholder="Search..."
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+          </div>
+          <div className="flex items-center gap-3">
+            <Button variant="secondary" label="Notifications" />
+            <Avatar name="Jane Doe" size="md" />
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-6 py-8">
+        <Card header={{ title: 'Search Results', hasDivider: true }}>
+          <p className="text-sm text-gray-600">Page content goes here.</p>
+        </Card>
+      </main>
+    </div>
+  );
+}
+```
+
+**Notes:**
+
+- Two header rows keep navigation and search visually separated but logically grouped.
+- Search input uses `flex-1 max-w-sm` to constrain width while filling available space.
+- Both rows use same border-bottom style for continuity.
+
+---
+
+## Left Sidebar Navigation Layout
+
+Vertical sidebar on left with main content on right. Good for dashboards with many nav items.
+
+```tsx
+import { Avatar, Button, Card, Sidebar } from '@cleen/ui';
+
+function AppWithSidebar() {
+  const activePage = 'dashboard';
+
+  const navItems = [
+    { id: 'dashboard', label: 'Dashboard', iconName: 'HouseLine' },
+    { id: 'team', label: 'Team', iconName: 'Users' },
+    { id: 'projects', label: 'Projects', iconName: 'FolderOpen' },
+    { id: 'calendar', label: 'Calendar', iconName: 'Calendar' },
+    { id: 'documents', label: 'Documents', iconName: 'FileText' },
+    { id: 'reports', label: 'Reports', iconName: 'ChartBar' },
+  ];
+
+  const bottomNavItems = [
+    { id: 'settings', label: 'Settings', iconName: 'Gear' },
+    { id: 'help', label: 'Help', iconName: 'Question' },
+  ];
+
+  return (
+    <div className="flex min-h-screen bg-gray-50">
+      {/* Left Sidebar via CleenUI */}
+      <Sidebar
+        navItems={navItems}
+        bottomNavItems={bottomNavItems}
+        activeItem={activePage}
+        appLogo={<span className="text-lg font-semibold">Logo</span>}
+      />
+
+      {/* Main Content */}
+      <main className="flex-1">
+        <header className="bg-white border-b border-gray-200 px-8 py-6">
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+            <div className="flex items-center gap-3">
+              <Button variant="secondary" label="Notifications" />
+              <Avatar name="Jane Doe" size="md" />
+            </div>
+          </div>
+        </header>
+
+        <section className="px-8 py-8">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <Card header={{ title: 'Team Activity', hasDivider: true }}>
+              <p className="text-sm text-gray-600">Page content goes here.</p>
+            </Card>
+            <Card header={{ title: 'Upcoming Work', hasDivider: true }}>
+              <p className="text-sm text-gray-600">Page content goes here.</p>
+            </Card>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+```
+
+**Notes:**
+
+- `Sidebar` centralizes icon + label nav structure and active item rendering.
+- Pass `activeItem` from route/page state to keep selection synchronized.
+- Keep secondary actions (Settings, Help) in `bottomNavItems` for consistent placement.
+- `appLogo` renders the brand mark in the sidebar header.
+
+---
+
+## Compact Icon Sidebar Layout
+
+Minimal left sidebar showing only icons; labels appear on hover. Maximizes content area.
+
+```tsx
+import { Avatar, Button, Card, Input, PillBadge, Sidebar } from '@cleen/ui';
+import { useState } from 'react';
+
+function AppWithIconSidebar() {
+  const activePage = 'dashboard';
+  const [search, setSearch] = useState('');
+
+  const navItems = [
+    { id: 'dashboard', label: 'Dashboard', iconName: 'HouseLine' },
+    { id: 'team', label: 'Team', iconName: 'Users' },
+    { id: 'projects', label: 'Projects', iconName: 'FolderOpen' },
+    { id: 'calendar', label: 'Calendar', iconName: 'Calendar' },
+    { id: 'documents', label: 'Documents', iconName: 'FileText' },
+    { id: 'reports', label: 'Reports', iconName: 'ChartBar' },
+  ];
+
+  const bottomNavItems = [
+    { id: 'settings', label: 'Settings', iconName: 'Gear' },
+    { id: 'help', label: 'Help', iconName: 'Question' },
+  ];
+
+  return (
+    <div className="flex min-h-screen bg-gray-50">
+      {/* Same Sidebar component as AppWithSidebar for identical behavior */}
+      <Sidebar
+        navItems={navItems}
+        bottomNavItems={bottomNavItems}
+        activeItem={activePage}
+        appLogo={<span className="text-lg font-semibold">Logo</span>}
+      />
+
+      {/* Main Content */}
+      <main className="flex-1">
+        <header className="bg-white border-b border-gray-200 px-8 py-6">
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+            <div className="flex items-center gap-4">
+              <Input
+                placeholder="Search..."
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+              />
+              <Button variant="secondary" label="Notifications" />
+              <Avatar name="Jane Doe" size="md" />
+            </div>
+          </div>
+        </header>
+
+        <section className="px-8 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card className="md:col-span-2" header={{ title: 'Overview', hasDivider: true }}>
+              <p className="text-sm text-gray-600">Page content goes here.</p>
+            </Card>
+            <Card header={{ title: 'Status', hasDivider: true }}>
+              <div className="flex flex-wrap gap-2">
+                <PillBadge label="Healthy" color="green" showDot />
+                <PillBadge label="2 Alerts" color="orange" />
+              </div>
+            </Card>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+```
+
+**Notes:**
+
+- Uses the same `Sidebar` component as the standard sidebar example for API parity.
+- Keep the same `navItems` and `bottomNavItems` shape (`id`, `label`, `iconName`) across both layouts.
+- Pass `activeItem` from page state/route to keep selection behavior identical.
+- Keep visual differences in content cards, not in sidebar implementation.
+
+---
+
+## Multi-Column Card Grid
+
+Responsive grid layout for displaying cards in 2, 3, or 4 columns depending on screen size.
+
+```tsx
+import { Card, PillBadge } from '@cleen/ui';
+
+function MultiColumnCardLayout() {
+  const cards = [
+    { id: 1, title: 'Card 1', description: 'First item' },
+    { id: 2, title: 'Card 2', description: 'Second item' },
+    { id: 3, title: 'Card 3', description: 'Third item' },
+    { id: 4, title: 'Card 4', description: 'Fourth item' },
+    { id: 5, title: 'Card 5', description: 'Fifth item' },
+    { id: 6, title: 'Card 6', description: 'Sixth item' },
+  ];
+
+  return (
+    <main className="max-w-7xl mx-auto px-6 py-8">
+      <h1 className="text-3xl font-bold text-gray-900 mb-8">Items</h1>
+
+      {/* 2-column md, 3-column lg, 4-column xl */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {cards.map((card) => (
+          <Card
+            key={card.id}
+            hoverable
+            header={{
+              content: (
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold text-gray-900">{card.title}</h3>
+                  <PillBadge label="New" color="blue" />
+                </div>
+              ),
+            }}
+          >
+            <div className="w-full h-32 rounded-lg bg-gray-200 mb-4" />
+            <p className="text-sm text-gray-600">{card.description}</p>
+          </Card>
+        ))}
       </div>
-      {index < activityItems.length - 1 && <Divider />}
-    </div>
-  ))}
-</Card>
+    </main>
+  );
+}
 ```
 
 **Notes:**
 
-- `index < items.length - 1 && <Divider />` — only renders a divider between items, not after the last one.
-- `cleen-flex-1 cleen-min-w-0` on the text column prevents long text from overflowing the row.
+- Responsive grid: 1 col mobile → 2 cols tablet → 3 cols desktop → 4 cols large screens.
+- Cards use `Card` with `hoverable` for interactivity.
+- Adjust gap-size: `gap-4` for tighter, `gap-8` for spacious layouts.
+- Use `xl:grid-cols-3` if 4 columns feels too cramped.
 
 ---
 
-## Danger Zone Card
+## Asymmetric Column Layout
 
-Visually distinct section for destructive actions. Always at the bottom of a settings section.
+One small column + one large column. Useful for sidebar + main content.
 
 ```tsx
-<Card color="var(--cleen-error)">
-  <div className="cleen-flex cleen-justify-between cleen-items-center">
-    <div>
-      <h3 className="cleen-text-base cleen-font-semibold cleen-text-error">
-        Danger zone
-      </h3>
-      <p className="cleen-text-sm cleen-text-gray/70 cleen-mt-1">
-        Permanently deletes all data. This cannot be undone.
-      </p>
-    </div>
-    <Button variant="danger" label="Delete account" onClick={openConfirm} />
-  </div>
-</Card>
+import { Card, Input, PillBadge, Tabs } from '@cleen/ui';
+import { useState } from 'react';
+
+function AsymmetricLayout() {
+  const [activeTab, setActiveTab] = useState(0);
+  const [keyword, setKeyword] = useState('');
+
+  return (
+    <main className="max-w-7xl mx-auto px-6 py-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Small left column (1/3 width) */}
+        <aside className="lg:col-span-1">
+          <Card className="sticky top-6" header={{ title: 'Filters', hasDivider: true }}>
+            <div className="space-y-4">
+              <Input
+                placeholder="Search by keyword..."
+                value={keyword}
+                onChange={(event) => setKeyword(event.target.value)}
+              />
+              <Tabs
+                tabs={[{ label: 'All' }, { label: 'Open' }, { label: 'Closed' }]}
+                currentTabIndex={activeTab}
+                onTabChange={setActiveTab}
+                variant="underlined"
+              />
+              <div className="flex flex-wrap gap-2">
+                <PillBadge label="Priority" color="orange" />
+                <PillBadge label="Assigned" color="blue" />
+                <PillBadge label="SLA" color="purple" />
+              </div>
+            </div>
+          </Card>
+        </aside>
+
+        {/* Large right column (2/3 width) */}
+        <section className="lg:col-span-2">
+          <div className="space-y-6">
+            {/* Card 1 */}
+            <Card header={{ title: 'Main Content', hasDivider: true }}>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                Main Content
+              </h2>
+              <p className="text-gray-600 mb-6">
+                This is the primary content area. The sidebar on the left stays sticky as you scroll.
+              </p>
+              <div className="h-64 rounded-lg bg-gray-100" />
+            </Card>
+
+            {/* Card 2 */}
+            <Card header={{ title: 'Secondary Content', hasDivider: true }}>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                Secondary Content
+              </h3>
+              <p className="text-gray-600">
+                Add more cards or sections as needed.
+              </p>
+            </Card>
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
 ```
 
 **Notes:**
 
-- `color="var(--cleen-error)"` automatically applies a reddish tint to the card background and border. No custom class needed.
-- Pair with a confirmation `Modal` — never execute destructive actions on a single click.
-
----
-
-## Mixed-width Grid (asymmetric columns)
-
-A 3-column grid where the last item spans 2 columns — useful for paired small + large content.
-
-```tsx
-<div className="cleen-grid cleen-grid-cols-1 lg:cleen-grid-cols-3 cleen-gap-6">
-  {/* Narrow card */}
-  <Card header={{ title: 'Summary', hasDivider: true }}>
-    <Chart
-      type="donut"
-      series={summarySeries}
-      options={donutOpts}
-      height={260}
-    />
-  </Card>
-
-  {/* Wide card — spans 2 of 3 columns */}
-  <Card
-    className="lg:cleen-col-span-2"
-    header={{ title: 'Detailed breakdown', hasDivider: true }}
-  >
-    <DataGrid tableHeaders={detailHeaders} rowData={detailRows} />
-  </Card>
-</div>
-```
-
-**Notes:**
-
-- `lg:cleen-col-span-2` only kicks in at the `lg` breakpoint — on mobile, both cards stack full-width.
-- This is the standard pattern for "summary + detail" side-by-side layout.
+- Left sidebar uses `lg:col-span-1`, right main uses `lg:col-span-2` — creates 1:2 split.
+- `sticky top-6` on sidebar keeps filters visible while scrolling.
+- On mobile, sidebar appears above main content (both full width).
+- Grid uses `gap-6` for consistent spacing between columns.
