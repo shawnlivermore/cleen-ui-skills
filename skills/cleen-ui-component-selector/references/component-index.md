@@ -85,7 +85,7 @@ A categorical listing of all components in `@cleen/ui`. Use this for a quick sca
 | `KanbanList` | `@cleen/ui` | Drag-and-drop Kanban in row-list layout |
 | `KanbanBlocks` | `@cleen/ui` | Individual Kanban sub-components for custom layouts |
 | `Card` | `@cleen/ui` | General-purpose content container with header/footer/media |
-| `Avatar` | `@cleen/ui` | User avatar from image or initials fallback |
+| `Avatar` | `@cleen/ui` | Circular media slot for profile photos, logos, or initials fallback |
 | `AvatarRow` | `@cleen/ui` | Stacked row of avatars with "+N" overflow indicator |
 | `PillBadge` | `@cleen/ui` | Compact badge for statuses, tags, and counts |
 | `GroupSelector` | `@cleen/ui` | Hierarchical group → item selector with create/edit/search |
@@ -119,7 +119,6 @@ A categorical listing of all components in `@cleen/ui`. Use this for a quick sca
 | Component | Import | One-liner |
 |---|---|---|
 | `Chart` | `@cleen/ui/charts` | Full ApexCharts wrapper: line, bar, pie, area, scatter, radar, etc. |
-| `SimpleChart` | `@cleen/ui/charts` | Minimal SVG line sparkline for compact trend display |
 
 ### Chart Variants (ApexCharts type values)
 

@@ -49,7 +49,7 @@ Common traps to avoid:
 App-level navigation panel — icon strip on the left with an optional expandable drawer for sub-navigation. The main chrome for any multi-section application.
 
 ```tsx
-import { Sidebar } from '@cleen/ui';
+import { Avatar, Sidebar } from '@cleen/ui';
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', iconName: 'HouseLine' },
@@ -101,7 +101,7 @@ const drawerContent = {
   navigationItems={navItems}
   bottomNavigationItems={bottomItems}
   drawerContent={drawerContent}
-  logo={<img src={logo} alt="Logo" />}
+  logo={<Avatar src={logo} name="Logo" size="md" />}
   onLogoClick={() => navigate('/')}
   userAvatar={<Avatar src={user.avatar} />}
   userInfo={<span>{user.name}</span>}
@@ -114,7 +114,7 @@ const drawerContent = {
 - `navigationItems` — main nav items at the top (required)
 - `bottomNavigationItems` — utility items at the bottom (settings, help)
 - `drawerContent` — `Record<itemId, ReactNode>` — what to render in the drawer when each item is active
-- `logo` / `onLogoClick` — logo rendered above nav items
+- `logo` / `onLogoClick` — logo rendered above nav items (prefer `Avatar` for circular logo marks)
 - `userAvatar` / `userInfo` — user section above bottom items
 - `drawerFooter` — footer content or factory `(activeMenuId) => ReactNode`
 - `drawerWidth` — drawer panel width in px (default 330)

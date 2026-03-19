@@ -197,9 +197,7 @@ function DashboardPage() {
         </Card>
       </div>
 
-      <Card header={{ title: 'Recent Activity', hasDivider: true }}>
-        <DataGrid tableHeaders={activityHeaders} rowData={activityRows} withSearch />
-      </Card>
+      <DataGrid title="Recent Activity" tableHeaders={activityHeaders} rowData={activityRows} withSearch />
     </AppShell>
   );
 }
@@ -350,15 +348,13 @@ function EventsPage() {
         </div>
       </div>
 
-      <Card>
-        <DataGrid
-          tableHeaders={eventHeaders}
-          rowData={events}
-          withSearch
-          withFilters
-          withFooter
-        />
-      </Card>
+      <DataGrid
+        tableHeaders={eventHeaders}
+        rowData={events}
+        withSearch
+        withFilters
+        withFooter
+      />
     </AppShell>
   );
 }
@@ -414,38 +410,35 @@ function SubsequentialEventsPage() {
       </div>
 
       <div className="flex flex-col gap-4 lg:gap-6">
-        <Card header={{ title: '1. Organizations', hasDivider: true }}>
-          <DataGrid
-            tableHeaders={organizationHeaders}
-            rowData={organizationRows}
-            withSearch
-            withFooter
-            onRowClick={handleOrganizationSelect}
-          />
-        </Card>
+        <DataGrid
+          title="1. Organizations"
+          tableHeaders={organizationHeaders}
+          rowData={organizationRows}
+          withSearch
+          withFooter
+          onRowClick={handleOrganizationSelect}
+        />
 
         {selectedOrgId && (
-          <Card header={{ title: '2. Projects', hasDivider: true }}>
-            <DataGrid
-              tableHeaders={projectHeaders}
-              rowData={projectRows}
-              withSearch
-              withFooter
-              onRowClick={handleProjectSelect}
-            />
-          </Card>
+          <DataGrid
+            title="2. Projects"
+            tableHeaders={projectHeaders}
+            rowData={projectRows}
+            withSearch
+            withFooter
+            onRowClick={handleProjectSelect}
+          />
         )}
 
         {selectedProjectId && (
-          <Card header={{ title: '3. Tasks', hasDivider: true }}>
-            <DataGrid
-              tableHeaders={taskHeaders}
-              rowData={taskRows}
-              withSearch
-              withFilters
-              withFooter
-            />
-          </Card>
+          <DataGrid
+            title="3. Tasks"
+            tableHeaders={taskHeaders}
+            rowData={taskRows}
+            withSearch
+            withFilters
+            withFooter
+          />
         )}
       </div>
     </AppShell>
@@ -486,9 +479,7 @@ function HelpCenterPage() {
           </div>
         </Card>
 
-        <Card>
-          <DataGrid tableHeaders={articleHeaders} rowData={articles} withSearch withFooter />
-        </Card>
+        <DataGrid tableHeaders={articleHeaders} rowData={articles} withSearch withFooter />
       </div>
     </AppShell>
   );

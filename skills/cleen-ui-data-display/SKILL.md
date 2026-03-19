@@ -17,10 +17,11 @@ Common traps to avoid:
 - Custom HTML table → use `DataGrid` or `DataGridWithFilters`
 - Raw `<ul>/<li>` card list → use `Card` + flex/grid or `DataGrid`
 - Hand-rolled Kanban columns → use `KanbanBoard` or `KanbanList`
-- Custom chart with D3/recharts → use `Chart` (ApexCharts) or `SimpleChart`
+- Custom chart with D3/recharts → use `Chart` (ApexCharts)
 - Custom spinner / loading div → use `Loader` or `Skeletons`
 - Raw `<span>` status labels → use `PillBadge`
 - Custom `<progress>` element → use `ProgressBar` or `ProgressCircle`
+- Wrapping `DataGrid` / `DataGridWithFilters` / `KanbanBoard` / `KanbanList` in `Card` → render advanced data components directly
 
 ---
 
@@ -33,13 +34,12 @@ Common traps to avoid:
 | Kanban (card grid) | `KanbanBoard` | `@cleen/ui` |
 | Kanban (row list) | `KanbanList` | `@cleen/ui` |
 | Content container | `Card` | `@cleen/ui` |
-| User avatar | `Avatar` / `AvatarRow` | `@cleen/ui` |
+| Circular media (user/logo/brand mark) | `Avatar` / `AvatarRow` | `@cleen/ui` |
 | Status tag / label | `PillBadge` | `@cleen/ui` |
 | Horizontal progress | `ProgressBar` | `@cleen/ui` |
 | Overlapping progress | `AdvancedProgressBar` | `@cleen/ui` |
 | Circular KPI | `ProgressCircle` | `@cleen/ui` |
 | Full interactive chart | `Chart` | `@cleen/ui/charts` |
-| Sparkline / trend | `SimpleChart` | `@cleen/ui/charts` |
 | Loading spinner | `Loader` | `@cleen/ui` |
 | Loading placeholder | `Skeletons` (see below) | `@cleen/ui` |
 
@@ -190,7 +190,12 @@ import { Card } from '@cleen/ui';
   hoverable
 >
   <div className="text-3xl font-bold">$48,200</div>
-  <SimpleChart data={revenueTrend} />
+  <Chart
+    type="line"
+    series={[{ name: 'Revenue', data: revenueTrend }]}
+    options={{ chart: { sparkline: { enabled: true } }, stroke: { width: 2 }, tooltip: { enabled: false } }}
+    height={64}
+  />
 </Card>
 
 // Coloured card
@@ -271,7 +276,7 @@ import { PillBadge } from '@cleen/ui';
 Import from the separate `charts` entry point.
 
 ```tsx
-import { Chart, SimpleChart } from '@cleen/ui/charts';
+import { Chart } from '@cleen/ui/charts';
 
 // Full interactive chart (line, bar, pie, area, scatter, radar...)
 <Chart
@@ -295,7 +300,12 @@ import { Chart, SimpleChart } from '@cleen/ui/charts';
 // Sparkline inside a card
 <Card header={{ title: 'Weekly Signups' }} p={20}>
   <div className="text-2xl font-bold">1,284</div>
-  <SimpleChart data={[32, 45, 38, 56, 49, 62]} width={200} height={60} />
+  <Chart
+    type="line"
+    series={[{ name: 'Signups', data: [32, 45, 38, 56, 49, 62] }]}
+    options={{ chart: { sparkline: { enabled: true } }, stroke: { width: 2 }, tooltip: { enabled: false } }}
+    height={60}
+  />
 </Card>
 ```
 

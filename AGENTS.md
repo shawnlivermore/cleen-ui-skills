@@ -114,6 +114,18 @@ When introducing color overrides/aliases, keep text/background contrast readable
 ### 11. Default app shell on first page
 If a user asks for the first page without layout direction, use the default SaaS App Shell pattern: left sidebar + main content on the right, with no root-level margin/padding wrappers.
 
+### 12. Do not wrap advanced data components in Card
+Do not wrap `DataGrid`, `DataGridWithFilters`, `KanbanBoard`, or `KanbanList` inside `Card`. These components should be rendered directly in layout containers.
+
+### 13. Prefer Chart over SimpleChart
+Always choose `Chart` from `@cleen/ui/charts`. Do not generate `SimpleChart` usage in new code examples.
+
+### 14. Avatar is not user-only
+Use `Avatar` for any circular media slot (user photos, team logos, brand marks, or icon-like circular thumbnails), not only profile avatars.
+
+### 15. DatePicker over Input date types
+For all date or date-range fields, use `DatePicker`. Do not use `Input type="date"` or datetime input types for date workflows.
+
 ---
 
 ## Reference files
@@ -151,3 +163,6 @@ If you find yourself about to write any of the following, stop and load the rele
 | Hand-built step tracker + next/back buttons | `Wizard` |
 | Individual `useState` per form field | `useForm` |
 | `<input>`, `<select>`, `<textarea>` raw elements | Library input components (`Input`, `Select`, `TextArea`, etc.) |
+| `Input type="date"` / date-like native input | `DatePicker` |
+| `SimpleChart` for new charts | `Chart` |
+| `Card` wrapping `DataGrid` / `KanbanBoard` | Render data component directly |

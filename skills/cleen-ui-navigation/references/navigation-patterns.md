@@ -23,6 +23,7 @@ Full app layout with sidebar navigation and an outlet for routed pages.
 
 ```tsx
 import {
+  Avatar,
   Sidebar,
   DrawerContainer,
   DrawerContentTitle,
@@ -95,16 +96,16 @@ function AppShell() {
   };
 
   return (
-    <div className="cleen flex h-screen">
+    <div className="flex h-screen">
       <Sidebar
         navigationItems={navItems}
         bottomNavigationItems={bottomItems}
         drawerContent={drawerContent}
         activeId={activeId}
         onActiveChange={handleActiveChange}
-        logo={<img src="/logo.svg" alt="FOXHOUND" className="h-8" />}
+        logo={<Avatar src="/logo.svg" name="FOXHOUND" size="md" />}
         onLogoClick={() => navigate('/')}
-        userAvatar={<img src={user.avatarUrl} alt={user.name} />}
+        userAvatar={<Avatar src={user.avatarUrl} name={user.name} size="sm" />}
         userInfo={
           <span className="text-sm font-medium">{user.name}</span>
         }
@@ -488,7 +489,7 @@ function AgentsPage() {
   const totalPages = Math.ceil((data?.totalCount ?? 0) / pageSize);
 
   return (
-    <div className="cleen flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <DataGrid
         title="Agents"
         tableHeaders={headers}

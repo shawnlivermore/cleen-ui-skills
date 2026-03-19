@@ -77,6 +77,16 @@ const { form, setField, isDirty, reset } = useForm<MyForm>({ defaultValue });
 const { errors, setError, clearError } = useValidation<MyFormErrors>({});
 ```
 
+## Date Inputs Policy (MANDATORY)
+
+For any date or date-range workflow, always use `DatePicker`.
+
+For datetime workflows, still use `DatePicker` for the date portion and pair it with a dedicated time control if needed.
+
+- Use `mode="single"` for one date.
+- Use `mode="range"` for start/end ranges.
+- Do not use `Input type="date"`, `type="datetime-local"`, or native date-time input variants.
+
 ---
 
 ## Layout: FormGroup

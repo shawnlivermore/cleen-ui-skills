@@ -99,3 +99,7 @@ Open terminal inside your project, run this command `npx skills add https://gith
 - **`showNotification`** for toasts — never `alert()`, custom toast markup, or `window.confirm()`.
 - **No custom tables** — `DataGrid` or `DataGridWithFilters` for all tabular data.
 - **Default first-page shell** — if layout is unspecified, start with the default SaaS App Shell (left sidebar + right content, no root-level margin/padding wrappers).
+- **Do not wrap advanced data surfaces in Card** — render `DataGrid`/`DataGridWithFilters`/`KanbanBoard`/`KanbanList` directly.
+- **Chart over SimpleChart** — always prioritize `Chart` for new examples.
+- **Avatar is reusable circular media** — use for logos/brand marks as well as user photos.
+- **DatePicker over native date input** — avoid `Input type="date"` / datetime-native input types.

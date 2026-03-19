@@ -14,6 +14,8 @@ This skill covers structuring pages and content containers using the @cleen/* pa
 > **`Card` is the default container for any distinct content block. Reach for it first.**
 > **Reuse library layout components within each other — avoid building wrapper divs or custom styled containers if the design of the layout component already provides the desired styling.**
 
+Exception: `DataGrid`, `DataGridWithFilters`, `KanbanBoard`, and `KanbanList` are advanced data surfaces and should be rendered directly in layout containers, not wrapped inside `Card`.
+
 Common traps to avoid:
 
 - Custom `<div>` containers with hand-rolled border/shadow/padding → use `Card`
@@ -268,7 +270,7 @@ import { PillBadge } from '@cleen/ui';
 
 ### Avatar
 
-User profile picture with initials fallback.
+Circular media with initials fallback. Use for profile photos, team logos, brand marks, or icon-like circular thumbnails.
 
 ```tsx
 import { Avatar } from '@cleen/ui';

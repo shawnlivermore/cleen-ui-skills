@@ -17,7 +17,7 @@ Use this file when two or more components seem interchangeable. Each section com
 9. [KanbanBoard vs KanbanList vs KanbanBlocks](#kanbanboard-vs-kanbanlist-vs-kanbanblocks)
 10. [Stepper vs Wizard vs Tabs](#stepper-vs-wizard-vs-tabs)
 11. [ProgressBar vs AdvancedProgressBar vs ProgressCircle](#progressbar-vs-advancedprogressbar-vs-progresscircle)
-12. [Chart vs SimpleChart](#chart-vs-simplechart)
+12. [Chart Selection](#chart-selection)
 13. [AiInput vs AiTextArea vs AiWidget](#aiinput-vs-aitextarea-vs-aiwidget)
 14. [AudioPlayback vs AudioRecorder](#audioplayback-vs-audiorecorder)
 15. [Tooltip vs Popover vs Menu](#tooltip-vs-popover-vs-menu)
@@ -201,17 +201,16 @@ All three involve multiple sections. The difference is **whether steps are seque
 
 ---
 
-## Chart vs SimpleChart
+## Chart selection
 
-| | Chart | SimpleChart |
-|---|---|---|
-| **Engine** | ApexCharts | Pure SVG |
-| **Chart types** | Line, bar, pie, area, scatter, radar, bell curve, etc. | Line sparkline only |
-| **Interactivity** | Tooltips, zoom, legend, drill-down | None |
-| **Bundle size** | Heavy (ApexCharts) | Minimal |
-| **Use case** | Dashboard panels, dedicated chart views | Compact trend in cards, table cells |
+| | Chart |
+|---|---|
+| **Engine** | ApexCharts |
+| **Chart types** | Line, bar, pie, area, scatter, radar, bell curve, etc. |
+| **Interactivity** | Tooltips, zoom, legend, drill-down |
+| **Use case** | Dashboard panels, dedicated chart views, compact trend summaries |
 
-**Pick rule:** Need **interaction** (hover, zoom, legend) or **non-line chart types**? → **Chart**. Need a **lightweight inline sparkline**? → **SimpleChart**.
+**Pick rule:** Always use **Chart** for new examples and implementations.
 
 ---
 
@@ -278,9 +277,9 @@ Both segment content, but the UX model differs.
 
 | | Avatar | AvatarRow |
 |---|---|---|
-| **Quantity** | Single user | Multiple users |
+| **Quantity** | Single circular media slot | Multiple circular media items |
 | **Overflow handling** | None | "+N more" indicator |
 | **Selection** | `isSelected` prop | `onAvatarToggle` callback |
-| **Use case** | Single user display (comments, profile) | "Members of team X" with overflow |
+| **Use case** | One avatar/logo/brand mark display | "Members of team X" with overflow |
 
-**Pick rule:** Showing **one user**? → **Avatar**. Showing a **group with overflow handling**? → **AvatarRow**.
+**Pick rule:** Showing **one circular media item** (person or logo)? → **Avatar**. Showing a **group with overflow handling**? → **AvatarRow**.

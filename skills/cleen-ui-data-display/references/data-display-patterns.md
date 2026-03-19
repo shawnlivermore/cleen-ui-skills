@@ -20,7 +20,7 @@ A typical dashboard: top row of KPI stat cards, followed by a chart panel and a 
 ```tsx
 import { Card, PillBadge, ProgressBar, Avatar, Loader, SkeletonWidgetCard, SkeletonChart,  } from '@cleen/ui';
 import { DataGrid } from '@cleen/ui-pro';;
-import { Chart, SimpleChart } from '@cleen/ui/charts';
+import { Chart } from '@cleen/ui/charts';
 import type { TableHeaderProps } from '@cleen/ui';
 
 interface ActivityRow extends Record<string, unknown> {
@@ -54,7 +54,12 @@ function StatCard({ title, value, trend, badge, badgeColor }: StatCardProps) {
         {badge && <PillBadge label={badge} color={badgeColor} variant="pill" />}
       </div>
       <div className="text-2xl font-bold">{value}</div>
-      <SimpleChart data={trend} width={160} height={40} />
+      <Chart
+        type="line"
+        series={[{ name: title, data: trend }]}
+        options={{ chart: { sparkline: { enabled: true } }, stroke: { width: 2 }, tooltip: { enabled: false } }}
+        height={40}
+      />
     </Card>
   );
 }

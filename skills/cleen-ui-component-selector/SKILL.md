@@ -22,7 +22,8 @@ Common traps to avoid:
 - Crafting custom toast/alert logic → use `Notification` (function API)
 - Hand-rolling a stepped form → use `Wizard`
 - Building a custom audio player or recorder → use `AudioPlayback` or `AudioRecorder`
-- Writing a custom chart → use `Chart` or `SimpleChart`
+- Writing a custom chart → use `Chart`
+- Wrapping `DataGrid` / `DataGridWithFilters` / `KanbanBoard` / `KanbanList` with `Card` → render the advanced data component directly
 
 ---
 
@@ -97,7 +98,8 @@ Common traps to avoid:
 **DatePicker**
 - Date or date-range selector via calendar popover.
 - DO pass `mode="range"` for start/end date pairs. DO use `min`/`max` for constrained ranges.
-- DON'T use for time — it's date-only.
+- DO use `DatePicker` as the date primitive for both date and datetime workflows (pair with a separate time control if needed).
+- DON'T use native date inputs such as `Input type="date"` for date workflows.
 
 **CreditCardInput**
 - Full credit card form: number, expiry, CVC with card visualization.
@@ -231,7 +233,7 @@ Common traps to avoid:
 - DON'T nest Cards deeply — one level of Card hierarchy is usually enough.
 
 **Avatar** / **AvatarRow**
-- `Avatar`: single user avatar. `AvatarRow`: stacked row with overflow count.
+- `Avatar`: single circular media element (profile image, logo, brand mark, initials fallback). `AvatarRow`: stacked row with overflow count.
 - DO use `AvatarRow` when showing "members of X" with a "+N more" pattern.
 - DON'T use `AvatarRow` when you need individual click actions per avatar — iterate `Avatar` manually.
 
@@ -298,11 +300,6 @@ Common traps to avoid:
 - Full ApexCharts wrapper: line, bar, pie, area, scatter, radar, etc.
 - DO use when you need interactive charts with tooltips, legends, zoom, and rich config.
 - DON'T pass raw ApexCharts options without typing them — use the exported option types.
-
-**SimpleChart**
-- Minimal SVG line chart for sparkline-style display.
-- DO use for compact trend indicators embedded in cards or table cells.
-- DON'T use when you need interactivity, legends, or axes — use `Chart`.
 
 ---
 
