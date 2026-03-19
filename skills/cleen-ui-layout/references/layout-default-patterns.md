@@ -9,6 +9,8 @@ These patterns should be the **default output** when users ask for Home, Dashboa
 - Use library components first (`Card`, `DataGrid`, `Tabs`, `Avatar`, `PillBadge`, `Divider`, `Sidebar`)
 - Use the consumer project's default Tailwind classes
 - Keep a neutral card-heavy layout with a left rail and content canvas, matching the provided reference images
+- For first-page defaults, use the SaaS App Shell with no root-level margin/padding wrappers
+- Do not add `.cleen` root wrappers or `cleen-*` utility classes in consumer app code
 
 ---
 
@@ -55,8 +57,8 @@ function AppShell({ children }: { children: React.ReactNode }) {
         />
 
         {/* Main canvas */}
-        <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-7xl flex flex-col gap-6">{children}</div>
+        <main className="flex-1 min-w-0">
+          <div className="flex h-screen flex-col gap-6 overflow-y-auto">{children}</div>
         </main>
       </div>
     </div>
@@ -66,7 +68,7 @@ function AppShell({ children }: { children: React.ReactNode }) {
 
 **Notes:**
 
-- Preserve lots of whitespace (`gap-6`, `p-6+`) to match the clean SaaS visual style.
+- Keep shell-level spacing neutral (`gap-*` inside content sections), with no root margin/padding wrappers.
 - Keep cards as the primary grouping unit; avoid floating standalone text blocks.
 - Use `Sidebar` as the default left navigation container instead of custom `<aside>` markup.
 
@@ -216,8 +218,6 @@ Default internal profile/settings layout from the references: identity strip, ta
 
 ```tsx
 function ProfileSettingsPage() {
-  const [tab, setTab] = useState(0);
-
   return (
     <AppShell>
       <div className="flex items-center justify-between">
@@ -239,8 +239,6 @@ function ProfileSettingsPage() {
           { label: 'Tickets' },
           { label: 'Notifications' },
         ]}
-        currentTabIndex={tab}
-        onTabChange={setTab}
         variant="underlined"
       />
 

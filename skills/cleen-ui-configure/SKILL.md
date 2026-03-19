@@ -7,6 +7,13 @@ description: Configure @cleen/ui — currently CSS color variables. Use this ski
 
 This skill covers customizing `@cleen/ui` theming via CSS variables. Currently: **color variables only**.
 
+## Non-Negotiable Theming Rules
+
+- In consumer projects, do not add ad-hoc hex literals for UI theming when a library color variable can be used.
+- Define custom project color aliases by inheriting from `--cleen-*` variables.
+- Keep all variable values as bare RGB triplets (or `var(--cleen-*)` references), never `#hex` or `rgb(...)` values for variable definitions.
+- Ensure readable foreground/background contrast. Target at least 4.5:1 for normal text and 3:1 for large text/UI emphasis.
+
 ---
 
 ## How the Color System Works
@@ -21,7 +28,6 @@ The values are bare `R, G, B` triplets — **not** wrapped in `rgb()`. This is i
 
 /* ❌ wrong — breaks transparency */
 --cleen-primary: rgb(99, 102, 241);
---cleen-primary: #6366f1;
 ```
 
 **Creating custom CSS variables:** If building color variables for a consumer project (not the library), follow the same RGB triplet format so Tailwind's opacity modifiers work seamlessly. Prefer inheriting values from library variables instead of creating entirely new ones.
@@ -32,7 +38,7 @@ The values are bare `R, G, B` triplets — **not** wrapped in `rgb()`. This is i
 --project-secondary: 236, 72, 153;         /* custom but inherits library color space */
 
 /* Avoid — isolated colors lose design system continuity */
---project-quirky: #a78bfa;  /* breaks opacity, orphaned from system */
+--project-quirky: 167, 139, 250;  /* still isolated if unrelated to semantic variables */
 ```
 
 ---
@@ -90,14 +96,29 @@ Before creating custom color variables in your project, **check if a library var
 :root {
   /* \u2705 Prefer using library variables directly */
   --app-primary: var(--cleen-primary);
+  --app-text-strong: var(--cleen-gray);
+  --app-surface: var(--cleen-background);
   
-  /* \u2705 Or inherit a library color and apply your own name */
-  --app-warning-light: rgba(var(--cleen-warning), 0.1);
+  /* ✅ Alias semantic colors for app-specific naming */
+  --app-critical: var(--cleen-error);
   
-  /* \u274c Avoid isolated hex colors unLinked from the system */
-  --app-quirky: #a78bfa;  /* orphaned from design system */
+  /* ❌ Avoid creating arbitrary variables disconnected from semantic roles */
+  --app-quirky: 167, 139, 250;
 }
 ```
+
+When Tailwind is available, leverage opacity variants with variable-backed utilities (for example, text utilities using RGB variables and classes such as `text-primary/70`) instead of creating separate hard-coded color values.
+
+---
+
+## Contrast Safety Checklist
+
+Before finalizing overrides:
+
+- Verify primary text against background is at least 4.5:1.
+- Verify large text, badges, and UI emphasis elements are at least 3:1.
+- Avoid reducing text opacity below readable thresholds on light backgrounds (for example `text-*/40` often fails for body text).
+- If a color feels too faint, increase contrast by darkening text aliases (`--app-text-strong`) or lightening surface aliases (`--app-surface`) using library-derived variables.
 
 ---
 

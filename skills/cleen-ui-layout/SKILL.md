@@ -1,11 +1,11 @@
 ---
 name: cleen-ui-layout
-description: Build page layouts using @cleen/ui. Trigger this skill whenever implementing any page structure, content container, dashboard, settings panel, detail view, or any UI that needs to be laid out visually. This includes vague prompts like "build a dashboard", "create a profile page", "make a settings layout", "design a detail view", "add a stats section", "build a landing page section", or "organize this content into cards". The primary purpose is to PREVENT building layouts from scratch with raw divs, rolling custom card markup, or forgetting the `cleen-` prefix and `.cleen` scoping wrapper. Trigger on any request that involves visual page composition — cards, grids, headers, stat rows, detail panels, or any content organization.
+description: Build page layouts using @cleen/ui. Trigger this skill whenever implementing any page structure, content container, dashboard, settings panel, detail view, or any UI that needs to be laid out visually. This includes vague prompts like "build a dashboard", "create a profile page", "make a settings layout", "design a detail view", "add a stats section", "build a landing page section", or "organize this content into cards". The primary purpose is to PREVENT building layouts from scratch with raw divs, rolling custom card markup, or introducing off-system styling when library components and project Tailwind already cover the need. Trigger on any request that involves visual page composition — cards, grids, headers, stat rows, detail panels, or any content organization.
 ---
 
 # Layout Skill
 
-This skill covers structuring pages and content containers using the @cleen/* packages and its Tailwind system. The fundamental unit is `Card`. Grids are built with Tailwind (prefixed). Everything lives inside a `.cleen` scope wrapper.
+This skill covers structuring pages and content containers using the @cleen/* packages and the consumer project's Tailwind system. The fundamental unit is `Card`.
 
 ---
 
@@ -20,8 +20,8 @@ Common traps to avoid:
 - Section wrapper div inside a Card that duplicates Card styling → nest `Card` inside `Card` or use `Divider` instead
 - `<hr>` for section separators → use `Divider`
 - Raw `<span>` with colored background for status tags → use `PillBadge`
-- Custom CSS file to style a wrapper container → use `Card` or another layout component
-- Non-prefixed Tailwind classes (`flex`, `grid`, `gap-4` in a consumer project) → use your project's default Tailwind config (not the library's `cleen-` prefixed classes, which are for the library's internal use only)
+- Custom CSS file (`App.css`, `*.scss`) to style a wrapper container in a Tailwind project → use Tailwind + `Card` or another layout component
+- `cleen` / `cleen-*` class names in consumer app code → use project Tailwind utilities and library components only
 - Rolling a custom avatar or initials component → use `Avatar` / `AvatarRow`
 
 ---
@@ -37,8 +37,12 @@ When styling **your own components** in a consumer project, use Tailwind utiliti
 <div className="flex gap-4 grid grid-cols-3 p-6">
 
 // ❌ Don't spread cleen- classes through your app
-<div className="flex gap-4 grid grid-cols-3 p-6">
+<div className="cleen-flex cleen-gap-4 cleen-grid cleen-grid-cols-3 cleen-p-6">
 ```
+
+### 1.1 Never add `.cleen` root wrappers in consumer apps
+
+Do not add `className="cleen"` to `App`, root layouts, or page containers in consumer projects.
 
 ### 2. Prefer library components over custom styling
 
@@ -54,10 +58,24 @@ Instead of reaching for CSS files or custom Tailwind utilities, **reuse library 
 </Card>
 
 // ❌ Don't create wrapper divs that mimic Card
-<div style={{ border: '1px solid #e5e7eb', padding: '24px', borderRadius: '8px' }}>
+<div style={{ border: '1px solid rgba(var(--cleen-light-gray), 0.6)', padding: '24px', borderRadius: '8px' }}>
   {/* custom styling that duplicates Card functionality */}
 </div>
 ```
+
+### 3. Default Layout Selection Protocol (MANDATORY)
+
+When the user does not specify layout structure, use a default SaaS pattern from `references/layout-default-patterns.md`.
+
+Selection order:
+
+1. First page / first layout request in a project → **SaaS App Shell (Default)**
+2. Home-like content (welcome + progress + quick actions) → **SaaS Home Screen (Default)**
+3. KPI/analytics-heavy page → **SaaS Dashboard Screen (Default)**
+4. Account/profile settings → **SaaS Profile Settings Screen (Default)**
+5. Admin/events/data listing → **SaaS Data List Screen (Default)**
+
+For the first page default shell, enforce: left sidebar + right main content, with **no root-level margin/padding wrappers**.
 
 ---
 
@@ -65,13 +83,15 @@ Instead of reaching for CSS files or custom Tailwind utilities, **reuse library 
 
 **When you're tempted to create a custom CSS file or write stylesheet code, reach for a library component instead.**
 
+If Tailwind is installed, do not create new layout or component classes in `App.css` for page composition.
+
 ### The Decision Tree
 
 1. **"I need a container with padding, border, and shadow"** → `Card` (not a `<div>` with custom CSS)
 2. **"I need to separate sections visually"** → `Divider` (not an `<hr>` or custom `border-top`)
 3. **"I need a status indicator or label"** → `PillBadge` (not a `<span>` with background color)
 4. **"I need to layout rows/columns with spacing"** → `Card` + Tailwind utilities from your project config (not custom layout CSS)
-5. **"I need grid or flex layout"** → Use your project's Tailwind config (`flex`, `gap-4`, `grid`) \*inside\* Card or library components (not unprefixed classes at page root; not custom CSS)
+5. **"I need grid or flex layout"** → Use your project's Tailwind config (`flex`, `gap-4`, `grid`) inside `Card` or library components (not custom stylesheet classes)
 
 ### Anti-Pattern: Custom CSS for Component-Like Styling
 
@@ -80,7 +100,7 @@ Instead of reaching for CSS files or custom Tailwind utilities, **reuse library 
 // styles.css
 .section-container {
   padding: 24px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid rgba(var(--cleen-light-gray), 0.6);
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }

@@ -1,6 +1,6 @@
 ---
 name: cleen-ui-setup
-description: Set up the Cleen UI monorepo packages (@cleen/ui-core, @cleen/ui, @cleen/ui-pro) in a user's existing project. Use this skill whenever the user asks how to install, set up, integrate, or add Cleen Components to their project, or when they mention setting up the library, getting started with it, importing the CSS, wrapper classes, or Tailwind prefixes. Trigger this skill proactively even if the user just says something like "how do I use this in my app?" or "can you help me get this working in my project?".
+description: Set up the Cleen UI monorepo packages (@cleen/ui-core, @cleen/ui, @cleen/ui-pro) in a user's existing project. Use this skill whenever the user asks how to install, set up, integrate, or add Cleen Components to their project, or when they mention setting up the library, getting started with it, importing the CSS, or Tailwind usage. Trigger this skill proactively even if the user just says something like "how do I use this in my app?" or "can you help me get this working in my project?".
 ---
 
 # Cleen UI Setup Skill
@@ -16,7 +16,7 @@ This skill walks through installing and wiring up the Cleen UI libraries into an
 1. **Detect package manager** from the user's project
 2. **Install the required packages** (`@cleen/ui-core`, `@cleen/ui`, and optionally `@cleen/ui-pro`)
 3. **Import the root stylesheet** (`@cleen/ui-core/dist/styles.css`)
-4. **Apply the `.cleen` wrapper class** to the app root
+4. **Apply Tailwind-first styling rules** in the project's global stylesheet (not `App.css`)
 5. **Place `<CleenNotificationContainer />`** in the root layout/app file
 6. _(Optional)_ **Set up dark mode**
 
@@ -61,6 +61,8 @@ _(Add `@cleen/ui-pro` to the command if the user has pro access or requests it)_
 
 The core stylesheet **must** be imported for any components to look correct. Prepend the import to the project's global CSS file (e.g., `src/index.css`, `app/globals.css`).
 
+If both a global CSS file and `App.css` exist, prefer the global CSS entry (`index.css`/`globals.css`) and avoid introducing new component/layout classes in `App.css` when Tailwind is installed.
+
 ```css
 @import '@cleen/ui-core/dist/styles.css';
 ```
@@ -69,22 +71,25 @@ The core stylesheet **must** be imported for any components to look correct. Pre
 
 ---
 
-## Step 4 — Apply the Stylesheet Scope Wrapper
+## Step 4 — Tailwind-First Styling Rules
 
-**CRITICAL:** All Cleen UI components expect to be rendered inside a `.cleen` CSS scope. The library uses the `cleen-` prefix for all its generated Tailwind utility classes.
+**CRITICAL:** In consumer projects, use the project's own Tailwind utilities and component classes. Do not add `.cleen` wrapper classes in app code and do not spread `cleen-` prefixed utility classes through the project.
 
-You must wrap the application's root in a `div` or `main` (or the `body` tag) with the `cleen` class.
+Use this checklist:
+
+- Keep styling in Tailwind utility classes first
+- Keep global variable overrides in `index.css` / `globals.css`
+- Do not create new layout/component classes in `App.css` when Tailwind already exists
+- If custom CSS is unavoidable, keep it minimal and variable-driven
 
 ### Example — standard React App.tsx
 
 ```tsx
 export default function App() {
   return (
-    <div className="cleen">
-      <BrowserRouter>
-        <Routes>...</Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>...</Routes>
+    </BrowserRouter>
   );
 }
 ```
@@ -99,7 +104,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="cleen">{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
@@ -112,24 +117,23 @@ The `cleen-` prefix and library imports are **for the library's internals and in
 - ✅ Use prefixed utilities only when working inside the library source itself
 - ✅ Use the project's default Tailwind config (unprefixed: `flex`, `p-4`, `grid`, etc.) for all consumer project components
 - ❌ **Do NOT spread `cleen-` classnames throughout the consumer application** — that's a library concern, not a project concern. 
+- ❌ **Do NOT add `.cleen` wrapper classes to app roots in consumer projects**.
 
 ---
 
 ## Step 5 — Place `<CleenNotificationContainer />`
 
-The `CleenNotificationContainer` renders the global notification portal and must live high in the component tree, _inside_ the `.cleen` wrapper.
+The `CleenNotificationContainer` renders the global notification portal and must live high in the component tree.
 
 ```tsx
 import { CleenNotificationContainer } from '@cleen/ui';
 
 export default function App() {
   return (
-    <div className="cleen">
-      <BrowserRouter>
-        <Routes>...</Routes>
-        <CleenNotificationContainer />
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>...</Routes>
+      <CleenNotificationContainer />
+    </BrowserRouter>
   );
 }
 ```
@@ -140,7 +144,7 @@ _Note for Next.js:_ If placing this in a Server Component layout, it might requi
 
 ## Step 6 (Optional) — Set Up Dark Mode
 
-The library uses Tailwind's **class-based dark mode**. It activates when the `cleen-dark` class (or standard `dark` depending on preset config) is present. Wait for the user to ask for dark mode before configuring this.
+The library uses Tailwind's **class-based dark mode**. In consumer projects, prefer the standard `dark` class strategy from the host app's Tailwind config. Wait for the user to ask for dark mode before configuring this.
 
 ---
 
@@ -150,5 +154,5 @@ After completing all steps, summarize:
 
 - Packages installed (`@cleen/ui-core`, `@cleen/ui`, etc.)
 - Where the CSS (`@cleen/ui-core/dist/styles.css`) was imported
-- Where the `.cleen` wrapper class was applied
+- Confirmation that no `.cleen` wrapper class was introduced in consumer app code
 - Where the `<CleenNotificationContainer />` was placed

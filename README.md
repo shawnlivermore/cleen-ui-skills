@@ -90,8 +90,12 @@ Open terminal inside your project, run this command `npx skills add https://gith
 
 - **No `.cleen` scope wrapper in consumer projects** — use your app's own layout/container classes at the page root.
 - **No `cleen-` Tailwind utility classes in consumer code** — use your project's standard unprefixed utilities (`flex`, `gap-4`, `grid-cols-3`, etc.).
+- **Tailwind-first in consumer apps** — if Tailwind is installed, avoid creating layout/component styles in `App.css`/`*.scss` unless explicitly requested.
 - **CSS variables as bare RGB triplets** — `--cleen-primary: 99, 102, 241` not `rgb(...)` or hex.
+- **Reuse library color variables** — prefer `var(--cleen-*)` aliases over ad-hoc custom color literals.
+- **Readable contrast is required** — keep text/background combinations at accessible contrast levels where practical.
 - **`useDisclosure`** for all overlay open/close state — never raw `useState(false)`.
 - **`useForm` + `useValidation`** for form state — never hand-roll field state management.
 - **`showNotification`** for toasts — never `alert()`, custom toast markup, or `window.confirm()`.
 - **No custom tables** — `DataGrid` or `DataGridWithFilters` for all tabular data.
+- **Default first-page shell** — if layout is unspecified, start with the default SaaS App Shell (left sidebar + right content, no root-level margin/padding wrappers).

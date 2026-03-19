@@ -57,28 +57,25 @@ If you need to adjust spacing or alignment beyond FormGroup's defaults, use your
 
 ---
 
-## Core Building Blocks
+## Hook Enforcement (MANDATORY)
 
-| Need | Component / Hook |
-|---|---|
-| Form layout rows | `FormGroup` |
-| Text input | `Input` |
-| Multi-line text | `TextArea` |
-| Dropdown (static options) | `Select` |
-| Dropdown (async search) | `Lookup` |
-| Single checkbox | `Checkbox` |
-| Multiple checkboxes | `CheckboxGroup` |
-| On/off toggle | `Switch` |
-| Single choice (text labels) | `RadioButtonGroup` |
-| Single choice (rich cards) | `RadioBoxGroup` |
-| Date / date range | `DatePicker` |
-| Numeric range | `RangeSlider` |
-| Single numeric value | `Slider` |
-| Field error / info messages | `InfoLabels` |
-| Form state management | `useForm` |
-| Validation state | `useValidation` |
-| Submit / cancel | `Button` (`primary` / `secondary`) |
-| AI-assisted text field | `AiInput` / `AiTextArea` |
+Use library hooks whenever the library already provides the state model.
+
+- Form values and dirty/reset behavior: `useForm`
+- Form validation messages: `useValidation`
+- Modal/Drawer/Popover open-close state for form containers: `useDisclosure`
+
+Do not replace these with custom `useState` patterns for the same responsibility.
+
+Allowed `useState` cases are limited to truly local UI concerns not covered by a library hook (for example, temporary loading booleans like `isSaving`).
+
+If a form is presented inside an overlay, combine hooks explicitly:
+
+```tsx
+const { isOpen, open, close } = useDisclosure();
+const { form, setField, isDirty, reset } = useForm<MyForm>({ defaultValue });
+const { errors, setError, clearError } = useValidation<MyFormErrors>({});
+```
 
 ---
 
@@ -122,7 +119,7 @@ const [name, setName] = useState('');
 const [email, setEmail] = useState('');
 const [role, setRole] = useState('');
 // ^ Lost form-level state, no dirty tracking, verbose
-```.
+```
 
 ```tsx
 interface ProfileForm {

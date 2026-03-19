@@ -47,7 +47,7 @@ Multiple skills may apply to a single feature — load all relevant ones.
 These are non-negotiable conventions the library enforces. Violating any of them will produce broken or unstyled UI.
 
 ### 1. No `.cleen` scope wrapper in consumer projects
-Do not add `.cleen` wrappers to page roots in consumer applications. Use your project's own layout/container classes.
+Do not add `.cleen` wrappers to page roots in consumer applications. Do not use `className="cleen"` in consumer app code at all. Use your project's own layout/container classes.
 
 ```tsx
 // correct (consumer project)
@@ -101,6 +101,18 @@ Use `showNotification` for all ephemeral feedback (success, error, warning, info
 
 ### 7. `useForm` + `useValidation` for forms
 Do not manage form field state with individual `useState` calls or raw `onChange` handlers. Use `useForm` for state and `useValidation` for validation logic.
+
+### 8. Tailwind-first in consumer projects
+If the consumer project already has Tailwind installed, prioritize Tailwind utilities and library components. Do not create or extend `App.css`/`*.scss` for layout or component styling unless the user explicitly asks for custom stylesheet work.
+
+### 9. Use library color variables, not ad-hoc hex
+Do not introduce raw hex color literals in consumer component styles when a library variable can be used. Prefer `var(--cleen-*)` variables or project aliases that inherit from them in RGB triplet format.
+
+### 10. Enforce readable contrast
+When introducing color overrides/aliases, keep text/background contrast readable. Target WCAG AA-level contrast where practical (at least 4.5:1 for normal body text, 3:1 for large text/UI emphasis).
+
+### 11. Default app shell on first page
+If a user asks for the first page without layout direction, use the default SaaS App Shell pattern: left sidebar + main content on the right, with no root-level margin/padding wrappers.
 
 ---
 
