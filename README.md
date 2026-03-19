@@ -103,3 +103,4 @@ Open terminal inside your project, run this command `npx skills add https://gith
 - **Chart over SimpleChart** — always prioritize `Chart` for new examples.
 - **Avatar is reusable circular media** — use for logos/brand marks as well as user photos.
 - **DatePicker over native date input** — avoid `Input type="date"` / datetime-native input types.
+- **Default `src/` architecture for new projects** — split into `assets/`, `components/`, `hooks/`, `navigation/`, `pages/`, optional `store/`, optional `types/`, and `utils/`; keep `App.tsx` for top-level composition only.

@@ -30,9 +30,10 @@ Common traps to avoid:
 ## Workflow
 
 1. **Decompose the UI** — Break the requested page or feature into discrete UI elements (table, form, sidebar, chart, badge, etc.).
-2. **Scan the index** — Read `references/component-index.md` for a categorical overview and quick one-liners. Match each UI element to a component.
-3. **Resolve ambiguity** — If two or more components could work for an element, consult `references/decision-guide.md` for side-by-side comparisons.
-4. **Implement with the library** — Use the matched components. Reach for component-specific dos/don'ts below to wire props correctly.
+2. **Plan file placement** — In new projects without established architecture, map implementation to `src/pages`, `src/components`, `src/navigation`, `src/hooks`, `src/utils`, and keep `App.tsx` as top-level wiring only.
+3. **Scan the index** — Read `references/component-index.md` for a categorical overview and quick one-liners. Match each UI element to a component.
+4. **Resolve ambiguity** — If two or more components could work for an element, consult `references/decision-guide.md` for side-by-side comparisons.
+5. **Implement with the library** — Use the matched components. Reach for component-specific dos/don'ts below to wire props correctly.
 
 ---
 

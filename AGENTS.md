@@ -126,6 +126,28 @@ Use `Avatar` for any circular media slot (user photos, team logos, brand marks, 
 ### 15. DatePicker over Input date types
 For all date or date-range fields, use `DatePicker`. Do not use `Input type="date"` or datetime input types for date workflows.
 
+### 16. Default source architecture for new projects
+If the project has no established architecture and the user does not specify one, do not place all logic in `App.tsx`.
+Use this default structure under `src/`:
+
+```text
+src/
+	assets/
+	components/
+	hooks/
+	navigation/
+	pages/
+	store/      (optional)
+	types/      (optional for JS projects)
+	utils/
+```
+
+Guidance:
+
+- `App.tsx` should only compose providers, router/shell, and top-level wiring.
+- Keep page-level UI in `pages/`, reusable UI in `components/`, and routing config in `navigation/`.
+- Prefer Tailwind utilities and library components over creating `App.css` layout/component classes.
+
 ---
 
 ## Reference files
@@ -166,3 +188,4 @@ If you find yourself about to write any of the following, stop and load the rele
 | `Input type="date"` / date-like native input | `DatePicker` |
 | `SimpleChart` for new charts | `Chart` |
 | `Card` wrapping `DataGrid` / `KanbanBoard` | Render data component directly |
+| Building whole app in `App.tsx` | Split into `pages/`, `components/`, `navigation/`, hooks, and utils |

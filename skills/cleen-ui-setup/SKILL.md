@@ -82,6 +82,30 @@ Use this checklist:
 - Do not create new layout/component classes in `App.css` when Tailwind already exists
 - If custom CSS is unavoidable, keep it minimal and variable-driven
 
+### Default source structure for new projects
+
+If the project does not already have a clear architecture, scaffold features with this default structure:
+
+```text
+src/
+  assets/
+  components/
+  hooks/
+  navigation/
+  pages/
+  store/      (optional)
+  types/      (optional for JS projects)
+  utils/
+```
+
+Implementation expectations:
+
+- Keep `App.tsx` minimal (providers, router, shell composition).
+- Place route definitions in `navigation/`.
+- Place screen-level components in `pages/`.
+- Place reusable UI and composed widgets in `components/`.
+- Keep business utilities in `utils/` and reusable hooks in `hooks/`.
+
 ### Example — standard React App.tsx
 
 ```tsx
