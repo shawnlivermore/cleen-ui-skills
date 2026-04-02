@@ -1,28 +1,73 @@
 ---
 name: cleen-ui-setup
-description: Set up the Cleen UI monorepo packages (@cleen/ui-core, @cleen/ui, @cleen/ui-pro) in a user's existing project. Use this skill whenever the user asks how to install, set up, integrate, or add Cleen Components to their project, or when they mention setting up the library, getting started with it, importing the CSS, or Tailwind usage. Trigger this skill proactively even if the user just says something like "how do I use this in my app?" or "can you help me get this working in my project?".
+description: Bootstrap, install, and configure Cleen UI packages (@cleen/ui-core, @cleen/ui, @cleen/ui-pro) in a project. ONLY use this skill when the user asks how to install, set up, initialize, create a new React app, scaffold a Vite project, or add Cleen Components to an empty workspace or existing project. DO NOT use this skill for building features, adding components, or styling pages (use cleen-ui-builder and cleen-ui-theme instead).
 ---
 
 # Cleen UI Setup Skill
 
-This skill walks through installing and wiring up the Cleen UI libraries into an existing project. The architecture consists of three packages:
+This skill handles the one-time installation and wiring of the Cleen UI libraries into a project. Once the app is running and components are rendering, this skill is no longer needed.
 
-- `@cleen/ui-core`: Shared hooks, utilities, types, stores, and Tailwind preset/CSS.
-- `@cleen/ui`: Main free component library + charts and icons.
-- `@cleen/ui-pro`: Premium components built on top of the free and core layers.
+## Mandatory Invocation Contract
+- **Setup Task?** → Load `cleen-ui-setup` (you are here).
+- **Building a Feature/Page/Feedback UI?** → Load `cleen-ui-builder`.
+- **Styling/Theming?** → Load `cleen-ui-theme`.
+
+## Pre-Code Checklist (Setup Phase)
+1. **Empty Project?** Ensure you scaffold a React + Vite + TypeScript project first, along with Tailwind CSS.
+2. Detect the project's package manager before running install commands.
+3. Verify React 18+ and `react-router-dom` v6 are present.
+4. Ensure the core CSS and Notification Container are added to the root layout.
+5. *Self-Check:* Did you only handle installation/wiring? If the user also asked to build a page, hand off the architecture and component construction to `cleen-ui-builder`.
 
 ## Steps Overview
 
-1. **Detect package manager** from the user's project
-2. **Install the required packages** (`@cleen/ui-core`, `@cleen/ui`, and optionally `@cleen/ui-pro`)
-3. **Import the root stylesheet** (`@cleen/ui-core/dist/styles.css`)
-4. **Apply Tailwind-first styling rules** in the project's global stylesheet (not `App.css`)
-5. **Place `<CleenNotificationContainer />`** in the root layout/app file
-6. _(Optional)_ **Set up dark mode**
+1. **Scaffold the project (if starting from scratch)** using React + Vite + TS.
+2. **Detect package manager** from the user's project
+3. **Install the required packages** (`@cleen/ui-core`, `@cleen/ui`, and optionally `@cleen/ui-pro`)
+4. **Import the root stylesheet** (`@cleen/ui-core/dist/styles.css`)
+5. **Apply Tailwind-first styling rules** in the project's global stylesheet (not `App.css`)
+6. **Place `<CleenNotificationContainer />`** in the root layout/app file
+7. _(Optional)_ **Set up dark mode**
 
 ---
 
-## Step 1 — Detect Package Manager
+## Step 1 — Scaffold the project (If Starting from Scratch)
+
+If the user has an empty workspace or explicitly asks to create a new application, generate a React + Vite project using TypeScript by default (unless they specify otherwise). 
+
+```bash
+# npm
+npm create vite@latest . -- --template react-ts
+npm install -D tailwindcss @tailwindcss/vite
+
+# bun
+bun create vite . --template react-ts
+bun add -D tailwindcss @tailwindcss/vite
+```
+
+The library's internal classes (`cleen-`) are pre-compiled and handled by importing its `styles.css`. Therefore, the consumer's app can safely run **Tailwind v4** without any `tailwind.config.js` bloat. 
+
+To configure Tailwind v4 in the Vite project:
+
+1. Update `vite.config.ts` to include the Tailwind plugin:
+```ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})
+```
+
+2. Import Tailwind into the project's root CSS (`src/index.css`):
+```css
+@import "tailwindcss";
+```
+
+---
+
+## Step 2 — Detect Package Manager
 
 Read the user's `package.json` to confirm the project exists and grab the package name for context. Then determine which package manager to use by checking for lockfiles in this priority order (`bun.lockb`/`bun.lock`, `pnpm-lock.yaml`, `yarn.lock`, `package-lock.json`). Default to `npm` if none is found.
 
@@ -33,7 +78,7 @@ Verify `react-router-dom` v6 is installed, as it is used internally. If missing,
 
 ---
 
-## Step 2 — Install Packages
+## Step 3 — Install Packages
 
 Install the correct packages. Everyone needs `@cleen/ui-core` and `@cleen/ui`. Pro users also need `@cleen/ui-pro`.
 
@@ -57,21 +102,22 @@ _(Add `@cleen/ui-pro` to the command if the user has pro access or requests it)_
 
 ---
 
-## Step 3 — Import the Stylesheet
+## Step 4 — Import the Stylesheet
 
 The core stylesheet **must** be imported for any components to look correct. Prepend the import to the project's global CSS file (e.g., `src/index.css`, `app/globals.css`).
 
 If both a global CSS file and `App.css` exist, prefer the global CSS entry (`index.css`/`globals.css`) and avoid introducing new component/layout classes in `App.css` when Tailwind is installed.
 
 ```css
+@import "tailwindcss";
 @import '@cleen/ui-core/dist/styles.css';
 ```
 
-> Put this at the very top of the CSS file before other styles to establish base styles without overriding custom project styles.
+> Put the library import directly beneath `@import "tailwindcss";` to establish the base styles without overriding custom project rules.
 
 ---
 
-## Step 4 — Tailwind-First Styling Rules
+## Step 5 — Tailwind-First Styling Rules
 
 **CRITICAL:** In consumer projects, use the project's own Tailwind utilities and component classes. Do not add `.cleen` wrapper classes in app code and do not spread `cleen-` prefixed utility classes through the project.
 
@@ -80,72 +126,18 @@ Use this checklist:
 - Keep styling in Tailwind utility classes first
 - Keep global variable overrides in `index.css` / `globals.css`
 - Do not create new layout/component classes in `App.css` when Tailwind already exists
-- If custom CSS is unavoidable, keep it minimal and variable-driven
-
-### Default source structure for new projects
-
-If the project does not already have a clear architecture, scaffold features with this default structure:
-
-```text
-src/
-  assets/
-  components/
-  hooks/
-  navigation/
-  pages/
-  store/      (optional)
-  types/      (optional for JS projects)
-  utils/
-```
-
-Implementation expectations:
-
-- Keep `App.tsx` minimal (providers, router, shell composition).
-- Place route definitions in `navigation/`.
-- Place screen-level components in `pages/`.
-- Place reusable UI and composed widgets in `components/`.
-- Keep business utilities in `utils/` and reusable hooks in `hooks/`.
-
-### Example — standard React App.tsx
-
-```tsx
-export default function App() {
-  return (
-    <BrowserRouter>
-      <Routes>...</Routes>
-    </BrowserRouter>
-  );
-}
-```
-
-### Example — Next.js App Router layout.tsx
-
-```tsx
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
-}
-```
 
 **IMPORTANT — Tailwind Usage in Consumer Projects:**
 
 The `cleen-` prefix and library imports are **for the library's internals and integration only**. Once installed, the user's project should use its **own Tailwind configuration** for styling its custom components — not the library's prefixed utilities.
 
-- ✅ Use prefixed utilities only when working inside the library source itself
 - ✅ Use the project's default Tailwind config (unprefixed: `flex`, `p-4`, `grid`, etc.) for all consumer project components
 - ❌ **Do NOT spread `cleen-` classnames throughout the consumer application** — that's a library concern, not a project concern. 
 - ❌ **Do NOT add `.cleen` wrapper classes to app roots in consumer projects**.
 
 ---
 
-## Step 5 — Place `<CleenNotificationContainer />`
+## Step 6 — Place `<CleenNotificationContainer />`
 
 The `CleenNotificationContainer` renders the global notification portal and must live high in the component tree.
 
@@ -166,7 +158,7 @@ _Note for Next.js:_ If placing this in a Server Component layout, it might requi
 
 ---
 
-## Step 6 (Optional) — Set Up Dark Mode
+## Step 7 (Optional) — Set Up Dark Mode
 
 The library uses Tailwind's **class-based dark mode**. In consumer projects, prefer the standard `dark` class strategy from the host app's Tailwind config. Wait for the user to ask for dark mode before configuring this.
 
@@ -180,3 +172,6 @@ After completing all steps, summarize:
 - Where the CSS (`@cleen/ui-core/dist/styles.css`) was imported
 - Confirmation that no `.cleen` wrapper class was introduced in consumer app code
 - Where the `<CleenNotificationContainer />` was placed
+
+**STOP: Do not proceed to build features, layouts, forms, or data grids.**
+If the user also requested to build a page or component, instruct them that the setup is complete and you will now use the `cleen-ui-builder` skill to construct the app.

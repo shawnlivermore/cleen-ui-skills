@@ -6,39 +6,23 @@ This repository contains agent skill definitions for `@cleen/ui`, `@cleen/ui-cor
 
 ## Skills Registry
 
-Skills are defined in `skills/<skill-name>/SKILL.md`. Each file contains a YAML frontmatter block with a `name` and `description` that describes the trigger conditions, followed by full implementation guidance.
-
-Load a skill by reading its `SKILL.md` before implementing anything in its domain.
+This repository has a streamlined "Power-Skill" structure to handle UI generation continuously without dropping context. Load the correct skill before implementing anything in its domain.
 
 ---
 
 ## When to invoke each skill
 
-### Always invoke first for any new project
+### 1. `cleen-ui-setup`
+**Always invoke first for any new project initialization.** 
+Use this when the user asks how to install, configure, or get started with the library. 
 
-**`cleen-ui-setup`** — If the user asks how to install, configure, or get started with the library in their project. Also trigger if you are about to import anything from the `@cleen/*` packages and there is no evidence the library is already installed (i.e. no entry in `dependencies`).
+### 2. `cleen-ui-theme`
+**Always invoke for global styling, colors, or dark mode.**
+Use this when the user asks about changing the brand color, adjusting variables, setting up dark mode overrides, or CSS customizations.
 
----
-
-### Invoke before writing any UI code
-
-**`cleen-ui-component-selector`** — Mandatory first step before implementing any UI feature, page, dashboard, or component. It maps UI needs to library components and prevents custom implementations of things the library already provides. Read `references/component-index.md` for the full component catalog and `references/decision-guide.md` for disambiguation between similar components.
-
----
-
-### Invoke based on what UI is being built
-
-| Building this | Load this skill |
-|---|---|
-| Color theming, CSS variable overrides, matching a brand | `cleen-ui-configure` |
-| Page structure, card layouts, stat rows, content grids | `cleen-ui-layout` |
-| Sidebar, tabs, breadcrumbs, wizards, pagination | `cleen-ui-navigation` |
-| Any form — settings, edit dialogs, onboarding, filters | `cleen-ui-forms` |
-| Tables, Kanban, charts, badges, progress indicators | `cleen-ui-data-display` |
-| Modals, drawers, menus, tooltips, toasts, popovers | `cleen-ui-overlays` |
-| Loading states, skeletons, error messages, empty states | `cleen-ui-feedback-and-errors` |
-
-Multiple skills may apply to a single feature — load all relevant ones.
+### 3. `cleen-ui-builder`
+**Mandatory for ANY UI feature, page, component, overlay, form, table, or feedback state.**
+This is your core framework skill for vibe-coding. It maps UI needs to library components and enforces the primary architectural constraints. It contains references to all form, layout, overlay, data-display, and navigation recipes you need. Load this *first* whenever the user asks you to build or modify any screen.
 
 ---
 
@@ -152,17 +136,17 @@ Guidance:
 
 ## Reference files
 
-Some skills include a `references/` subdirectory with supporting lookup documents. Load these when the skill instructs you to or when resolving ambiguity:
+The `cleen-ui-builder` skill includes a `references/` subdirectory with supporting lookup documents. Pull the specific reference file dynamically based on the component type requested:
 
 | File | Purpose |
 |---|---|
-| `cleen-ui-component-selector/references/component-index.md` | Full component catalog — categories, names, one-line descriptions |
-| `cleen-ui-component-selector/references/decision-guide.md` | Side-by-side comparisons for components that are easy to confuse |
-| `cleen-ui-layout/references/layout-patterns.md` | Common layout recipes (dashboard grids, stat rows, detail views) |
-| `cleen-ui-navigation/references/navigation-patterns.md` | Navigation patterns (sidebar setup, tab configs, wizard steps) |
-| `cleen-ui-forms/references/form-patterns.md` | Form patterns (validation, multi-field layouts, async submit) |
-| `cleen-ui-data-display/references/data-display-patterns.md` | Data display recipes (column configs, Kanban setup, chart types) |
-| `cleen-ui-overlays/references/overlay-patterns.md` | Overlay patterns (confirmation modal, filter drawer, nested menus) |
+| `cleen-ui-builder/references/component-index.md` | Full component catalog — categories, names, descriptions |
+| `cleen-ui-builder/references/decision-guide.md` | Side-by-side comparisons for similar components |
+| `cleen-ui-builder/references/layout-patterns.md` | Common layout recipes (dashboard grids, stat rows) |
+| `cleen-ui-builder/references/navigation-patterns.md` | Sidebar setup, tab configs, wizard steps |
+| `cleen-ui-builder/references/form-patterns.md` | Form validation, multi-field layouts, async submit |
+| `cleen-ui-builder/references/data-display-patterns.md` | Data grid column configs, charts, Kanban boards |
+| `cleen-ui-builder/references/overlay-patterns.md` | Confirmation modals, sliding filter drawers, menus |
 
 ---
 

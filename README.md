@@ -6,56 +6,34 @@ Agent skill definitions for building UI with the Cleen UI monorepo packages (`@c
 
 ## What's in here
 
-Each skill lives in `skills/<skill-name>/` and contains a `SKILL.md` with a YAML frontmatter trigger description and full implementation guidance. Some skills also ship a `references/` folder with supporting lookup tables and decision guides.
+Each skill lives in `skills/<skill-name>/` and contains a `SKILL.md` with a YAML frontmatter trigger description and full implementation guidance. The architectural skills also ship a `references/` folder with supporting lookup tables and decision guides.
 
-| Skill                                                                          | What it covers                                                                                  |
-| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| [`cleen-ui-setup`](skills/cleen-ui-setup/SKILL.md)                             | Installing the library, npm auth, peer dep checks, stylesheet import, dark mode                 |
-| [`cleen-ui-configure`](skills/cleen-ui-configure/SKILL.md)                     | CSS variable theming — overriding colors for light/dark mode                                    |
-| [`cleen-ui-component-selector`](skills/cleen-ui-component-selector/SKILL.md)   | Picking the right component before writing any UI code                                          |
-| [`cleen-ui-layout`](skills/cleen-ui-layout/SKILL.md)                           | Page layout with `Card`, `Divider`, `Avatar`, and consumer-project Tailwind conventions          |
-| [`cleen-ui-navigation`](skills/cleen-ui-navigation/SKILL.md)                   | `Sidebar`, `Breadcrumb`, `Tabs`, `Wizard`, `Stepper`, `Pagination`                              |
-| [`cleen-ui-forms`](skills/cleen-ui-forms/SKILL.md)                             | Form layout, all input components, `useForm`, `useValidation`, validation UX                    |
-| [`cleen-ui-data-display`](skills/cleen-ui-data-display/SKILL.md)               | `DataGrid`, `KanbanBoard`, `Chart`, `ProgressBar`, `PillBadge`, `Loader`, `Skeletons`           |
-| [`cleen-ui-overlays`](skills/cleen-ui-overlays/SKILL.md)                       | `Modal`, `Drawer`, `FilterDrawer`, `Menu`, `Dropdown`, `Popover`, `Tooltip`, `showNotification` |
-| [`cleen-ui-feedback-and-errors`](skills/cleen-ui-feedback-and-errors/SKILL.md) | Loading states, toasts, skeleton screens, inline errors, empty states                           |
+| Skill | What it covers |
+| --- | --- |
+| [`cleen-ui-setup`](skills/cleen-ui-setup/SKILL.md) | Installing the library, npm auth, peer dep checks, root stylesheet import |
+| [`cleen-ui-theme`](skills/cleen-ui-theme/SKILL.md) | CSS variable theming — overriding colors, dark mode, defining brand palettes |
+| [`cleen-ui-builder`](skills/cleen-ui-builder/SKILL.md) | The core framework for vibe-coding. Building pages, layouts, forms, data grids, overlays, and feedback UI |
 
 ---
 
 ## Repository structure
 
-```
+```text
 skills/
-  cleen-ui-setup/
-    SKILL.md
-  cleen-ui-configure/
-    SKILL.md
-  cleen-ui-component-selector/
+  cleen-ui-builder/
     SKILL.md
     references/
       component-index.md       # full component catalog with one-liners
+      data-display-patterns.md # grids, charts, kanban
       decision-guide.md        # side-by-side comparisons for ambiguous choices
-  cleen-ui-layout/
+      form-patterns.md         # forms, validation, submission
+      layout-default-patterns.md
+      layout-patterns.md       # page composition
+      navigation-patterns.md   # sidebars, tabs, breadcrumbs
+      overlay-patterns.md      # modals, drawers, menus
+  cleen-ui-setup/
     SKILL.md
-    references/
-      layout-patterns.md
-  cleen-ui-navigation/
-    SKILL.md
-    references/
-      navigation-patterns.md
-  cleen-ui-forms/
-    SKILL.md
-    references/
-      form-patterns.md
-  cleen-ui-data-display/
-    SKILL.md
-    references/
-      data-display-patterns.md
-  cleen-ui-overlays/
-    SKILL.md
-    references/
-      overlay-patterns.md
-  cleen-ui-feedback-and-errors/
+  cleen-ui-theme/
     SKILL.md
 ```
 
@@ -78,11 +56,11 @@ Open terminal inside your project, run this command `npx skills add https://gith
 | You say                                      | Skill invoked                                                               |
 | -------------------------------------------- | --------------------------------------------------------------------------- |
 | "How do I install this in my app?"           | `cleen-ui-setup`                                                            |
-| "How do I change the primary color?"         | `cleen-ui-configure`                                                        |
-| "Build a user dashboard"                     | `cleen-ui-component-selector` → `cleen-ui-layout` → `cleen-ui-data-display` |
-| "Create a multi-step onboarding form"        | `cleen-ui-forms` + `cleen-ui-navigation`                                    |
-| "Add a confirmation dialog"                  | `cleen-ui-overlays`                                                         |
-| "Show a loading skeleton while data fetches" | `cleen-ui-feedback-and-errors`                                              |
+| "How do I change the primary color?"         | `cleen-ui-theme`                                                            |
+| "Build a user dashboard with a data table"   | `cleen-ui-builder`                                                          |
+| "Create a multi-step onboarding form"        | `cleen-ui-builder`                                                          |
+| "Add a confirmation dialog"                  | `cleen-ui-builder`                                                          |
+| "Show a loading skeleton while data fetches" | `cleen-ui-builder`                                                          |
 
 ---
 
