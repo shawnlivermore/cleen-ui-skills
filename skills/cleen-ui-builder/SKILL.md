@@ -31,6 +31,7 @@ src/
   assets/       # Images, global icons, raw static files
   components/   # Reusable UI parts, composed library widgets
   hooks/        # Reusable domain or utility hooks
+  mock/         # (or constants/) Large mock data arrays and objects
   navigation/   # Route definitions, guards, layout shells
   pages/        # Screen-level components (each route points here)
   store/        # Zustand or global state (optional)
@@ -42,6 +43,7 @@ src/
 - Keep `App.tsx` minimal (providers, router, shell composition).
 - Place page and layout composition in `pages/` and `navigation/`.
 - Never put all logic in `App.tsx`.
+- **Mock Data:** Extract all large mock data arrays or objects into a separate `/mock` or `/constants` folder. NEVER bloat component or page files with dozens of lines of static mock data.
 
 ---
 
@@ -70,6 +72,7 @@ To prevent hallucinations, read the reference files below that match the user's 
 ### 5. Navigation & Routing
 *Use these when adding a sidebar, top tabs, breadcrumbs, or splitting a workflow into steps:*
 - **`references/navigation-patterns.md`**: Sidebar setups, Tab configs, and Wizard patterns.
+- *Rule Check:* When passing a logo component to the `Sidebar`, it must be a square image or a single letter to prevent the sidebar from becoming too wide or visually breaking.
 
 ### 6. Overlays & Dialogs
 *Use these for modals, drawers, slide-overs, popovers, dropdown menus, and tooltips:*
@@ -87,6 +90,8 @@ To prevent hallucinations, read the reference files below that match the user's 
 
 If you find yourself doing any of these, STOP and use the correct library primitive:
 - `<table>` or custom grid markup ❌ → Use `DataGrid` / `DataGridWithFilters`
+- `Card` wrapping `DataGrid` / `KanbanBoard` ❌ → Render advanced components directly in the container.
+- Hardcoded native Tailwind colors (e.g. `text-red-500`) ❌ → Rely on mapped CSS variables (e.g. `text-error` or `bg-primary`) derived from the `@theme` via `cleen-ui-theme`.
 - Custom modal/dialog JSX ❌ → Use `Modal` + `useDisclosure`
 - `useState(false)` for overlay open/close ❌ → Use `useDisclosure`
 - `alert()` or custom toast ❌ → Use `showNotification`

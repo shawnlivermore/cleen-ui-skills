@@ -48,20 +48,38 @@ Override these in your global CSS to theme the app:
 ### How to Override Colors
 Place overrides in the root CSS file *after* the library import.
 
+In consumer projects using Tailwind v4, expose these library colors to the standard utility classes (e.g. `bg-primary`, `text-error`) using the `@theme` directive, so you can avoid raw Tailwind color scales like `text-red-500`. 
+
 ```css
 @import "@cleen/ui-core/dist/styles.css";
 
 /* Light mode overrides */
 :root {
-  --cleen-primary: 99, 102, 241;   
-  --cleen-brand: 99, 102, 241;
-  --cleen-sidebar: 245, 245, 255;
+  --cleen-primary: 210, 105, 30;   
+  --cleen-brand: 176, 79, 28;
+  --cleen-warning: 225, 140, 55;
+  --cleen-sidebar: 243, 230, 214;
+  --cleen-background: 255, 248, 237;
 }
 
 /* Dark mode overrides */
 .dark {
-  --cleen-primary: 129, 140, 248;
-  --cleen-sidebar: 15, 15, 30;
+  --cleen-primary: 225, 131, 64;
+  --cleen-brand: 197, 106, 45;
+  --cleen-warning: 244, 166, 92;
+  --cleen-sidebar: 50, 36, 28;
+  --cleen-background: 28, 21, 18;
+}
+
+/* Map the library CSS variables to Tailwind v4 theme utility classes */
+@theme {
+  --color-primary: rgb(var(--cleen-primary));
+  --color-brand: rgb(var(--cleen-brand));
+  --color-warning: rgb(var(--cleen-warning));
+  --color-success: rgb(var(--cleen-success));
+  --color-error: rgb(var(--cleen-error));
+  --color-sidebar: rgb(var(--cleen-sidebar));
+  --color-background: rgb(var(--cleen-background));
 }
 ```
 
