@@ -13,12 +13,13 @@ This is your primary orchestrator for building features, pages, and components u
 - **Building a Feature/Page/Component?** → Load `cleen-ui-builder` (you are here).
 
 ## Pre-Code Checklist (Builder Phase)
-1. Are you placing the files correctly according to the default project architecture below?
-2. Are you using `DataGrid` (never custom HTML tables) for lists of records?
-3. Are you using `useDisclosure` + `Modal`/`Drawer` instead of custom open/close state?
-4. Are you using the `useForm` hook for managing form states?
-5. Are you using unprefixed Tailwind utilities for consumer projects, avoiding the internal `cleen-` prefixes and `.cleen` wrappers?
-6. *Self-Check:* Did you consult the relevant `references/` files below before writing the component?
+1. Are you using a `@cleen/ui-pro` component (like `DataGrid`, `KanbanBoard`, `Wizard`)? Verify if `@cleen/ui-pro` is already installed via `package.json`. If it's missing, **STOP IMMEDIATELY**. Do NOT attempt to search the workspace to see if it is included in the free `@cleen/ui` package. Do NOT perform any file searches. Switch immediately to the `cleen-ui-setup` skill to handle the private package installation and NPM auth token verification.
+2. Are you placing the files correctly according to the default project architecture below?
+3. Are you using `DataGrid` (never custom HTML tables) for lists of records?
+4. Are you using `useDisclosure` + `Modal`/`Drawer` instead of custom open/close state?
+5. Are you using the `useForm` hook for managing form states?
+6. Are you using unprefixed Tailwind utilities for consumer projects, avoiding the internal `cleen-` prefixes and `.cleen` wrappers?
+7. *Self-Check:* Did you consult the relevant `references/` files below before writing the component?
 
 ---
 
@@ -89,6 +90,7 @@ To prevent hallucinations, read the reference files below that match the user's 
 ## Anti-Patterns to Reject
 
 If you find yourself doing any of these, STOP and use the correct library primitive:
+- Searching for `DataGrid`, `KanbanBoard`, `Wizard` or other pro components inside the free `@cleen/ui` package ❌ → They are EXCLUSIVELY in `@cleen/ui-pro`. If it's missing from `package.json`, trigger `cleen-ui-setup` to instruct the user on NPM auth configuration. Never perform file searches to check if a pro component is "accidentally" included in the free package.
 - `<table>` or custom grid markup ❌ → Use `DataGrid` / `DataGridWithFilters`
 - `Card` wrapping `DataGrid` / `KanbanBoard` ❌ → Render advanced components directly in the container.
 - Hardcoded native Tailwind colors (e.g. `text-red-500`) ❌ → Rely on mapped CSS variables (e.g. `text-error` or `bg-primary`) derived from the `@theme` via `cleen-ui-theme`.

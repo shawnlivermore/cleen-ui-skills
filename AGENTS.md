@@ -110,7 +110,10 @@ Use `Avatar` for any circular media slot (user photos, team logos, brand marks, 
 ### 15. DatePicker over Input date types
 For all date or date-range fields, use `DatePicker`. Do not use `Input type="date"` or datetime input types for date workflows.
 
-### 16. Default source architecture for new projects
+### 16. Do not search for Pro components in the free package
+Assume a hard boundary between public and private packages. If a project requires a pro component like `DataGrid`, `KanbanBoard`, or `Wizard` but `@cleen/ui-pro` is not installed, **STOP**. Do NOT read the node_modules folder or search the free package to verify if it's there. Instruct the user to set up their `.npmrc` instead.
+
+### 17. Default source architecture for new projects
 If the project has no established architecture and the user does not specify one, do not place all logic in `App.tsx`.
 Use this default structure under `src/`:
 
@@ -172,4 +175,5 @@ If you find yourself about to write any of the following, stop and load the rele
 | `Input type="date"` / date-like native input | `DatePicker` |
 | `SimpleChart` for new charts | `Chart` |
 | `Card` wrapping `DataGrid` / `KanbanBoard` | Render data component directly |
+| Searching `@cleen/ui` or `node_modules` for Pro components like `DataGrid` | Stop instantly, assume it's missing, and run `cleen-ui-setup` to configure `.npmrc` |
 | Building whole app in `App.tsx` | Split into `pages/`, `components/`, `navigation/`, hooks, and utils |

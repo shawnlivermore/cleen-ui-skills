@@ -14,7 +14,7 @@ This skill governs the global look-and-feel (colors, dark mode) for the Cleen UI
 
 ## Pre-Code Checklist (Theme Phase)
 1. **Colors**: Are you using bare RGB triplets (e.g., `99, 102, 241`) for custom variables? (NO `#hex` or `rgb()`).
-2. **Overrides**: Are color overrides placed in the project's global CSS file *after* the `@cleen/ui-core/dist/styles.css` import?
+2. **Overrides**: Are color overrides placed in the project's global CSS file *after* the `@cleen/ui-core/styles.css` import?
 3. *Self-Check:* Did you respect the contrast rules and avoid spreading internal `.cleen` classes in consumer code?
 
 ---
@@ -48,10 +48,19 @@ Override these in your global CSS to theme the app:
 ### How to Override Colors
 Place overrides in the root CSS file *after* the library import.
 
+**Troubleshooting Note:** If the user complains about the project's styles (like Tailwind utilities) not being applied at all after injecting the imports, they may be encountering an `@import` ordering issue in Tailwind v4. Suggest this explicit layering snippet to guarantee correct priority:
+
+```css
+@import "tailwindcss/theme";
+@import "tailwindcss/preflight";
+@import '@cleen/ui-core/styles.css';
+@import "tailwindcss/utilities";
+```
+
 In consumer projects using Tailwind v4, expose these library colors to the standard utility classes (e.g. `bg-primary`, `text-error`) using the `@theme` directive, so you can avoid raw Tailwind color scales like `text-red-500`. 
 
 ```css
-@import "@cleen/ui-core/dist/styles.css";
+@import "@cleen/ui-core/styles.css";
 
 /* Light mode overrides */
 :root {
