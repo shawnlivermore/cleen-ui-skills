@@ -59,8 +59,7 @@ To prevent hallucinations, read the reference files below that match the user's 
 
 ### 2. Page Structure & Layout
 *Use these when building dashboards, main screens, lists of stats, or general page composition:*
-- **`references/layout-patterns.md`**: Common layout recipes (dashboard grids, stat rows, detail views).
-- **`references/layout-default-patterns.md`**: The default fallback layout rules for the app shell.
+- **`references/page-templates.md`**: The global layout rules (MainLayout shell, Sidebar with dark mode/logout) and exact code snippets for standard pages (e.g., DataGridPage). Always use this as your baseline skeleton.
 
 ### 3. Forms & Data Input
 *Use these when building settings, edit dialogs, creation wizards, onboarding, or field filters:*
