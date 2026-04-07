@@ -10,7 +10,7 @@ Instead of building raw unstyled dashboards, **always use these page templates**
    - Displaying the brand logo.
    - Showing user identity and handling the logout sequence.
    - Presenting a theme toggle (Dark Mode / Light Mode) inside a settings or bottom drawer context if applicable.
-4. **Child pages** (like the `DataGridPage` below) should focus strictly on local content (Breadcrumbs, Page Title, Tabs, Actions, and the Content itself).
+4. **Child pages** should focus strictly on local content (Breadcrumbs, Page Title, Tabs, Actions, and the Content itself).
 5. **No `cleen-` prefixes in app code:** When adapting these snippets, ensure you use the consumer project's standard Tailwind utilities (e.g., `flex`, `p-6`) instead of library-internal `cleen-` prefixed classes. Note: `cleen-no-scrollbar` is a custom CSS class that must be either imported without changes or globally defined in consumer's project.
 6. Snippets contain classes with custom tailwind colours. Please don't forget to create CSS variables that inherit the colours from CleenUI variables by default.
 
@@ -39,10 +39,11 @@ type MainLayoutProps = {
   breadcrumbs?: BreadcrumbProps['segments'];
   title?: string;
   subtitle?: string;
+  pageActions?: React.ReactNode;
 };
 
 // Example shell wrapper
-export function MainLayout({ children, breadcrumbs, title, subtitle }: MainLayoutProps) {
+export function MainLayout({ children, breadcrumbs, title, subtitle, pageActions }: MainLayoutProps) {
   const [activeMenu, setActiveMenu] = useState<string | null>('dashboard');
   const [isDark, setIsDark] = useState(false);
 
@@ -123,14 +124,19 @@ export function MainLayout({ children, breadcrumbs, title, subtitle }: MainLayou
         <main className="mx-auto flex h-full w-full max-w-[1500px] flex-col gap-8 p-4 pt-0 sm:pt-[unset] md:p-6 2xl:p-10">
           
           {/* Header Section: Breadcrumbs + Titles (Rendered if provided) */}
-          {(breadcrumbs || title || subtitle) && (
+          {(breadcrumbs || title || subtitle || pageActions) && (
             <div className="h-fit flex w-full flex-col gap-5">
               {breadcrumbs && <Breadcrumb segments={breadcrumbs} />}
 
-              {title && (
-                <div className="flex w-full flex-col items-start justify-start">
-                  <p className="w-full text-nowrap font-bold text-gray">{title}</p>
-                  {subtitle && <p className="text-sm text-gray/70">{subtitle}</p>}
+              {(title || subtitle || pageActions) && (
+                <div className="flex w-full items-start justify-between gap-4">
+                  <div className="flex flex-col items-start justify-start">
+                    {title && <p className="text-nowrap font-bold text-gray">{title}</p>}
+                    {subtitle && <p className="text-sm text-gray/70">{subtitle}</p>}
+                  </div>
+                  
+                  {/* Optional actions rendered to the right of the title */}
+                  {pageActions && <div>{pageActions}</div>}
                 </div>
               )}
             </div>
@@ -142,84 +148,6 @@ export function MainLayout({ children, breadcrumbs, title, subtitle }: MainLayou
         </main>
       </div>
     </div>
-  );
-}
-```
-
----
-
-## 2. The `DataGrid` Page Template
-
-This is the standard layout for list/table screens. It features Breadcrumbs, Page Header, optional Tabs (for mode switching), an Action Button (Add Entry), and the `DataGrid` (or `DataGridWithFilters`).
-
-```tsx
-import { useState } from 'react';
-import { Tabs, Button } from '@cleen/ui';
-import { DataGrid } from '@cleen/ui-pro';
-import { MainLayout } from '@/components/MainLayout'; // import your shell
-import { mockData, tableHeaders } from '@/mock/data';
-
-export function DataGridPage() {
-  const [activeTab, setActiveTab] = useState(0);
-  const [searchText, setSearchText] = useState('');
-  const [page, setPage] = useState(1);
-  
-  const pageTabs = [
-    { id: 'all-entries', label: 'All Entries' },
-    { id: 'configure', label: 'Configure' },
-  ];
-
-  const dataGridTabs = [
-    { id: 'all', label: 'All' },
-    { id: 'in-review', label: 'In Review' },
-    { id: 'approved', label: 'Approved' },
-    { id: 'archived', label: 'Archived' },
-  ]
-
-  return (
-    <MainLayout
-      breadcrumbs={[{ label: 'Home', path: '/' }, { label: 'Data', path: '/data' }]}
-      title="Data Management"
-      subtitle="View and manage system records and operational metrics."
-    >
-      {/* 1. Controls Section: Tabs + Primary Action */}
-      <div className="flex justify-between gap-4 mb-4">
-        <Tabs 
-          variant="padded" 
-          tabs={pageTabs} 
-          className="w-full"
-          currentTabIndex={activeTab} 
-          onTabChange={setActiveTab} 
-        />
-          
-        <Button variant="secondary">
-          Add New Entry
-        </Button>
-      </div>
-
-      {/* 2. Main Data View */}
-      <DataGrid
-        tableHeaders={tableHeaders}
-        rowData={mockData}
-        activePage={page}
-        onPageChange={setPage}
-        withSearch
-        searchInputValue={searchText}
-        onSearchChange={setSearchText}
-        isSearchDebounced
-        withRefreshButton
-        onRefreshButtonClick={() => console.log('Refreshing...')}
-        customFilterElements={
-          <Tabs
-            variant="padded"
-            tabs={dataGridTabs}
-            classNames={{
-              list: '!cleen-mb-0',
-            }}
-          />
-        }
-      />      
-    </MainLayout>
   );
 }
 ```

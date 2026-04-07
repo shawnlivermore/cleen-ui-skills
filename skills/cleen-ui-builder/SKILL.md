@@ -58,8 +58,11 @@ To prevent hallucinations, read the reference files below that match the user's 
 - **`references/decision-guide.md`**: Clarifications on when to use similar components (e.g., Select vs DropdownMenu vs Combobox).
 
 ### 2. Page Structure & Layout
-*Use these when building dashboards, main screens, lists of stats, or general page composition:*
-- **`references/page-templates.md`**: The global layout rules (MainLayout shell, Sidebar with dark mode/logout) and exact code snippets for standard pages (e.g., DataGridPage). Always use this as your baseline skeleton.
+*Use these when building dashboards, main screens, lists of stats, settings pages, or general page composition:*
+- **`references/page-templates.md`**: The global layout rules (MainLayout shell, Sidebar with dark mode/logout). Always use this as your baseline skeleton.
+- **`references/page-templates/dashboard-templates.md`**: Dashboard grids, card-based catalogs (`CardGridPage`, `CardGridPageAlt`), and multi-widget layout compositions.
+- **`references/page-templates/data-grid-templates.md`**: Single and complex data grid layouts, standard views for system records and generic lists.
+- **`references/page-templates/settings-templates.md`**: Settings pages layouts (`SettingsPage` horizontally tabbed, `SettingsPageAlt` vertically tabbed), configuring the setup for properties configurations and complex `FormGroup` combinations.
 
 ### 3. Forms & Data Input
 *Use these when building settings, edit dialogs, creation wizards, onboarding, or field filters:*
