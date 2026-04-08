@@ -19,7 +19,8 @@ This is your primary orchestrator for building features, pages, and components u
 4. Are you using `useDisclosure` + `Modal`/`Drawer` instead of custom open/close state?
 5. Are you using the `useForm` hook for managing form states?
 6. Are you using unprefixed Tailwind utilities for consumer projects, avoiding the internal `cleen-` prefixes and `.cleen` wrappers?
-7. *Self-Check:* Did you consult the relevant `references/` files below before writing the component?
+7. Have you set up the `@theme` block in the global CSS to map semantic colours (like `bg-primary`) to the `--cleen-primary` variables? If not, STOP and load `cleen-ui-theme` first!
+8. *Self-Check:* Did you consult the relevant `references/` files below before writing the component?
 
 ---
 
@@ -45,7 +46,7 @@ src/
 - Place page and layout composition in `pages/` and `navigation/`.
 - **CRITICAL:** Every page component MUST return rendering elements wrapped inside the `<PageWrapper>` container! You can find the `<PageWrapper>` layout and exact component imports mapped out within `page-templates.md`. DO NOT build your own `<aside>`, `<header>`, or `nav` elements for a page layout!
 - Never put all logic in `App.tsx`.
-- **Mock Data:** Extract all large mock data arrays or objects into a separate `/mock` or `/constants` folder. NEVER bloat component or page files with dozens of lines of static mock data.
+- **Mock Data & Types:** Extract all large mock data arrays or objects into a separate `/mock` or `/constants` folder, and their corresponding TypeScript interfaces or types into the `/types` folder. NEVER bloat component or page files with dozens of lines of static mock data or massive type definitions!
 
 ---
 
@@ -93,6 +94,7 @@ To prevent hallucinations, read the reference files below that match the user's 
 ## Anti-Patterns to Reject
 
 If you find yourself doing any of these, STOP and use the correct library primitive:
+- Setting up CSS colour variables in Tailwind v4 without an `@theme` block mapping ❌ → ALWAYS add the mapped `@theme { --color-primary: rgb(var(--cleen-primary)); }` variables to inject them into Tailwind's utility scale! Otherwise, your `bg-primary` classes will silently fail. When in doubt, read `cleen-ui-theme`.
 - Using `dark:` prefixed Tailwind utility classes for Dark Mode manually (e.g., `dark:bg-slate-900`) ❌ → ALWAYS use global CSS variable overrides via `.dark` class from `cleen-ui-theme` instead. You *should* build your own dark mode toggle logic (`localStorage` + `.dark` class on `html`), but the styling must be variable-driven, not utility-driven!
 - Searching for `DataGrid`, `KanbanBoard`, `Wizard` or other pro components inside the free `@cleen/ui` package ❌ → They are EXCLUSIVELY in `@cleen/ui-pro`. If it's missing from `package.json`, trigger `cleen-ui-setup` to instruct the user on NPM auth configuration. Never perform file searches to check if a pro component is "accidentally" included in the free package.
 - `<table>` or custom grid markup ❌ → Use `DataGrid` / `DataGridWithFilters`

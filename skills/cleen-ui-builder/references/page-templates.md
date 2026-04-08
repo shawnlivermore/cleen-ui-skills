@@ -12,7 +12,7 @@ Instead of building raw unstyled dashboards, **always use these page templates**
    - Presenting a theme toggle (Dark Mode / Light Mode) inside a settings or bottom drawer context if applicable.
 4. **Child pages** should focus strictly on local content (Breadcrumbs, Page Title, Tabs, Actions, and the Content itself).
 5. **No `cleen-` prefixes in app code:** When adapting these snippets, ensure you use the consumer project's standard Tailwind utilities (e.g., `flex`, `p-6`) instead of library-internal `cleen-` prefixed classes. Note: `cleen-no-scrollbar` is a custom CSS class that must be either imported without changes or globally defined in consumer's project.
-6. Snippets contain classes with custom tailwind colours. Please don't forget to create CSS variables that inherit the colours from CleenUI variables by default.
+6. **Tailwind v4 Colors Setup:** Snippets contain classes with custom tailwind colours (e.g. `bg-primary`, `text-gray`, `bg-background`). You MUST map these inside the project's global CSS file (e.g. `index.css`) using the `@theme` directive so Tailwind v4 recognizes them. If you haven't configured the `@theme` block, the classes will do nothing. If you don't know how to do this, load the `cleen-ui-theme` skill.
 
 ---
 
@@ -33,7 +33,7 @@ import {
   IconName,
   type BreadcrumbProps 
 } from '@cleen/ui';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type PageWrapperProps = {
   children: React.ReactNode;
@@ -46,7 +46,33 @@ type PageWrapperProps = {
 // Example shell wrapper
 export function PageWrapper({ children, breadcrumbs, title, subtitle, pageActions }: PageWrapperProps) {
   const [activeMenu, setActiveMenu] = useState<string | null>('dashboard');
-  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const theme = window.localStorage.getItem('theme');
+    if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  const handleThemeChange = (theme: 'light' | 'dark' | 'system') => {
+    if (theme === 'system') {
+      window.localStorage.removeItem('theme');
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } else {
+      window.localStorage.setItem('theme', theme);
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+  };
 
   // You can adapt this based on project requirements (use react-router, etc.)
   const mainNavigation = [
@@ -63,9 +89,19 @@ export function PageWrapper({ children, breadcrumbs, title, subtitle, pageAction
       <DrawerContainer title="Theme Settings">
         <div className="flex flex-col gap-2">
           <DrawerContentTitle
-            title={isDark ? 'Light mode' : 'Dark mode'}
-            iconName={isDark ? IconName.Sun : IconName.MoonCircle}
-            onClick={() => setIsDark(!isDark)}
+            title="Light mode"
+            iconName={IconName.Sun}
+            onClick={() => handleThemeChange('light')}
+          />
+          <DrawerContentTitle
+            title="Dark mode"
+            iconName={IconName.MoonCircle}
+            onClick={() => handleThemeChange('dark')}
+          />
+          <DrawerContentTitle
+            title="System default"
+            iconName={IconName.Monitor2}
+            onClick={() => handleThemeChange('system')}
           />
         </div>
       </DrawerContainer>
