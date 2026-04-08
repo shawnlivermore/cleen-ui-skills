@@ -17,7 +17,7 @@ import {
   Tabs,
 } from '@cleen/ui';
 import { useForm } from '@cleen/ui-core';
-import { MainLayout } from '@/components/MainLayout';
+import { PageWrapper } from '@/components/PageWrapper';
 // Provide mock data or API integrations
 import { countryOptions } from '@/mock/data';
 
@@ -178,9 +178,9 @@ export const SettingsPage = () => {
   ];
 
   return (
-    <MainLayout title="Jane Doe" subtitle="@janedoe">
+    <PageWrapper title="Jane Doe" subtitle="@janedoe">
       <Tabs tabs={settingsPageTabs} className="w-full" />
-    </MainLayout>
+    </PageWrapper>
   );
 };
 ```
@@ -192,7 +192,7 @@ This variant utilizes a vertical tab layout to organize settings categories on t
 ```tsx
 import { Divider, FormGroup, IconMail, Input, Select, Tabs } from '@cleen/ui';
 import { useForm } from '@cleen/ui-core';
-import { MainLayout } from '@/components/MainLayout';
+import { PageWrapper } from '@/components/PageWrapper';
 // Provide mock data or API integrations
 import { countryOptions, horizontalTabs } from '@/mock/data';
 
@@ -326,7 +326,7 @@ export const SettingsPageAlt = () => {
   ];
 
   return (
-    <MainLayout title="Jane Doe" subtitle="@janedoe">
+    <PageWrapper title="Jane Doe" subtitle="@janedoe">
       <Tabs
         direction="vertical"
         tabs={settingsPageTabs}
@@ -334,7 +334,7 @@ export const SettingsPageAlt = () => {
           list: 'w-[200px]',
         }}
       />
-    </MainLayout>
+    </PageWrapper>
   );
 };
 ```
@@ -348,7 +348,7 @@ import { useMemo, useState } from 'react';
 import { Button, FormGroup, IconEditable, IconMail, IconTrash, Input, Select, Tabs } from '@cleen/ui';
 import { cn, useForm } from '@cleen/ui-core';
 import { DataGridWithFilters } from '@cleen/ui-pro';
-import { MainLayout } from '@/components/MainLayout';
+import { PageWrapper } from '@/components/PageWrapper';
 // Provide mock data or API integrations
 import { Department, departmentOptions, employees, stretchedTabs, verticalTabs, type Employee } from '@/mock/data';
 import { employeesTableHeaders } from '@/mock/data';
@@ -502,7 +502,7 @@ export const DataGridSettingsPage = () => {
   ];
 
   return (
-    <MainLayout
+    <PageWrapper
       breadcrumbs={[
         { label: 'Home', path: '/' },
         { label: 'HR', path: '/human-resources' },
@@ -510,7 +510,7 @@ export const DataGridSettingsPage = () => {
       title="User Management"
     >
       <Tabs tabs={settingsPageTabs} className="w-full" />
-    </MainLayout>
+    </PageWrapper>
   );
 };
 ```

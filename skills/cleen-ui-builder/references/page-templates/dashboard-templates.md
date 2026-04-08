@@ -20,7 +20,7 @@ import {
   PillBadge,
   Tabs,
 } from '@cleen/ui';
-import { MainLayout } from '@/components/MainLayout';
+import { PageWrapper } from '@/components/PageWrapper';
 // Provide these in your mock/data file
 import { companiesData } from '@/mock/data';
 
@@ -34,7 +34,7 @@ export const CardGridPage = () => {
   ];
 
   return (
-    <MainLayout
+    <PageWrapper
       breadcrumbs={[
         { label: 'Home', path: '/' },
         { label: 'Companies', path: '/companies' },
@@ -178,7 +178,7 @@ export const CardGridPage = () => {
           </Card>
         ))}
       </div>
-    </MainLayout>
+    </PageWrapper>
   );
 };
 ```
@@ -196,13 +196,13 @@ import {
   IconCheckVerified,
   IconStar,
 } from '@cleen/ui';
-import { MainLayout } from '@/components/MainLayout';
+import { PageWrapper } from '@/components/PageWrapper';
 // Provide these in your mock/data file
 import { companiesData } from '@/mock/data';
 
 export const CardGridPageAlt = () => {
   return (
-    <MainLayout
+    <PageWrapper
       breadcrumbs={[
         { label: 'Home', path: '/' },
         { label: 'Companies', path: '/companies' },
@@ -276,7 +276,7 @@ export const CardGridPageAlt = () => {
           </Card>
         ))}
       </div>
-    </MainLayout>
+    </PageWrapper>
   );
 };
 ```

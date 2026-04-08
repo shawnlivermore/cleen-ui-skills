@@ -96,7 +96,7 @@ Do not introduce raw hex color literals in consumer component styles when a libr
 When introducing color overrides/aliases, keep text/background contrast readable. Target WCAG AA-level contrast where practical (at least 4.5:1 for normal body text, 3:1 for large text/UI emphasis).
 
 ### 11. Default app shell on first page
-If a user asks for the first page without layout direction, use the default SaaS App Shell pattern: left sidebar + main content on the right, with no root-level margin/padding wrappers.
+If a user asks for the first page without layout direction, you MUST create a `<PageWrapper>` (or use an existing one if provided) that wraps the child page with the default SaaS App Shell pattern: a left `Sidebar` + main content canvas. Do NOT create custom `<aside>` or layout boilerplate yourself.
 
 ### 12. Do not wrap advanced data components in Card
 Do not wrap `DataGrid`, `DataGridWithFilters`, `KanbanBoard`, or `KanbanList` inside `Card`. These components should be rendered directly in layout containers.
@@ -145,7 +145,10 @@ The `cleen-ui-builder` skill includes a `references/` subdirectory with supporti
 |---|---|
 | `cleen-ui-builder/references/component-index.md` | Full component catalog — categories, names, descriptions |
 | `cleen-ui-builder/references/decision-guide.md` | Side-by-side comparisons for similar components |
-| `cleen-ui-builder/references/layout-patterns.md` | Common layout recipes (dashboard grids, stat rows) |
+| `cleen-ui-builder/references/page-templates.md` | The universal `PageWrapper` layout shell block |
+| `cleen-ui-builder/references/page-templates/dashboard-templates.md` | Common dashboard and grid structure |
+| `cleen-ui-builder/references/page-templates/data-grid-templates.md` | Common data grids |
+| `cleen-ui-builder/references/page-templates/settings-templates.md` | Common settings templates layout recipes |
 | `cleen-ui-builder/references/navigation-patterns.md` | Sidebar setup, tab configs, wizard steps |
 | `cleen-ui-builder/references/form-patterns.md` | Form validation, multi-field layouts, async submit |
 | `cleen-ui-builder/references/data-display-patterns.md` | Data grid column configs, charts, Kanban boards |
@@ -177,3 +180,5 @@ If you find yourself about to write any of the following, stop and load the rele
 | `Card` wrapping `DataGrid` / `KanbanBoard` | Render data component directly |
 | Searching `@cleen/ui` or `node_modules` for Pro components like `DataGrid` | Stop instantly, assume it's missing, and run `cleen-ui-setup` to configure `.npmrc` |
 | Building whole app in `App.tsx` | Split into `pages/`, `components/`, `navigation/`, hooks, and utils |
+| Hardcoded native Tailwind colors (`bg-slate-300`, `text-gray-900`) | Rely on custom mapped variables from your theme like `bg-background`, `text-gray`, `border-gray/30`. |
+| Creating custom arbitrary `<aside>`, `<header>`, `<nav>` shells | Wrap all page contents directly inside the predefined `<PageWrapper>` container! |

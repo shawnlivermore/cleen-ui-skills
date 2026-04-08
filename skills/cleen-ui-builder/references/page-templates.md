@@ -4,8 +4,8 @@ Instead of building raw unstyled dashboards, **always use these page templates**
 
 ## Global Layout Rules
 
-1. **Always use a `MainLayout` component** that wraps the page content.
-2. **The `MainLayout` must always include a `Sidebar`** on the left side of the main content.
+1. **Always use a `PageWrapper` component** that wraps the page content.
+2. **The `PageWrapper` must always include a `Sidebar`** on the left side of the main content.
 3. **The `Sidebar` must handle basic shell requirements:**
    - Displaying the brand logo.
    - Showing user identity and handling the logout sequence.
@@ -16,7 +16,7 @@ Instead of building raw unstyled dashboards, **always use these page templates**
 
 ---
 
-## 1. The `MainLayout` Shell
+## 1. The `PageWrapper` Shell
 
 Create this reusable shell once per project. It sets up the `Sidebar` and the main `<main>` scrolling canvas.
 
@@ -30,11 +30,12 @@ import {
   Tooltip,
   DrawerContainer,
   DrawerContentTitle,
+  IconName,
   type BreadcrumbProps 
 } from '@cleen/ui';
 import { useState } from 'react';
 
-type MainLayoutProps = {
+type PageWrapperProps = {
   children: React.ReactNode;
   breadcrumbs?: BreadcrumbProps['segments'];
   title?: string;
@@ -43,18 +44,18 @@ type MainLayoutProps = {
 };
 
 // Example shell wrapper
-export function MainLayout({ children, breadcrumbs, title, subtitle, pageActions }: MainLayoutProps) {
+export function PageWrapper({ children, breadcrumbs, title, subtitle, pageActions }: PageWrapperProps) {
   const [activeMenu, setActiveMenu] = useState<string | null>('dashboard');
   const [isDark, setIsDark] = useState(false);
 
   // You can adapt this based on project requirements (use react-router, etc.)
   const mainNavigation = [
-    { id: 'dashboard', label: 'Dashboard', iconName: 'HouseLine' },
-    { id: 'data', label: 'Data Grid', iconName: 'Table' },
+    { id: 'dashboard', label: 'Dashboard', iconName: IconName.HouseLine },
+    { id: 'data', label: 'Data Grid', iconName: IconName.Table },
   ];
 
   const bottomNavigation = [
-    { id: 'settings', label: 'Settings', iconName: 'Settings' },
+    { id: 'settings', label: 'Settings', iconName: IconName.Settings },
   ];
 
   const drawerContent = {
@@ -63,7 +64,7 @@ export function MainLayout({ children, breadcrumbs, title, subtitle, pageActions
         <div className="flex flex-col gap-2">
           <DrawerContentTitle
             title={isDark ? 'Light mode' : 'Dark mode'}
-            iconName={isDark ? 'Sun' : 'MoonCircle'}
+            iconName={isDark ? IconName.Sun : IconName.MoonCircle}
             onClick={() => setIsDark(!isDark)}
           />
         </div>

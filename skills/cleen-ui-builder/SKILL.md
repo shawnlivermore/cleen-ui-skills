@@ -43,6 +43,7 @@ src/
 **Implementation rules:**
 - Keep `App.tsx` minimal (providers, router, shell composition).
 - Place page and layout composition in `pages/` and `navigation/`.
+- **CRITICAL:** Every page component MUST return rendering elements wrapped inside the `<PageWrapper>` container! You can find the `<PageWrapper>` layout and exact component imports mapped out within `page-templates.md`. DO NOT build your own `<aside>`, `<header>`, or `nav` elements for a page layout!
 - Never put all logic in `App.tsx`.
 - **Mock Data:** Extract all large mock data arrays or objects into a separate `/mock` or `/constants` folder. NEVER bloat component or page files with dozens of lines of static mock data.
 
@@ -59,7 +60,7 @@ To prevent hallucinations, read the reference files below that match the user's 
 
 ### 2. Page Structure & Layout
 *Use these when building dashboards, main screens, lists of stats, settings pages, or general page composition:*
-- **`references/page-templates.md`**: The global layout rules (MainLayout shell, Sidebar with dark mode/logout). Always use this as your baseline skeleton.
+- **`references/page-templates.md`**: The global layout rules (PageWrapper shell, Sidebar with dark mode/logout). Always use this as your baseline skeleton.
 - **`references/page-templates/dashboard-templates.md`**: Dashboard grids, card-based catalogs (`CardGridPage`, `CardGridPageAlt`), and multi-widget layout compositions.
 - **`references/page-templates/data-grid-templates.md`**: Single and complex data grid layouts, standard views for system records and generic lists.
 - **`references/page-templates/settings-templates.md`**: Settings pages layouts (`SettingsPage` horizontally tabbed, `SettingsPageAlt` vertically tabbed), configuring the setup for properties configurations and complex `FormGroup` combinations.
@@ -92,10 +93,12 @@ To prevent hallucinations, read the reference files below that match the user's 
 ## Anti-Patterns to Reject
 
 If you find yourself doing any of these, STOP and use the correct library primitive:
+- Using `dark:` prefixed Tailwind utility classes for Dark Mode manually (e.g., `dark:bg-slate-900`) ❌ → ALWAYS use global CSS variable overrides via `.dark` class from `cleen-ui-theme` instead. You *should* build your own dark mode toggle logic (`localStorage` + `.dark` class on `html`), but the styling must be variable-driven, not utility-driven!
 - Searching for `DataGrid`, `KanbanBoard`, `Wizard` or other pro components inside the free `@cleen/ui` package ❌ → They are EXCLUSIVELY in `@cleen/ui-pro`. If it's missing from `package.json`, trigger `cleen-ui-setup` to instruct the user on NPM auth configuration. Never perform file searches to check if a pro component is "accidentally" included in the free package.
 - `<table>` or custom grid markup ❌ → Use `DataGrid` / `DataGridWithFilters`
 - `Card` wrapping `DataGrid` / `KanbanBoard` ❌ → Render advanced components directly in the container.
-- Hardcoded native Tailwind colors (e.g. `text-red-500`) ❌ → Rely on mapped CSS variables (e.g. `text-error` or `bg-primary`) derived from the `@theme` via `cleen-ui-theme`.
+- Hardcoded native Tailwind colors (e.g. `text-red-500`, `bg-white`, `border-slate-300`) ❌ → Rely on mapped CSS variables (e.g. `text-error`, `bg-background`, `text-gray`, `border-gray/30`) derived from the `@theme` via `cleen-ui-theme`.
+- Building custom `<aside>`, `<header>`, or `<nav>` page shells ❌ → ALWAYS wrap your pages in the `PageWrapper` (from `page-templates.md`) which handles the global `Sidebar` and layout canvas natively.
 - Custom modal/dialog JSX ❌ → Use `Modal` + `useDisclosure`
 - `useState(false)` for overlay open/close ❌ → Use `useDisclosure`
 - `alert()` or custom toast ❌ → Use `showNotification`

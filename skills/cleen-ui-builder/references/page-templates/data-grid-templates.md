@@ -10,7 +10,7 @@ This is the standard layout for list/table screens. It features Breadcrumbs, Pag
 import { useMemo, useState } from 'react';
 import { Button, IconBoxLines, IconTrash, IconUser, Tabs } from '@cleen/ui';
 import { DataGrid } from '@cleen/ui-pro';
-import { MainLayout } from '@/components/MainLayout';
+import { PageWrapper } from '@/components/PageWrapper';
 // Provide these in your mock/data file
 import { assessmentsData, pageTabs, tableHeaders, tabs } from '@/mock/data';
 
@@ -62,7 +62,7 @@ export const DataGridPage = () => {
   });
 
   return (
-    <MainLayout
+    <PageWrapper
       breadcrumbs={[
         { label: 'Home', path: '/' },
         { label: 'Data', path: '/data' },
@@ -122,7 +122,7 @@ export const DataGridPage = () => {
           },
         ]}
       />
-    </MainLayout>
+    </PageWrapper>
   );
 };
 ```
@@ -136,7 +136,7 @@ import { useMemo, useState } from 'react';
 import { IconBoxLines, IconTrash, Tabs } from '@cleen/ui';
 import { cn } from '@cleen/ui-core';
 import { DataGrid } from '@cleen/ui-pro';
-import { MainLayout } from '@/components/MainLayout';
+import { PageWrapper } from '@/components/PageWrapper';
 // Provide these in your mock/data file
 import { dataGridData, statusTabs, tableHeaders, typeTabs } from '@/mock/data';
 
@@ -190,7 +190,7 @@ export const DataGridPageAlt = () => {
   });
 
   return (
-    <MainLayout
+    <PageWrapper
       breadcrumbs={[
         { label: 'Home', path: '/' },
         { label: 'Data', path: '/data' },
@@ -248,7 +248,7 @@ export const DataGridPageAlt = () => {
           ]}
         />
       </div>
-    </MainLayout>
+    </PageWrapper>
   );
 };
 ```
@@ -262,7 +262,7 @@ import { useMemo, useState } from 'react';
 import { Button, IconPlus, Tabs } from '@cleen/ui';
 import { cn } from '@cleen/ui-core';
 import { DataGrid } from '@cleen/ui-pro';
-import { MainLayout } from '@/components/MainLayout';
+import { PageWrapper } from '@/components/PageWrapper';
 // Provide these in your mock/data file
 import { dataGridData, roleTableHeaders, tabs, usersTableHeaders } from '@/mock/data';
 
@@ -277,7 +277,7 @@ export const DoubleDataGridPage = () => {
   }, [selectedRoleID]);
 
   return (
-    <MainLayout
+    <PageWrapper
       breadcrumbs={[
         { label: 'Home', path: '/' },
         { label: 'Roles', path: '/roles' },
@@ -372,7 +372,7 @@ export const DoubleDataGridPage = () => {
           />
         </div>
       </div>
-    </MainLayout>
+    </PageWrapper>
   );
 };
 ```
@@ -386,7 +386,7 @@ import { useState } from 'react';
 import { Button, IconEditable, IconSearch, IconTrash, Input, Tabs } from '@cleen/ui';
 import { cn } from '@cleen/ui-core';
 import { DataGrid } from '@cleen/ui-pro';
-import { MainLayout } from '@/components/MainLayout';
+import { PageWrapper } from '@/components/PageWrapper';
 // Provide these in your mock file
 import { departments, departmentsTableHeaders, employeesTableHeaders, tabs, teamsTableHeaders, type Department, type Team } from '@/mock/data';
 
@@ -413,7 +413,7 @@ export const TripleDataGridPage = () => {
   });
 
   return (
-    <MainLayout
+    <PageWrapper
       breadcrumbs={[
         { label: 'Home', path: '/' },
         { label: 'HR', path: '/human-resources' },
@@ -533,7 +533,7 @@ export const TripleDataGridPage = () => {
           }}
         />
       </div>
-    </MainLayout>
+    </PageWrapper>
   );
 };
 ```
